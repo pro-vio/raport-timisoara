@@ -1,0 +1,6 @@
+# surse brute mari, redescărcabile de pe data.gov.ro — nu intră în repo
+date/*.xlsx
+date/*.xls
+
+# scratch/temp
+*.tmp

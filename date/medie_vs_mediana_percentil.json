@@ -1,0 +1,1879 @@
+{
+ "per_an": {
+  "2020": {
+   "n_scoli": 29,
+   "gap_mediu": -9.47,
+   "gap_median": -9.21,
+   "gap_min": -22.41,
+   "gap_max": 7.89
+  },
+  "2021": {
+   "n_scoli": 30,
+   "gap_mediu": -3.58,
+   "gap_median": -4.13,
+   "gap_min": -15.0,
+   "gap_max": 7.14
+  },
+  "2022": {
+   "n_scoli": 31,
+   "gap_mediu": -3.84,
+   "gap_median": -5.56,
+   "gap_min": -16.39,
+   "gap_max": 10.0
+  },
+  "2023": {
+   "n_scoli": 31,
+   "gap_mediu": -7.04,
+   "gap_median": -8.67,
+   "gap_min": -15.67,
+   "gap_max": 8.82
+  },
+  "2024": {
+   "n_scoli": 32,
+   "gap_mediu": -4.95,
+   "gap_median": -4.01,
+   "gap_min": -15.96,
+   "gap_max": 5.77
+  },
+  "2025": {
+   "n_scoli": 30,
+   "gap_mediu": -6.44,
+   "gap_median": -7.14,
+   "gap_min": -13.92,
+   "gap_max": 6.25
+  }
+ },
+ "corelatie_medie_vs_gap": -0.636,
+ "scoala_an": [
+  {
+   "an": 2020,
+   "cod_siiir": "3561100013",
+   "denumire": "LICEUL TEOLOGIC BAPTIST TIMIȘOARA",
+   "n": 29,
+   "medie": 7.603,
+   "mediana": 8.0,
+   "percentila_mediei": 27.6,
+   "gap_percentile": -22.4
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561102173",
+   "denumire": "LICEUL TEOLOGIC ROMANO-CATOLIC \"GERHARDINUM\" TIMIȘOARA",
+   "n": 21,
+   "medie": 6.323,
+   "mediana": 6.85,
+   "percentila_mediei": 33.3,
+   "gap_percentile": -16.7
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101448",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.13 TIMIȘOARA",
+   "n": 75,
+   "medie": 7.98,
+   "mediana": 8.5,
+   "percentila_mediei": 33.3,
+   "gap_percentile": -16.7
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561100922",
+   "denumire": "COLEGIUL NAȚIONAL PEDAGOGIC \"CARMEN SYLVA\" TIMIȘOARA",
+   "n": 119,
+   "medie": 8.518,
+   "mediana": 8.9,
+   "percentila_mediei": 33.6,
+   "gap_percentile": -16.4
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101005",
+   "denumire": "LICEUL WALDORF TIMIȘOARA",
+   "n": 47,
+   "medie": 7.505,
+   "mediana": 7.8,
+   "percentila_mediei": 34.0,
+   "gap_percentile": -16.0
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561102069",
+   "denumire": "LICEUL TEORETIC \"NIKOLAUS LENAU\" TIMIȘOARA",
+   "n": 117,
+   "medie": 8.713,
+   "mediana": 9.03,
+   "percentila_mediei": 34.2,
+   "gap_percentile": -15.8
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101656",
+   "denumire": "LICEUL TEORETIC \"GRIGORE MOISIL\" TIMIȘOARA",
+   "n": 134,
+   "medie": 9.061,
+   "mediana": 9.35,
+   "percentila_mediei": 34.3,
+   "gap_percentile": -15.7
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561106462",
+   "denumire": "LICEUL TEORETIC \"WILLIAM SHAKESPEARE\" TIMIȘOARA",
+   "n": 72,
+   "medie": 7.62,
+   "mediana": 8.02,
+   "percentila_mediei": 34.7,
+   "gap_percentile": -15.3
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101683",
+   "denumire": "COLEGIUL NAȚIONAL \"CONSTANTIN DIACONOVICI LOGA\" TIMIȘOARA",
+   "n": 60,
+   "medie": 9.29,
+   "mediana": 9.46,
+   "percentila_mediei": 35.0,
+   "gap_percentile": -15.0
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561100085",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.16 \"TAKE IONESCU\" TIMIȘOARA",
+   "n": 105,
+   "medie": 8.405,
+   "mediana": 8.95,
+   "percentila_mediei": 35.2,
+   "gap_percentile": -14.8
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101656",
+   "denumire": "LICEUL TEORETIC \"GRIGORE MOISIL\" TIMIȘOARA",
+   "n": 129,
+   "medie": 9.081,
+   "mediana": 9.37,
+   "percentila_mediei": 35.7,
+   "gap_percentile": -14.3
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561100922",
+   "denumire": "COLEGIUL NAȚIONAL PEDAGOGIC \"CARMEN SYLVA\" TIMIȘOARA",
+   "n": 75,
+   "medie": 8.356,
+   "mediana": 8.75,
+   "percentila_mediei": 36.0,
+   "gap_percentile": -14.0
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101656",
+   "denumire": "LICEUL TEORETIC \"GRIGORE MOISIL\" TIMIȘOARA",
+   "n": 194,
+   "medie": 8.966,
+   "mediana": 9.2,
+   "percentila_mediei": 36.1,
+   "gap_percentile": -13.9
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561102033",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.2 TIMIȘOARA",
+   "n": 47,
+   "medie": 7.686,
+   "mediana": 8.12,
+   "percentila_mediei": 36.2,
+   "gap_percentile": -13.8
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561100922",
+   "denumire": "COLEGIUL NAȚIONAL PEDAGOGIC \"CARMEN SYLVA\" TIMIȘOARA",
+   "n": 104,
+   "medie": 8.394,
+   "mediana": 8.695,
+   "percentila_mediei": 36.5,
+   "gap_percentile": -13.5
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101683",
+   "denumire": "COLEGIUL NAȚIONAL \"CONSTANTIN DIACONOVICI LOGA\" TIMIȘOARA",
+   "n": 60,
+   "medie": 9.341,
+   "mediana": 9.47,
+   "percentila_mediei": 36.7,
+   "gap_percentile": -13.3
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561102033",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.2 TIMIȘOARA",
+   "n": 76,
+   "medie": 7.485,
+   "mediana": 8.075,
+   "percentila_mediei": 36.8,
+   "gap_percentile": -13.2
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101507",
+   "denumire": "LICEUL DE ARTĂ \"ION VIDU\" TIMIȘOARA",
+   "n": 38,
+   "medie": 7.532,
+   "mediana": 7.885,
+   "percentila_mediei": 36.8,
+   "gap_percentile": -13.2
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101448",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.13 TIMIȘOARA",
+   "n": 73,
+   "medie": 7.592,
+   "mediana": 8.17,
+   "percentila_mediei": 37.0,
+   "gap_percentile": -13.0
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561106367",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.27 TIMIȘOARA",
+   "n": 51,
+   "medie": 6.86,
+   "mediana": 7.45,
+   "percentila_mediei": 37.3,
+   "gap_percentile": -12.7
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101656",
+   "denumire": "LICEUL TEORETIC \"GRIGORE MOISIL\" TIMIȘOARA",
+   "n": 153,
+   "medie": 8.813,
+   "mediana": 9.07,
+   "percentila_mediei": 37.3,
+   "gap_percentile": -12.7
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561102205",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.30 TIMIȘOARA",
+   "n": 182,
+   "medie": 7.747,
+   "mediana": 8.1,
+   "percentila_mediei": 37.9,
+   "gap_percentile": -12.1
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101683",
+   "denumire": "COLEGIUL NAȚIONAL \"CONSTANTIN DIACONOVICI LOGA\" TIMIȘOARA",
+   "n": 58,
+   "medie": 9.54,
+   "mediana": 9.635,
+   "percentila_mediei": 37.9,
+   "gap_percentile": -12.1
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561106417",
+   "denumire": "COLEGIUL NAȚIONAL BĂNĂȚEAN TIMIȘOARA",
+   "n": 129,
+   "medie": 8.136,
+   "mediana": 8.6,
+   "percentila_mediei": 38.0,
+   "gap_percentile": -12.0
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561100899",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.18 TIMIȘOARA",
+   "n": 50,
+   "medie": 7.672,
+   "mediana": 7.935,
+   "percentila_mediei": 38.0,
+   "gap_percentile": -12.0
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101466",
+   "denumire": "LICEUL TEOLOGIC PENTICOSTAL \"LOGOS\" TIMIȘOARA",
+   "n": 21,
+   "medie": 7.704,
+   "mediana": 7.92,
+   "percentila_mediei": 38.1,
+   "gap_percentile": -11.9
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561100085",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.16 \"TAKE IONESCU\" TIMIȘOARA",
+   "n": 105,
+   "medie": 8.467,
+   "mediana": 9.07,
+   "percentila_mediei": 38.1,
+   "gap_percentile": -11.9
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101683",
+   "denumire": "COLEGIUL NAȚIONAL \"CONSTANTIN DIACONOVICI LOGA\" TIMIȘOARA",
+   "n": 60,
+   "medie": 9.406,
+   "mediana": 9.52,
+   "percentila_mediei": 38.3,
+   "gap_percentile": -11.7
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101543",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.19 \"AVRAM IANCU\" TIMIȘOARA",
+   "n": 162,
+   "medie": 8.14,
+   "mediana": 8.57,
+   "percentila_mediei": 38.3,
+   "gap_percentile": -11.7
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561102069",
+   "denumire": "LICEUL TEORETIC \"NIKOLAUS LENAU\" TIMIȘOARA",
+   "n": 86,
+   "medie": 8.654,
+   "mediana": 8.84,
+   "percentila_mediei": 38.4,
+   "gap_percentile": -11.6
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101005",
+   "denumire": "LICEUL WALDORF TIMIȘOARA",
+   "n": 26,
+   "medie": 7.953,
+   "mediana": 8.385,
+   "percentila_mediei": 38.5,
+   "gap_percentile": -11.5
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561100085",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.16 \"TAKE IONESCU\" TIMIȘOARA",
+   "n": 117,
+   "medie": 8.235,
+   "mediana": 8.7,
+   "percentila_mediei": 38.5,
+   "gap_percentile": -11.5
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561102205",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.30 TIMIȘOARA",
+   "n": 199,
+   "medie": 8.017,
+   "mediana": 8.57,
+   "percentila_mediei": 38.7,
+   "gap_percentile": -11.3
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561100153",
+   "denumire": "LICEUL TEORETIC \"BARTÓK BÉLA\" TIMIȘOARA",
+   "n": 49,
+   "medie": 7.415,
+   "mediana": 7.65,
+   "percentila_mediei": 38.8,
+   "gap_percentile": -11.2
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101683",
+   "denumire": "COLEGIUL NAȚIONAL \"CONSTANTIN DIACONOVICI LOGA\" TIMIȘOARA",
+   "n": 59,
+   "medie": 9.667,
+   "mediana": 9.75,
+   "percentila_mediei": 39.0,
+   "gap_percentile": -11.0
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561102069",
+   "denumire": "LICEUL TEORETIC \"NIKOLAUS LENAU\" TIMIȘOARA",
+   "n": 156,
+   "medie": 8.339,
+   "mediana": 8.66,
+   "percentila_mediei": 39.1,
+   "gap_percentile": -10.9
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561100085",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.16 \"TAKE IONESCU\" TIMIȘOARA",
+   "n": 120,
+   "medie": 8.357,
+   "mediana": 8.735,
+   "percentila_mediei": 39.2,
+   "gap_percentile": -10.8
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561100922",
+   "denumire": "COLEGIUL NAȚIONAL PEDAGOGIC \"CARMEN SYLVA\" TIMIȘOARA",
+   "n": 122,
+   "medie": 8.463,
+   "mediana": 8.8,
+   "percentila_mediei": 39.3,
+   "gap_percentile": -10.7
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101032",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.24 TIMIȘOARA",
+   "n": 163,
+   "medie": 7.86,
+   "mediana": 8.5,
+   "percentila_mediei": 39.3,
+   "gap_percentile": -10.7
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561100601",
+   "denumire": "LICEUL TEORETIC \"JEAN LOUIS CALDERON\" TIMIȘOARA",
+   "n": 28,
+   "medie": 7.263,
+   "mediana": 7.675,
+   "percentila_mediei": 39.3,
+   "gap_percentile": -10.7
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561100881",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.25 TIMIȘOARA",
+   "n": 86,
+   "medie": 7.508,
+   "mediana": 7.82,
+   "percentila_mediei": 39.5,
+   "gap_percentile": -10.5
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561106417",
+   "denumire": "COLEGIUL NAȚIONAL BĂNĂȚEAN TIMIȘOARA",
+   "n": 179,
+   "medie": 8.576,
+   "mediana": 8.85,
+   "percentila_mediei": 39.7,
+   "gap_percentile": -10.3
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101493",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.6 TIMIȘOARA",
+   "n": 63,
+   "medie": 7.39,
+   "mediana": 7.92,
+   "percentila_mediei": 39.7,
+   "gap_percentile": -10.3
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561102205",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.30 TIMIȘOARA",
+   "n": 251,
+   "medie": 8.079,
+   "mediana": 8.47,
+   "percentila_mediei": 39.8,
+   "gap_percentile": -10.2
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561102069",
+   "denumire": "LICEUL TEORETIC \"NIKOLAUS LENAU\" TIMIȘOARA",
+   "n": 143,
+   "medie": 8.399,
+   "mediana": 8.65,
+   "percentila_mediei": 39.9,
+   "gap_percentile": -10.1
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101448",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.13 TIMIȘOARA",
+   "n": 55,
+   "medie": 7.647,
+   "mediana": 8.02,
+   "percentila_mediei": 40.0,
+   "gap_percentile": -10.0
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561106462",
+   "denumire": "LICEUL TEORETIC \"WILLIAM SHAKESPEARE\" TIMIȘOARA",
+   "n": 85,
+   "medie": 7.586,
+   "mediana": 8.25,
+   "percentila_mediei": 40.0,
+   "gap_percentile": -10.0
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101801",
+   "denumire": "LICEUL DE ARTE PLASTICE TIMIȘOARA",
+   "n": 20,
+   "medie": 6.072,
+   "mediana": 6.395,
+   "percentila_mediei": 40.0,
+   "gap_percentile": -10.0
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561100013",
+   "denumire": "LICEUL TEOLOGIC BAPTIST TIMIȘOARA",
+   "n": 30,
+   "medie": 8.054,
+   "mediana": 8.225,
+   "percentila_mediei": 40.0,
+   "gap_percentile": -10.0
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561206763",
+   "denumire": "LICEUL TEORETIC \"BABEL\" TIMIȘOARA",
+   "n": 15,
+   "medie": 8.279,
+   "mediana": 8.47,
+   "percentila_mediei": 40.0,
+   "gap_percentile": -10.0
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561100899",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.18 TIMIȘOARA",
+   "n": 60,
+   "medie": 7.726,
+   "mediana": 8.075,
+   "percentila_mediei": 40.0,
+   "gap_percentile": -10.0
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101005",
+   "denumire": "LICEUL WALDORF TIMIȘOARA",
+   "n": 52,
+   "medie": 8.069,
+   "mediana": 8.35,
+   "percentila_mediei": 40.4,
+   "gap_percentile": -9.6
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101597",
+   "denumire": "LICEUL TEOLOGIC ORTODOX \"SFÂNTUL ANTIM IVIREANU\" TIMIȘOARA",
+   "n": 42,
+   "medie": 8.077,
+   "mediana": 8.145,
+   "percentila_mediei": 40.5,
+   "gap_percentile": -9.5
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101032",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.24 TIMIȘOARA",
+   "n": 200,
+   "medie": 8.155,
+   "mediana": 8.5,
+   "percentila_mediei": 40.5,
+   "gap_percentile": -9.5
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101005",
+   "denumire": "LICEUL WALDORF TIMIȘOARA",
+   "n": 27,
+   "medie": 8.226,
+   "mediana": 8.55,
+   "percentila_mediei": 40.7,
+   "gap_percentile": -9.3
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101032",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.24 TIMIȘOARA",
+   "n": 152,
+   "medie": 7.985,
+   "mediana": 8.485,
+   "percentila_mediei": 40.8,
+   "gap_percentile": -9.2
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561106417",
+   "denumire": "COLEGIUL NAȚIONAL BĂNĂȚEAN TIMIȘOARA",
+   "n": 191,
+   "medie": 8.405,
+   "mediana": 8.7,
+   "percentila_mediei": 40.8,
+   "gap_percentile": -9.2
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561100601",
+   "denumire": "LICEUL TEORETIC \"JEAN LOUIS CALDERON\" TIMIȘOARA",
+   "n": 44,
+   "medie": 7.36,
+   "mediana": 8.035,
+   "percentila_mediei": 40.9,
+   "gap_percentile": -9.1
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101656",
+   "denumire": "LICEUL TEORETIC \"GRIGORE MOISIL\" TIMIȘOARA",
+   "n": 97,
+   "medie": 8.375,
+   "mediana": 8.57,
+   "percentila_mediei": 41.2,
+   "gap_percentile": -8.8
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101543",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.19 \"AVRAM IANCU\" TIMIȘOARA",
+   "n": 119,
+   "medie": 8.195,
+   "mediana": 8.55,
+   "percentila_mediei": 41.2,
+   "gap_percentile": -8.8
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101597",
+   "denumire": "LICEUL TEOLOGIC ORTODOX \"SFÂNTUL ANTIM IVIREANU\" TIMIȘOARA",
+   "n": 17,
+   "medie": 7.579,
+   "mediana": 7.8,
+   "percentila_mediei": 41.2,
+   "gap_percentile": -8.8
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101032",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.24 TIMIȘOARA",
+   "n": 165,
+   "medie": 8.044,
+   "mediana": 8.42,
+   "percentila_mediei": 41.2,
+   "gap_percentile": -8.8
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101466",
+   "denumire": "LICEUL TEOLOGIC PENTICOSTAL \"LOGOS\" TIMIȘOARA",
+   "n": 17,
+   "medie": 7.894,
+   "mediana": 8.1,
+   "percentila_mediei": 41.2,
+   "gap_percentile": -8.8
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101543",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.19 \"AVRAM IANCU\" TIMIȘOARA",
+   "n": 109,
+   "medie": 8.082,
+   "mediana": 8.45,
+   "percentila_mediei": 41.3,
+   "gap_percentile": -8.7
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561100899",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.18 TIMIȘOARA",
+   "n": 75,
+   "medie": 7.64,
+   "mediana": 8.25,
+   "percentila_mediei": 41.3,
+   "gap_percentile": -8.7
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101448",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.13 TIMIȘOARA",
+   "n": 70,
+   "medie": 7.182,
+   "mediana": 7.695,
+   "percentila_mediei": 41.4,
+   "gap_percentile": -8.6
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561100922",
+   "denumire": "COLEGIUL NAȚIONAL PEDAGOGIC \"CARMEN SYLVA\" TIMIȘOARA",
+   "n": 128,
+   "medie": 8.443,
+   "mediana": 8.625,
+   "percentila_mediei": 41.4,
+   "gap_percentile": -8.6
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561100881",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.25 TIMIȘOARA",
+   "n": 65,
+   "medie": 7.048,
+   "mediana": 7.32,
+   "percentila_mediei": 41.5,
+   "gap_percentile": -8.5
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101543",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.19 \"AVRAM IANCU\" TIMIȘOARA",
+   "n": 130,
+   "medie": 7.828,
+   "mediana": 8.17,
+   "percentila_mediei": 41.5,
+   "gap_percentile": -8.5
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101371",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.7 \"SFÂNTA MARIA\" TIMIȘOARA",
+   "n": 159,
+   "medie": 7.243,
+   "mediana": 7.75,
+   "percentila_mediei": 41.5,
+   "gap_percentile": -8.5
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561100085",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.16 \"TAKE IONESCU\" TIMIȘOARA",
+   "n": 77,
+   "medie": 8.411,
+   "mediana": 8.82,
+   "percentila_mediei": 41.6,
+   "gap_percentile": -8.4
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561106462",
+   "denumire": "LICEUL TEORETIC \"WILLIAM SHAKESPEARE\" TIMIȘOARA",
+   "n": 89,
+   "medie": 7.357,
+   "mediana": 7.9,
+   "percentila_mediei": 41.6,
+   "gap_percentile": -8.4
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561100899",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.18 TIMIȘOARA",
+   "n": 72,
+   "medie": 7.774,
+   "mediana": 7.975,
+   "percentila_mediei": 41.7,
+   "gap_percentile": -8.3
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561106417",
+   "denumire": "COLEGIUL NAȚIONAL BĂNĂȚEAN TIMIȘOARA",
+   "n": 211,
+   "medie": 8.312,
+   "mediana": 8.6,
+   "percentila_mediei": 41.7,
+   "gap_percentile": -8.3
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561100085",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.16 \"TAKE IONESCU\" TIMIȘOARA",
+   "n": 98,
+   "medie": 8.533,
+   "mediana": 8.835,
+   "percentila_mediei": 41.8,
+   "gap_percentile": -8.2
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561100922",
+   "denumire": "COLEGIUL NAȚIONAL PEDAGOGIC \"CARMEN SYLVA\" TIMIȘOARA",
+   "n": 86,
+   "medie": 8.773,
+   "mediana": 8.96,
+   "percentila_mediei": 41.9,
+   "gap_percentile": -8.1
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561106462",
+   "denumire": "LICEUL TEORETIC \"WILLIAM SHAKESPEARE\" TIMIȘOARA",
+   "n": 62,
+   "medie": 7.549,
+   "mediana": 7.62,
+   "percentila_mediei": 41.9,
+   "gap_percentile": -8.1
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101656",
+   "denumire": "LICEUL TEORETIC \"GRIGORE MOISIL\" TIMIȘOARA",
+   "n": 117,
+   "medie": 8.682,
+   "mediana": 8.92,
+   "percentila_mediei": 41.9,
+   "gap_percentile": -8.1
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101448",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.13 TIMIȘOARA",
+   "n": 43,
+   "medie": 7.655,
+   "mediana": 7.97,
+   "percentila_mediei": 41.9,
+   "gap_percentile": -8.1
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101597",
+   "denumire": "LICEUL TEOLOGIC ORTODOX \"SFÂNTUL ANTIM IVIREANU\" TIMIȘOARA",
+   "n": 31,
+   "medie": 8.266,
+   "mediana": 8.57,
+   "percentila_mediei": 41.9,
+   "gap_percentile": -8.1
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561106417",
+   "denumire": "COLEGIUL NAȚIONAL BĂNĂȚEAN TIMIȘOARA",
+   "n": 169,
+   "medie": 8.458,
+   "mediana": 8.72,
+   "percentila_mediei": 42.0,
+   "gap_percentile": -8.0
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561106417",
+   "denumire": "COLEGIUL NAȚIONAL BĂNĂȚEAN TIMIȘOARA",
+   "n": 171,
+   "medie": 8.439,
+   "mediana": 8.68,
+   "percentila_mediei": 42.1,
+   "gap_percentile": -7.9
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101371",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.7 \"SFÂNTA MARIA\" TIMIȘOARA",
+   "n": 152,
+   "medie": 7.298,
+   "mediana": 7.635,
+   "percentila_mediei": 42.1,
+   "gap_percentile": -7.9
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101493",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.6 TIMIȘOARA",
+   "n": 54,
+   "medie": 6.842,
+   "mediana": 7.195,
+   "percentila_mediei": 42.6,
+   "gap_percentile": -7.4
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561102205",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.30 TIMIȘOARA",
+   "n": 206,
+   "medie": 7.436,
+   "mediana": 8.01,
+   "percentila_mediei": 42.7,
+   "gap_percentile": -7.3
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101507",
+   "denumire": "LICEUL DE ARTĂ \"ION VIDU\" TIMIȘOARA",
+   "n": 49,
+   "medie": 7.438,
+   "mediana": 7.72,
+   "percentila_mediei": 42.9,
+   "gap_percentile": -7.1
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101597",
+   "denumire": "LICEUL TEOLOGIC ORTODOX \"SFÂNTUL ANTIM IVIREANU\" TIMIȘOARA",
+   "n": 28,
+   "medie": 8.284,
+   "mediana": 8.82,
+   "percentila_mediei": 42.9,
+   "gap_percentile": -7.1
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101005",
+   "denumire": "LICEUL WALDORF TIMIȘOARA",
+   "n": 28,
+   "medie": 7.85,
+   "mediana": 8.185,
+   "percentila_mediei": 42.9,
+   "gap_percentile": -7.1
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101032",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.24 TIMIȘOARA",
+   "n": 184,
+   "medie": 7.653,
+   "mediana": 8.035,
+   "percentila_mediei": 42.9,
+   "gap_percentile": -7.1
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561102205",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.30 TIMIȘOARA",
+   "n": 139,
+   "medie": 7.413,
+   "mediana": 7.85,
+   "percentila_mediei": 43.2,
+   "gap_percentile": -6.8
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101801",
+   "denumire": "LICEUL DE ARTE PLASTICE TIMIȘOARA",
+   "n": 30,
+   "medie": 6.729,
+   "mediana": 7.05,
+   "percentila_mediei": 43.3,
+   "gap_percentile": -6.7
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101683",
+   "denumire": "COLEGIUL NAȚIONAL \"CONSTANTIN DIACONOVICI LOGA\" TIMIȘOARA",
+   "n": 60,
+   "medie": 9.482,
+   "mediana": 9.585,
+   "percentila_mediei": 43.3,
+   "gap_percentile": -6.7
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101493",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.6 TIMIȘOARA",
+   "n": 53,
+   "medie": 6.637,
+   "mediana": 6.95,
+   "percentila_mediei": 43.4,
+   "gap_percentile": -6.6
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101891",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.21 \"VICENȚIU BABEȘ\" TIMIȘOARA",
+   "n": 83,
+   "medie": 6.39,
+   "mediana": 6.95,
+   "percentila_mediei": 43.4,
+   "gap_percentile": -6.6
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561102205",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.30 TIMIȘOARA",
+   "n": 177,
+   "medie": 7.791,
+   "mediana": 8.07,
+   "percentila_mediei": 43.5,
+   "gap_percentile": -6.5
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561102069",
+   "denumire": "LICEUL TEORETIC \"NIKOLAUS LENAU\" TIMIȘOARA",
+   "n": 151,
+   "medie": 8.328,
+   "mediana": 8.5,
+   "percentila_mediei": 43.7,
+   "gap_percentile": -6.3
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101597",
+   "denumire": "LICEUL TEOLOGIC ORTODOX \"SFÂNTUL ANTIM IVIREANU\" TIMIȘOARA",
+   "n": 16,
+   "medie": 8.174,
+   "mediana": 8.435,
+   "percentila_mediei": 43.8,
+   "gap_percentile": -6.2
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561100601",
+   "denumire": "LICEUL TEORETIC \"JEAN LOUIS CALDERON\" TIMIȘOARA",
+   "n": 48,
+   "medie": 6.842,
+   "mediana": 7.22,
+   "percentila_mediei": 43.8,
+   "gap_percentile": -6.2
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561100994",
+   "denumire": "LICEUL TEORETIC SPECIAL \"IRIS\" TIMIȘOARA",
+   "n": 16,
+   "medie": 4.684,
+   "mediana": 4.96,
+   "percentila_mediei": 43.8,
+   "gap_percentile": -6.2
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101801",
+   "denumire": "LICEUL DE ARTE PLASTICE TIMIȘOARA",
+   "n": 16,
+   "medie": 6.206,
+   "mediana": 6.3,
+   "percentila_mediei": 43.8,
+   "gap_percentile": -6.2
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561106462",
+   "denumire": "LICEUL TEORETIC \"WILLIAM SHAKESPEARE\" TIMIȘOARA",
+   "n": 48,
+   "medie": 7.625,
+   "mediana": 7.8,
+   "percentila_mediei": 43.8,
+   "gap_percentile": -6.2
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101543",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.19 \"AVRAM IANCU\" TIMIȘOARA",
+   "n": 112,
+   "medie": 8.182,
+   "mediana": 8.5,
+   "percentila_mediei": 43.8,
+   "gap_percentile": -6.2
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101543",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.19 \"AVRAM IANCU\" TIMIȘOARA",
+   "n": 132,
+   "medie": 8.562,
+   "mediana": 8.75,
+   "percentila_mediei": 43.9,
+   "gap_percentile": -6.1
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561106367",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.27 TIMIȘOARA",
+   "n": 75,
+   "medie": 7.599,
+   "mediana": 7.87,
+   "percentila_mediei": 44.0,
+   "gap_percentile": -6.0
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101371",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.7 \"SFÂNTA MARIA\" TIMIȘOARA",
+   "n": 144,
+   "medie": 7.635,
+   "mediana": 7.945,
+   "percentila_mediei": 44.4,
+   "gap_percentile": -5.6
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561102173",
+   "denumire": "LICEUL TEOLOGIC ROMANO-CATOLIC \"GERHARDINUM\" TIMIȘOARA",
+   "n": 18,
+   "medie": 7.235,
+   "mediana": 7.51,
+   "percentila_mediei": 44.4,
+   "gap_percentile": -5.6
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101801",
+   "denumire": "LICEUL DE ARTE PLASTICE TIMIȘOARA",
+   "n": 18,
+   "medie": 6.524,
+   "mediana": 6.795,
+   "percentila_mediei": 44.4,
+   "gap_percentile": -5.6
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561100153",
+   "denumire": "LICEUL TEORETIC \"BARTÓK BÉLA\" TIMIȘOARA",
+   "n": 54,
+   "medie": 7.434,
+   "mediana": 7.655,
+   "percentila_mediei": 44.4,
+   "gap_percentile": -5.6
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561102033",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.2 TIMIȘOARA",
+   "n": 87,
+   "medie": 7.484,
+   "mediana": 7.7,
+   "percentila_mediei": 44.8,
+   "gap_percentile": -5.2
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561100013",
+   "denumire": "LICEUL TEOLOGIC BAPTIST TIMIȘOARA",
+   "n": 29,
+   "medie": 8.348,
+   "mediana": 8.37,
+   "percentila_mediei": 44.8,
+   "gap_percentile": -5.2
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561100836",
+   "denumire": "LICEUL CU PROGRAM SPORTIV \"BANATUL\" TIMIȘOARA",
+   "n": 49,
+   "medie": 6.784,
+   "mediana": 6.92,
+   "percentila_mediei": 44.9,
+   "gap_percentile": -5.1
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561206763",
+   "denumire": "LICEUL TEORETIC \"BABEL\" TIMIȘOARA",
+   "n": 20,
+   "medie": 8.281,
+   "mediana": 8.31,
+   "percentila_mediei": 45.0,
+   "gap_percentile": -5.0
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561100601",
+   "denumire": "LICEUL TEORETIC \"JEAN LOUIS CALDERON\" TIMIȘOARA",
+   "n": 42,
+   "medie": 6.643,
+   "mediana": 6.735,
+   "percentila_mediei": 45.2,
+   "gap_percentile": -4.8
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101448",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.13 TIMIȘOARA",
+   "n": 75,
+   "medie": 7.105,
+   "mediana": 7.4,
+   "percentila_mediei": 45.3,
+   "gap_percentile": -4.7
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101891",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.21 \"VICENȚIU BABEȘ\" TIMIȘOARA",
+   "n": 55,
+   "medie": 6.722,
+   "mediana": 6.92,
+   "percentila_mediei": 45.5,
+   "gap_percentile": -4.5
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561102033",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.2 TIMIȘOARA",
+   "n": 68,
+   "medie": 7.46,
+   "mediana": 7.535,
+   "percentila_mediei": 45.6,
+   "gap_percentile": -4.4
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561100153",
+   "denumire": "LICEUL TEORETIC \"BARTÓK BÉLA\" TIMIȘOARA",
+   "n": 46,
+   "medie": 7.345,
+   "mediana": 7.685,
+   "percentila_mediei": 45.7,
+   "gap_percentile": -4.3
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561100153",
+   "denumire": "LICEUL TEORETIC \"BARTÓK BÉLA\" TIMIȘOARA",
+   "n": 46,
+   "medie": 7.321,
+   "mediana": 7.53,
+   "percentila_mediei": 45.7,
+   "gap_percentile": -4.3
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101014",
+   "denumire": "LICEUL TEORETIC \"VLAD ȚEPEȘ\" TIMIȘOARA",
+   "n": 24,
+   "medie": 6.516,
+   "mediana": 6.595,
+   "percentila_mediei": 45.8,
+   "gap_percentile": -4.2
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561100601",
+   "denumire": "LICEUL TEORETIC \"JEAN LOUIS CALDERON\" TIMIȘOARA",
+   "n": 24,
+   "medie": 6.41,
+   "mediana": 6.635,
+   "percentila_mediei": 45.8,
+   "gap_percentile": -4.2
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101466",
+   "denumire": "LICEUL TEOLOGIC PENTICOSTAL \"LOGOS\" TIMIȘOARA",
+   "n": 24,
+   "medie": 7.459,
+   "mediana": 7.635,
+   "percentila_mediei": 45.8,
+   "gap_percentile": -4.2
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101466",
+   "denumire": "LICEUL TEOLOGIC PENTICOSTAL \"LOGOS\" TIMIȘOARA",
+   "n": 24,
+   "medie": 7.799,
+   "mediana": 8.0,
+   "percentila_mediei": 45.8,
+   "gap_percentile": -4.2
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561102033",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.2 TIMIȘOARA",
+   "n": 61,
+   "medie": 6.962,
+   "mediana": 7.2,
+   "percentila_mediei": 45.9,
+   "gap_percentile": -4.1
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561100881",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.25 TIMIȘOARA",
+   "n": 91,
+   "medie": 6.755,
+   "mediana": 6.97,
+   "percentila_mediei": 46.2,
+   "gap_percentile": -3.8
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561106367",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.27 TIMIȘOARA",
+   "n": 65,
+   "medie": 7.708,
+   "mediana": 7.92,
+   "percentila_mediei": 46.2,
+   "gap_percentile": -3.8
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101371",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.7 \"SFÂNTA MARIA\" TIMIȘOARA",
+   "n": 148,
+   "medie": 6.997,
+   "mediana": 7.32,
+   "percentila_mediei": 46.6,
+   "gap_percentile": -3.4
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561100013",
+   "denumire": "LICEUL TEOLOGIC BAPTIST TIMIȘOARA",
+   "n": 30,
+   "medie": 6.924,
+   "mediana": 7.1,
+   "percentila_mediei": 46.7,
+   "gap_percentile": -3.3
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101493",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.6 TIMIȘOARA",
+   "n": 49,
+   "medie": 6.967,
+   "mediana": 7.35,
+   "percentila_mediei": 46.9,
+   "gap_percentile": -3.1
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561106462",
+   "denumire": "LICEUL TEORETIC \"WILLIAM SHAKESPEARE\" TIMIȘOARA",
+   "n": 81,
+   "medie": 6.779,
+   "mediana": 6.87,
+   "percentila_mediei": 46.9,
+   "gap_percentile": -3.1
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561102069",
+   "denumire": "LICEUL TEORETIC \"NIKOLAUS LENAU\" TIMIȘOARA",
+   "n": 155,
+   "medie": 8.114,
+   "mediana": 8.3,
+   "percentila_mediei": 47.1,
+   "gap_percentile": -2.9
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561100153",
+   "denumire": "LICEUL TEORETIC \"BARTÓK BÉLA\" TIMIȘOARA",
+   "n": 36,
+   "medie": 7.02,
+   "mediana": 7.155,
+   "percentila_mediei": 47.2,
+   "gap_percentile": -2.8
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101891",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.21 \"VICENȚIU BABEȘ\" TIMIȘOARA",
+   "n": 72,
+   "medie": 7.097,
+   "mediana": 7.12,
+   "percentila_mediei": 47.2,
+   "gap_percentile": -2.8
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101507",
+   "denumire": "LICEUL DE ARTĂ \"ION VIDU\" TIMIȘOARA",
+   "n": 38,
+   "medie": 7.086,
+   "mediana": 7.235,
+   "percentila_mediei": 47.4,
+   "gap_percentile": -2.6
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561100022",
+   "denumire": "LICEUL TEHNOLOGIC TRANSPORTURI AUTO TIMIȘOARA",
+   "n": 19,
+   "medie": 5.289,
+   "mediana": 5.3,
+   "percentila_mediei": 47.4,
+   "gap_percentile": -2.6
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101014",
+   "denumire": "LICEUL TEORETIC \"VLAD ȚEPEȘ\" TIMIȘOARA",
+   "n": 19,
+   "medie": 7.061,
+   "mediana": 7.25,
+   "percentila_mediei": 47.4,
+   "gap_percentile": -2.6
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561102173",
+   "denumire": "LICEUL TEOLOGIC ROMANO-CATOLIC \"GERHARDINUM\" TIMIȘOARA",
+   "n": 21,
+   "medie": 6.834,
+   "mediana": 7.45,
+   "percentila_mediei": 47.6,
+   "gap_percentile": -2.4
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561102173",
+   "denumire": "LICEUL TEOLOGIC ROMANO-CATOLIC \"GERHARDINUM\" TIMIȘOARA",
+   "n": 23,
+   "medie": 6.63,
+   "mediana": 7.22,
+   "percentila_mediei": 47.8,
+   "gap_percentile": -2.2
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101801",
+   "denumire": "LICEUL DE ARTE PLASTICE TIMIȘOARA",
+   "n": 23,
+   "medie": 5.681,
+   "mediana": 6.0,
+   "percentila_mediei": 47.8,
+   "gap_percentile": -2.2
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561100899",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.18 TIMIȘOARA",
+   "n": 54,
+   "medie": 7.473,
+   "mediana": 7.7,
+   "percentila_mediei": 48.1,
+   "gap_percentile": -1.9
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561100836",
+   "denumire": "LICEUL CU PROGRAM SPORTIV \"BANATUL\" TIMIȘOARA",
+   "n": 60,
+   "medie": 6.131,
+   "mediana": 6.16,
+   "percentila_mediei": 48.3,
+   "gap_percentile": -1.7
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561100013",
+   "denumire": "LICEUL TEOLOGIC BAPTIST TIMIȘOARA",
+   "n": 29,
+   "medie": 7.75,
+   "mediana": 8.02,
+   "percentila_mediei": 48.3,
+   "gap_percentile": -1.7
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561106367",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.27 TIMIȘOARA",
+   "n": 74,
+   "medie": 7.123,
+   "mediana": 7.41,
+   "percentila_mediei": 48.6,
+   "gap_percentile": -1.4
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561100899",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.18 TIMIȘOARA",
+   "n": 51,
+   "medie": 7.586,
+   "mediana": 7.62,
+   "percentila_mediei": 49.0,
+   "gap_percentile": -1.0
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101493",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.6 TIMIȘOARA",
+   "n": 49,
+   "medie": 6.607,
+   "mediana": 6.7,
+   "percentila_mediei": 49.0,
+   "gap_percentile": -1.0
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561102033",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.2 TIMIȘOARA",
+   "n": 81,
+   "medie": 6.907,
+   "mediana": 6.95,
+   "percentila_mediei": 49.4,
+   "gap_percentile": -0.6
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561100881",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.25 TIMIȘOARA",
+   "n": 91,
+   "medie": 7.169,
+   "mediana": 7.3,
+   "percentila_mediei": 49.5,
+   "gap_percentile": -0.5
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561100013",
+   "denumire": "LICEUL TEOLOGIC BAPTIST TIMIȘOARA",
+   "n": 26,
+   "medie": 7.183,
+   "mediana": 7.095,
+   "percentila_mediei": 50.0,
+   "gap_percentile": 0.0
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101371",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.7 \"SFÂNTA MARIA\" TIMIȘOARA",
+   "n": 144,
+   "medie": 7.114,
+   "mediana": 7.135,
+   "percentila_mediei": 50.0,
+   "gap_percentile": 0.0
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3562103866",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.20 TIMIȘOARA",
+   "n": 16,
+   "medie": 5.058,
+   "mediana": 4.96,
+   "percentila_mediei": 50.0,
+   "gap_percentile": 0.0
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3562103866",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.20 TIMIȘOARA",
+   "n": 20,
+   "medie": 5.963,
+   "mediana": 5.695,
+   "percentila_mediei": 50.0,
+   "gap_percentile": 0.0
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101014",
+   "denumire": "LICEUL TEORETIC \"VLAD ȚEPEȘ\" TIMIȘOARA",
+   "n": 24,
+   "medie": 5.762,
+   "mediana": 5.66,
+   "percentila_mediei": 50.0,
+   "gap_percentile": 0.0
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561101507",
+   "denumire": "LICEUL DE ARTĂ \"ION VIDU\" TIMIȘOARA",
+   "n": 48,
+   "medie": 6.941,
+   "mediana": 7.045,
+   "percentila_mediei": 50.0,
+   "gap_percentile": 0.0
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561102173",
+   "denumire": "LICEUL TEOLOGIC ROMANO-CATOLIC \"GERHARDINUM\" TIMIȘOARA",
+   "n": 34,
+   "medie": 6.705,
+   "mediana": 6.585,
+   "percentila_mediei": 50.0,
+   "gap_percentile": 0.0
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101801",
+   "denumire": "LICEUL DE ARTE PLASTICE TIMIȘOARA",
+   "n": 18,
+   "medie": 6.193,
+   "mediana": 6.185,
+   "percentila_mediei": 50.0,
+   "gap_percentile": 0.0
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101597",
+   "denumire": "LICEUL TEOLOGIC ORTODOX \"SFÂNTUL ANTIM IVIREANU\" TIMIȘOARA",
+   "n": 40,
+   "medie": 7.666,
+   "mediana": 7.675,
+   "percentila_mediei": 50.0,
+   "gap_percentile": 0.0
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101032",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.24 TIMIȘOARA",
+   "n": 94,
+   "medie": 7.844,
+   "mediana": 7.72,
+   "percentila_mediei": 51.1,
+   "gap_percentile": 1.1
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561106367",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.27 TIMIȘOARA",
+   "n": 37,
+   "medie": 6.776,
+   "mediana": 6.77,
+   "percentila_mediei": 51.4,
+   "gap_percentile": 1.4
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101005",
+   "denumire": "LICEUL WALDORF TIMIȘOARA",
+   "n": 29,
+   "medie": 7.2,
+   "mediana": 7.17,
+   "percentila_mediei": 51.7,
+   "gap_percentile": 1.7
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561100601",
+   "denumire": "LICEUL TEORETIC \"JEAN LOUIS CALDERON\" TIMIȘOARA",
+   "n": 29,
+   "medie": 5.816,
+   "mediana": 5.72,
+   "percentila_mediei": 51.7,
+   "gap_percentile": 1.7
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561100881",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.25 TIMIȘOARA",
+   "n": 50,
+   "medie": 6.537,
+   "mediana": 6.36,
+   "percentila_mediei": 52.0,
+   "gap_percentile": 2.0
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101014",
+   "denumire": "LICEUL TEORETIC \"VLAD ȚEPEȘ\" TIMIȘOARA",
+   "n": 23,
+   "medie": 6.241,
+   "mediana": 6.02,
+   "percentila_mediei": 52.2,
+   "gap_percentile": 2.2
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101891",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.21 \"VICENȚIU BABEȘ\" TIMIȘOARA",
+   "n": 55,
+   "medie": 6.848,
+   "mediana": 6.7,
+   "percentila_mediei": 52.7,
+   "gap_percentile": 2.7
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561100836",
+   "denumire": "LICEUL CU PROGRAM SPORTIV \"BANATUL\" TIMIȘOARA",
+   "n": 51,
+   "medie": 5.446,
+   "mediana": 5.3,
+   "percentila_mediei": 52.9,
+   "gap_percentile": 2.9
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3562103866",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.20 TIMIȘOARA",
+   "n": 17,
+   "medie": 4.769,
+   "mediana": 4.47,
+   "percentila_mediei": 52.9,
+   "gap_percentile": 2.9
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101891",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.21 \"VICENȚIU BABEȘ\" TIMIȘOARA",
+   "n": 45,
+   "medie": 6.637,
+   "mediana": 6.6,
+   "percentila_mediei": 53.3,
+   "gap_percentile": 3.3
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561100994",
+   "denumire": "LICEUL TEORETIC SPECIAL \"IRIS\" TIMIȘOARA",
+   "n": 15,
+   "medie": 4.133,
+   "mediana": 3.9,
+   "percentila_mediei": 53.3,
+   "gap_percentile": 3.3
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101371",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.7 \"SFÂNTA MARIA\" TIMIȘOARA",
+   "n": 109,
+   "medie": 6.922,
+   "mediana": 6.72,
+   "percentila_mediei": 54.1,
+   "gap_percentile": 4.1
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561106367",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.27 TIMIȘOARA",
+   "n": 57,
+   "medie": 7.047,
+   "mediana": 6.9,
+   "percentila_mediei": 54.4,
+   "gap_percentile": 4.4
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101014",
+   "denumire": "LICEUL TEORETIC \"VLAD ȚEPEȘ\" TIMIȘOARA",
+   "n": 22,
+   "medie": 6.496,
+   "mediana": 6.435,
+   "percentila_mediei": 54.5,
+   "gap_percentile": 4.5
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561100836",
+   "denumire": "LICEUL CU PROGRAM SPORTIV \"BANATUL\" TIMIȘOARA",
+   "n": 44,
+   "medie": 5.341,
+   "mediana": 5.245,
+   "percentila_mediei": 54.5,
+   "gap_percentile": 4.5
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561101466",
+   "denumire": "LICEUL TEOLOGIC PENTICOSTAL \"LOGOS\" TIMIȘOARA",
+   "n": 22,
+   "medie": 8.077,
+   "mediana": 7.96,
+   "percentila_mediei": 54.5,
+   "gap_percentile": 4.5
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101493",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.6 TIMIȘOARA",
+   "n": 40,
+   "medie": 6.039,
+   "mediana": 5.785,
+   "percentila_mediei": 55.0,
+   "gap_percentile": 5.0
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561100836",
+   "denumire": "LICEUL CU PROGRAM SPORTIV \"BANATUL\" TIMIȘOARA",
+   "n": 40,
+   "medie": 6.341,
+   "mediana": 6.15,
+   "percentila_mediei": 55.0,
+   "gap_percentile": 5.0
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561101507",
+   "denumire": "LICEUL DE ARTĂ \"ION VIDU\" TIMIȘOARA",
+   "n": 45,
+   "medie": 7.199,
+   "mediana": 7.02,
+   "percentila_mediei": 55.6,
+   "gap_percentile": 5.6
+  },
+  {
+   "an": 2024,
+   "cod_siiir": "3561100836",
+   "denumire": "LICEUL CU PROGRAM SPORTIV \"BANATUL\" TIMIȘOARA",
+   "n": 52,
+   "medie": 5.603,
+   "mediana": 5.41,
+   "percentila_mediei": 55.8,
+   "gap_percentile": 5.8
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561100153",
+   "denumire": "LICEUL TEORETIC \"BARTÓK BÉLA\" TIMIȘOARA",
+   "n": 25,
+   "medie": 6.834,
+   "mediana": 6.61,
+   "percentila_mediei": 56.0,
+   "gap_percentile": 6.0
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3561100881",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.25 TIMIȘOARA",
+   "n": 75,
+   "medie": 6.722,
+   "mediana": 6.5,
+   "percentila_mediei": 56.0,
+   "gap_percentile": 6.0
+  },
+  {
+   "an": 2025,
+   "cod_siiir": "3561102173",
+   "denumire": "LICEUL TEOLOGIC ROMANO-CATOLIC \"GERHARDINUM\" TIMIȘOARA",
+   "n": 32,
+   "medie": 6.907,
+   "mediana": 6.645,
+   "percentila_mediei": 56.2,
+   "gap_percentile": 6.2
+  },
+  {
+   "an": 2021,
+   "cod_siiir": "3561101507",
+   "denumire": "LICEUL DE ARTĂ \"ION VIDU\" TIMIȘOARA",
+   "n": 35,
+   "medie": 6.862,
+   "mediana": 6.67,
+   "percentila_mediei": 57.1,
+   "gap_percentile": 7.1
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101891",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.21 \"VICENȚIU BABEȘ\" TIMIȘOARA",
+   "n": 71,
+   "medie": 6.107,
+   "mediana": 5.45,
+   "percentila_mediei": 57.7,
+   "gap_percentile": 7.7
+  },
+  {
+   "an": 2020,
+   "cod_siiir": "3561101466",
+   "denumire": "LICEUL TEOLOGIC PENTICOSTAL \"LOGOS\" TIMIȘOARA",
+   "n": 19,
+   "medie": 7.277,
+   "mediana": 7.07,
+   "percentila_mediei": 57.9,
+   "gap_percentile": 7.9
+  },
+  {
+   "an": 2023,
+   "cod_siiir": "3561101014",
+   "denumire": "LICEUL TEORETIC \"VLAD ȚEPEȘ\" TIMIȘOARA",
+   "n": 17,
+   "medie": 5.708,
+   "mediana": 5.22,
+   "percentila_mediei": 58.8,
+   "gap_percentile": 8.8
+  },
+  {
+   "an": 2022,
+   "cod_siiir": "3562105886",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.4 TIMIȘOARA",
+   "n": 15,
+   "medie": 5.229,
+   "mediana": 5.02,
+   "percentila_mediei": 60.0,
+   "gap_percentile": 10.0
+  }
+ ]
+}

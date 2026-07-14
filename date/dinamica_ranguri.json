@@ -1,0 +1,698 @@
+[
+ {
+  "cod": "3561101493",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.6 TIMIȘOARA",
+  "ranguri": [
+   26,
+   29,
+   24,
+   25,
+   19,
+   18
+  ],
+  "z_scores": [
+   -1.05,
+   -1.39,
+   -0.65,
+   -0.32,
+   -0.04,
+   -0.07
+  ],
+  "delta_rank": 8,
+  "delta_z": 0.98,
+  "slope_rank_pe_an": 1.97,
+  "n_ultimul_an": 63
+ },
+ {
+  "cod": "3561101466",
+  "denumire": "LICEUL TEOLOGIC PENTICOSTAL \"LOGOS\" TIMIȘOARA",
+  "ranguri": [
+   23,
+   9,
+   13,
+   16,
+   16,
+   16
+  ],
+  "z_scores": [
+   -0.74,
+   0.52,
+   0.39,
+   0.3,
+   0.18,
+   0.03
+  ],
+  "delta_rank": 7,
+  "delta_z": 0.77,
+  "slope_rank_pe_an": 0.31,
+  "n_ultimul_an": 24
+ },
+ {
+  "cod": "3561100601",
+  "denumire": "LICEUL TEORETIC \"JEAN LOUIS CALDERON\" TIMIȘOARA",
+  "ranguri": [
+   21,
+   21,
+   29,
+   20,
+   26,
+   15
+  ],
+  "z_scores": [
+   -0.71,
+   -0.55,
+   -1.48,
+   0.01,
+   -0.57,
+   0.06
+  ],
+  "delta_rank": 6,
+  "delta_z": 0.77,
+  "slope_rank_pe_an": 0.69,
+  "n_ultimul_an": 44
+ },
+ {
+  "cod": "3561100013",
+  "denumire": "LICEUL TEOLOGIC BAPTIST TIMIȘOARA",
+  "ranguri": [
+   15,
+   18,
+   20,
+   13,
+   12,
+   10
+  ],
+  "z_scores": [
+   0.03,
+   -0.18,
+   -0.29,
+   0.43,
+   0.5,
+   0.5
+  ],
+  "delta_rank": 5,
+  "delta_z": 0.46,
+  "slope_rank_pe_an": 1.43,
+  "n_ultimul_an": 29
+ },
+ {
+  "cod": "3561101014",
+  "denumire": "LICEUL TEORETIC \"VLAD ȚEPEȘ\" TIMIȘOARA",
+  "ranguri": [
+   28,
+   26,
+   27,
+   29,
+   29,
+   24
+  ],
+  "z_scores": [
+   -1.38,
+   -0.82,
+   -1.05,
+   -1.64,
+   -1.28,
+   -0.49
+  ],
+  "delta_rank": 4,
+  "delta_z": 0.89,
+  "slope_rank_pe_an": 0.26,
+  "n_ultimul_an": 19
+ },
+ {
+  "cod": "3561106367",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.27 TIMIȘOARA",
+  "ranguri": [
+   20,
+   19,
+   22,
+   18,
+   17,
+   17
+  ],
+  "z_scores": [
+   -0.54,
+   -0.44,
+   -0.5,
+   0.16,
+   0.01,
+   -0.07
+  ],
+  "delta_rank": 3,
+  "delta_z": 0.47,
+  "slope_rank_pe_an": 0.71,
+  "n_ultimul_an": 65
+ },
+ {
+  "cod": "3561106417",
+  "denumire": "COLEGIUL NAȚIONAL BĂNĂȚEAN TIMIȘOARA",
+  "ranguri": [
+   6,
+   5,
+   5,
+   5,
+   5,
+   3
+  ],
+  "z_scores": [
+   1.01,
+   1.21,
+   1.04,
+   0.81,
+   1.09,
+   1.03
+  ],
+  "delta_rank": 3,
+  "delta_z": 0.01,
+  "slope_rank_pe_an": 0.43,
+  "n_ultimul_an": 169
+ },
+ {
+  "cod": "3561101032",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.24 TIMIȘOARA",
+  "ranguri": [
+   10,
+   12,
+   9,
+   10,
+   10,
+   8
+  ],
+  "z_scores": [
+   0.59,
+   0.34,
+   0.81,
+   0.65,
+   0.57,
+   0.72
+  ],
+  "delta_rank": 2,
+  "delta_z": 0.13,
+  "slope_rank_pe_an": 0.43,
+  "n_ultimul_an": 200
+ },
+ {
+  "cod": "3561100899",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.18 TIMIȘOARA",
+  "ranguri": [
+   16,
+   14,
+   14,
+   11,
+   14,
+   14
+  ],
+  "z_scores": [
+   0.01,
+   0.26,
+   0.37,
+   0.44,
+   0.26,
+   0.13
+  ],
+  "delta_rank": 2,
+  "delta_z": 0.12,
+  "slope_rank_pe_an": 0.37,
+  "n_ultimul_an": 60
+ },
+ {
+  "cod": "3561100085",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.16 \"TAKE IONESCU\" TIMIȘOARA",
+  "ranguri": [
+   5,
+   3,
+   4,
+   3,
+   3,
+   4
+  ],
+  "z_scores": [
+   1.12,
+   1.4,
+   1.16,
+   1.09,
+   1.16,
+   1.02
+  ],
+  "delta_rank": 1,
+  "delta_z": -0.11,
+  "slope_rank_pe_an": 0.17,
+  "n_ultimul_an": 120
+ },
+ {
+  "cod": "3561101543",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.19 \"AVRAM IANCU\" TIMIȘOARA",
+  "ranguri": [
+   7,
+   7,
+   8,
+   9,
+   8,
+   6
+  ],
+  "z_scores": [
+   0.88,
+   1.13,
+   0.83,
+   0.65,
+   0.69,
+   0.81
+  ],
+  "delta_rank": 1,
+  "delta_z": -0.07,
+  "slope_rank_pe_an": 0.03,
+  "n_ultimul_an": 162
+ },
+ {
+  "cod": "3561100836",
+  "denumire": "LICEUL CU PROGRAM SPORTIV \"BANATUL\" TIMIȘOARA",
+  "ranguri": [
+   29,
+   30,
+   28,
+   30,
+   31,
+   28
+  ],
+  "z_scores": [
+   -1.91,
+   -1.98,
+   -1.14,
+   -1.79,
+   -1.64,
+   -1.28
+  ],
+  "delta_rank": 1,
+  "delta_z": 0.62,
+  "slope_rank_pe_an": -0.0,
+  "n_ultimul_an": 49
+ },
+ {
+  "cod": "3561100153",
+  "denumire": "LICEUL TEORETIC \"BARTÓK BÉLA\" TIMIȘOARA",
+  "ranguri": [
+   22,
+   23,
+   16,
+   22,
+   15,
+   22
+  ],
+  "z_scores": [
+   -0.71,
+   -0.59,
+   0.14,
+   -0.1,
+   0.22,
+   -0.41
+  ],
+  "delta_rank": 0,
+  "delta_z": 0.31,
+  "slope_rank_pe_an": 0.51,
+  "n_ultimul_an": 54
+ },
+ {
+  "cod": "3561101005",
+  "denumire": "LICEUL WALDORF TIMIȘOARA",
+  "ranguri": [
+   11,
+   17,
+   10,
+   8,
+   13,
+   11
+  ],
+  "z_scores": [
+   0.45,
+   -0.12,
+   0.5,
+   0.65,
+   0.36,
+   0.49
+  ],
+  "delta_rank": 0,
+  "delta_z": 0.03,
+  "slope_rank_pe_an": 0.4,
+  "n_ultimul_an": 52
+ },
+ {
+  "cod": "3561101656",
+  "denumire": "LICEUL TEORETIC \"GRIGORE MOISIL\" TIMIȘOARA",
+  "ranguri": [
+   2,
+   6,
+   2,
+   2,
+   2,
+   2
+  ],
+  "z_scores": [
+   1.63,
+   1.18,
+   1.26,
+   1.33,
+   1.52,
+   1.71
+  ],
+  "delta_rank": 0,
+  "delta_z": 0.09,
+  "slope_rank_pe_an": 0.34,
+  "n_ultimul_an": 194
+ },
+ {
+  "cod": "3561101683",
+  "denumire": "COLEGIUL NAȚIONAL \"CONSTANTIN DIACONOVICI LOGA\" TIMIȘOARA",
+  "ranguri": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "z_scores": [
+   2.08,
+   2.05,
+   1.76,
+   1.51,
+   1.93,
+   2.32
+  ],
+  "delta_rank": 0,
+  "delta_z": 0.25,
+  "slope_rank_pe_an": -0.0,
+  "n_ultimul_an": 58
+ },
+ {
+  "cod": "3561102205",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.30 TIMIȘOARA",
+  "ranguri": [
+   8,
+   10,
+   11,
+   14,
+   11,
+   9
+  ],
+  "z_scores": [
+   0.67,
+   0.49,
+   0.5,
+   0.34,
+   0.54,
+   0.68
+  ],
+  "delta_rank": -1,
+  "delta_z": 0.01,
+  "slope_rank_pe_an": -0.31,
+  "n_ultimul_an": 251
+ },
+ {
+  "cod": "3561101891",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.21 \"VICENȚIU BABEȘ\" TIMIȘOARA",
+  "ranguri": [
+   25,
+   24,
+   25,
+   28,
+   24,
+   26
+  ],
+  "z_scores": [
+   -1.01,
+   -0.64,
+   -0.65,
+   -1.59,
+   -0.4,
+   -1.11
+  ],
+  "delta_rank": -1,
+  "delta_z": -0.1,
+  "slope_rank_pe_an": -0.23,
+  "n_ultimul_an": 72
+ },
+ {
+  "cod": "3561100922",
+  "denumire": "COLEGIUL NAȚIONAL PEDAGOGIC \"CARMEN SYLVA\" TIMIȘOARA",
+  "ranguri": [
+   4,
+   4,
+   3,
+   4,
+   4,
+   5
+  ],
+  "z_scores": [
+   1.14,
+   1.35,
+   1.24,
+   0.89,
+   1.11,
+   0.98
+  ],
+  "delta_rank": -1,
+  "delta_z": -0.16,
+  "slope_rank_pe_an": -0.17,
+  "n_ultimul_an": 104
+ },
+ {
+  "cod": "3561102173",
+  "denumire": "LICEUL TEOLOGIC ROMANO-CATOLIC \"GERHARDINUM\" TIMIȘOARA",
+  "ranguri": [
+   27,
+   15,
+   18,
+   23,
+   27,
+   29
+  ],
+  "z_scores": [
+   -1.1,
+   -0.07,
+   0.0,
+   -0.1,
+   -0.65,
+   -1.66
+  ],
+  "delta_rank": -2,
+  "delta_z": -0.56,
+  "slope_rank_pe_an": -1.46,
+  "n_ultimul_an": 32
+ },
+ {
+  "cod": "3561101371",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.7 \"SFÂNTA MARIA\" TIMIȘOARA",
+  "ranguri": [
+   17,
+   20,
+   21,
+   21,
+   20,
+   20
+  ],
+  "z_scores": [
+   -0.03,
+   -0.54,
+   -0.31,
+   -0.02,
+   -0.07,
+   -0.3
+  ],
+  "delta_rank": -3,
+  "delta_z": -0.28,
+  "slope_rank_pe_an": -0.43,
+  "n_ultimul_an": 159
+ },
+ {
+  "cod": "3561101448",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.13 TIMIȘOARA",
+  "ranguri": [
+   9,
+   8,
+   12,
+   19,
+   18,
+   13
+  ],
+  "z_scores": [
+   0.6,
+   0.65,
+   0.4,
+   0.03,
+   -0.0,
+   0.26
+  ],
+  "delta_rank": -4,
+  "delta_z": -0.34,
+  "slope_rank_pe_an": -1.63,
+  "n_ultimul_an": 73
+ },
+ {
+  "cod": "3561102069",
+  "denumire": "LICEUL TEORETIC \"NIKOLAUS LENAU\" TIMIȘOARA",
+  "ranguri": [
+   3,
+   2,
+   6,
+   6,
+   7,
+   7
+  ],
+  "z_scores": [
+   1.22,
+   1.44,
+   1.02,
+   0.78,
+   0.81,
+   0.72
+  ],
+  "delta_rank": -4,
+  "delta_z": -0.5,
+  "slope_rank_pe_an": -1.0,
+  "n_ultimul_an": 151
+ },
+ {
+  "cod": "3561106462",
+  "denumire": "LICEUL TEORETIC \"WILLIAM SHAKESPEARE\" TIMIȘOARA",
+  "ranguri": [
+   14,
+   13,
+   15,
+   12,
+   25,
+   19
+  ],
+  "z_scores": [
+   0.06,
+   0.27,
+   0.25,
+   0.44,
+   -0.47,
+   -0.09
+  ],
+  "delta_rank": -5,
+  "delta_z": -0.15,
+  "slope_rank_pe_an": -1.66,
+  "n_ultimul_an": 89
+ },
+ {
+  "cod": "3561101801",
+  "denumire": "LICEUL DE ARTE PLASTICE TIMIȘOARA",
+  "ranguri": [
+   24,
+   27,
+   23,
+   26,
+   28,
+   30
+  ],
+  "z_scores": [
+   -0.89,
+   -0.86,
+   -0.53,
+   -0.94,
+   -1.13,
+   -1.99
+  ],
+  "delta_rank": -6,
+  "delta_z": -1.1,
+  "slope_rank_pe_an": -1.03,
+  "n_ultimul_an": 18
+ },
+ {
+  "cod": "3561100881",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.25 TIMIȘOARA",
+  "ranguri": [
+   18,
+   25,
+   26,
+   24,
+   22,
+   25
+  ],
+  "z_scores": [
+   -0.16,
+   -0.79,
+   -0.85,
+   -0.26,
+   -0.36,
+   -0.82
+  ],
+  "delta_rank": -7,
+  "delta_z": -0.66,
+  "slope_rank_pe_an": -0.69,
+  "n_ultimul_an": 91
+ },
+ {
+  "cod": "3561102033",
+  "denumire": "ȘCOALA GIMNAZIALĂ NR.2 TIMIȘOARA",
+  "ranguri": [
+   13,
+   16,
+   17,
+   15,
+   23,
+   21
+  ],
+  "z_scores": [
+   0.17,
+   -0.11,
+   0.02,
+   0.32,
+   -0.39,
+   -0.37
+  ],
+  "delta_rank": -8,
+  "delta_z": -0.54,
+  "slope_rank_pe_an": -1.69,
+  "n_ultimul_an": 87
+ },
+ {
+  "cod": "3561101507",
+  "denumire": "LICEUL DE ARTĂ \"ION VIDU\" TIMIȘOARA",
+  "ranguri": [
+   19,
+   22,
+   19,
+   17,
+   21,
+   27
+  ],
+  "z_scores": [
+   -0.27,
+   -0.57,
+   -0.22,
+   0.17,
+   -0.29,
+   -1.17
+  ],
+  "delta_rank": -8,
+  "delta_z": -0.9,
+  "slope_rank_pe_an": -1.0,
+  "n_ultimul_an": 45
+ },
+ {
+  "cod": "3561101597",
+  "denumire": "LICEUL TEOLOGIC ORTODOX \"SFÂNTUL ANTIM IVIREANU\" TIMIȘOARA",
+  "ranguri": [
+   12,
+   11,
+   7,
+   7,
+   9,
+   23
+  ],
+  "z_scores": [
+   0.43,
+   0.38,
+   1.02,
+   0.69,
+   0.66,
+   -0.41
+  ],
+  "delta_rank": -11,
+  "delta_z": -0.84,
+  "slope_rank_pe_an": -1.4,
+  "n_ultimul_an": 40
+ }
+]
