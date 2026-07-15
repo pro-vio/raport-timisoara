@@ -1,18 +1,20 @@
-# STARE — raport-timisoara (handoff · 2026-07-14)
+# STARE — raport-timisoara (handoff · 2026-07-15)
 
 Analiză a rezultatelor Evaluării Naționale (clasa a VIII-a) pe școli, date deschise data.gov.ro, 2020-2025. **Un singur folder, un singur repo** — consolidat pe 2026-07-14 din foste 2 locații (`Documents/evaluare-nationala/` + `Documents/raport-timisoara/`), decizie user („am lucrat prost până acum, totul într-un singur folder").
 
 ## ✅ Livrabil gata: `index.html`
-- **[Artifact claude.ai](https://claude.ai/code/artifact/84c74049-6070-4d70-9fd4-798190532f1c)** — linkul public (repo-ul GitHub e privat, fără Pages — vezi mai jos).
+- **[pro-vio.github.io/raport-timisoara](https://pro-vio.github.io/raport-timisoara/)** — **linkul public de trimis** (GitHub Pages, verificat live 2026-07-15). Se actualizează automat la fiecare `git push` pe `main`.
+- **[Artifact claude.ai](https://claude.ai/code/artifact/84c74049-6070-4d70-9fd4-798190532f1c)** — aceeași pagină, util pt iterare rapidă din chat (artifactele sunt private by default; linkul Pages e cel de distribuit).
 - fișier local `index.html` (rădăcina proiectului), **~160 KB — trimis fără probleme pe mail/WhatsApp**.
 
-⚠️ Artifactul încarcă Chart.js de pe CDN extern (cdnjs.cloudflare.com) → cine deschide are nevoie de internet în acel moment, altfel graficele nu se randează (restul e self-contained, date inline).
+⚠️ Toate încarcă Chart.js de pe CDN extern (cdnjs.cloudflare.com) → cine deschide are nevoie de internet în acel moment, altfel graficele nu se randează (restul e self-contained, date inline).
 
-### Structură GitHub (1 repo, PRIVAT — decizie user 2026-07-14)
-- **`pro-vio/raport-timisoara`** (PRIVAT) — tot proiectul: scripturi, JSON-uri derivate, STARE.md, `index.html`. `.gitignore` exclude xlsx-urile brute (97MB, redescărcabile de pe data.gov.ro).
-- **GitHub Pages dezactivat** (repo privat, ar necesita GitHub Pro). Linkul public rămâne artifactul claude.ai de mai sus — la orice update al raportului, republică artifactul (`Artifact` tool) pe același URL.
+### Structură GitHub (1 repo, PUBLIC — decizie user 2026-07-15)
+- **`pro-vio/raport-timisoara`** (PUBLIC) — tot proiectul: scripturi, JSON-uri derivate, STARE.md, `index.html` la rădăcină. `.gitignore` exclude xlsx-urile brute (97MB, redescărcabile de pe data.gov.ro).
+- **GitHub Pages activat** pe branch `main`, root `/` → servește `index.html`.
+- ⚠️ **Istoric al deciziei** (ca să nu se reia dezbaterea): schema a oscilat de 3 ori — (1) 2 repo-uri: privat + public-doar-raport; (2) 2026-07-14: consolidare într-un singur repo PRIVAT, Pages dezactivat, link = artifact; (3) 2026-07-15: userul a vrut înapoi linkul Pages → repo făcut PUBLIC din nou. **Constrângerea de fond: pe cont gratuit, Pages nu servește din repo privat.** Privat + link public GitHub = incompatibile fără GitHub Pro. Datele fiind deschise/anonimizate, public e OK.
 - Fostul repo `pro-vio/evaluare-nationala-timisoara` — **șters de user, verificat 2026-07-14**. Nu mai există; `raport-timisoara` e singurul repo al proiectului.
-- Autentificare `gh` cont `pro-vio` (HTTPS, keyring) — deja configurată pe această mașină.
+- Autentificare `gh` cont `pro-vio` (HTTPS, keyring) — deja configurată pe această mașină. ⚠️ Tokenul NU are scope `delete_repo` (ștergerile de repo le face userul din browser).
 
 Raport pentru audiență politică, scop restrâns la **Timișoara** (din cele 3 orașe analizate: Timișoara, Cluj-Napoca, Iași), 5 tab-uri:
 1. **Efecte structurale** — grafic rang mediu Friedman (3 orașe) + teste efectuate + concluzia „nu există interacțiune între efectul de oraș și efectul de an" (finalizată lingvistic).
