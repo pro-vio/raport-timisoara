@@ -11,7 +11,7 @@ Analiză a rezultatelor Evaluării Naționale (clasa a VIII-a) pe școli, date d
 ### Structură GitHub (1 repo, PRIVAT — decizie user 2026-07-14)
 - **`pro-vio/raport-timisoara`** (PRIVAT) — tot proiectul: scripturi, JSON-uri derivate, STARE.md, `index.html`. `.gitignore` exclude xlsx-urile brute (97MB, redescărcabile de pe data.gov.ro).
 - **GitHub Pages dezactivat** (repo privat, ar necesita GitHub Pro). Linkul public rămâne artifactul claude.ai de mai sus — la orice update al raportului, republică artifactul (`Artifact` tool) pe același URL.
-- Fostul repo `pro-vio/evaluare-nationala-timisoara` — userul îl șterge manual din browser (Settings → Danger Zone), pt că tokenul `gh` nu are scope `delete_repo`. La reluare: verifică dacă mai există (`gh repo view pro-vio/evaluare-nationala-timisoara`); dacă da, reamintește userului să-l șteargă.
+- Fostul repo `pro-vio/evaluare-nationala-timisoara` — **șters de user, verificat 2026-07-14**. Nu mai există; `raport-timisoara` e singurul repo al proiectului.
 - Autentificare `gh` cont `pro-vio` (HTTPS, keyring) — deja configurată pe această mașină.
 
 Raport pentru audiență politică, scop restrâns la **Timișoara** (din cele 3 orașe analizate: Timișoara, Cluj-Napoca, Iași), 5 tab-uri:
