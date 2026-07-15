@@ -171,23 +171,28 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
   <div id="tab-temporal" class="tabpanel">
     <div class="card">
       <h2>Rangul mediu al anilor, per oraș (test Friedman)</h2>
-      <p class="note">Fiecare oraș = un bloc de școli prezente în toți cei 6 ani; anul = tratamentul. Rangul mediu arată cât de bun/slab a fost anul respectiv față de celelalte, în interiorul fiecărui oraș.</p>
+      <p class="note">Pentru fiecare școală prezentă în toți cei 6 ani, anii sunt ordonați de la 1 (cel mai slab an al școlii) la 6 (cel mai bun), după mediana notelor. Liniile arată media acestor poziții pe oraș; banda colorată arată intervalul dintre extremele școlilor din oraș, în fiecare an.</p>
       <div style="position:relative;width:100%;height:300px;">
-        <canvas id="friedmanChart" role="img" aria-label="Rang mediu Friedman pe ani, trei orașe: traiectoriile coboară în 2021 și 2024, urcă în 2020 și 2025, aproape identic în toate orașele — semn de efect de examen național."></canvas>
+        <canvas id="friedmanChart" role="img" aria-label="Rang mediu Friedman pe ani, trei orașe: liniile coboară în 2021 și 2024, urcă în 2020 și 2025, cu același tipar în toate orașele; banda din fundal, între extremele școlilor, acoperă aproape tot intervalul 1-6 în fiecare an."></canvas>
       </div>
       <p class="hint">rang mediu 1 = cel mai slab an din cei 6, pentru orașul respectiv; 6 = cel mai bun</p>
+      <div class="findings" style="margin-top:1rem;">
+        <p><b>Cum se calculează, pas cu pas.</b> Testul Friedman ordonează, pentru fiecare școală în parte, cei șase ani după mediana notelor din anul respectiv: anul cu cea mai slabă mediană primește poziția 1, cel cu cea mai bună — poziția 6. De exemplu, la Școala Gimnazială nr. 16 „Take Ionescu" din Timișoara medianele au fost 8,95 (2020), 8,82 (2021), 8,84 (2022), 9,07 (2023), 8,70 (2024) și 8,74 (2025) — deci pozițiile 5, 3, 4, 6, 1, 2. Apoi, pentru fiecare an, se face media acestor poziții peste toate școlile orașului. Graficul arată exact această medie.</p>
+        <p><b>De ce diferă puțin liniile orașelor, dacă subiectele sunt identice?</b> Pentru că poziția unui an în interiorul unei școli nu depinde doar de subiecte, ci și de generația de copii care a dat examenul — iar generația se schimbă complet în fiecare an. La „Take Ionescu", ordinea dintre 2021 și 2022 s-a decis la o diferență de 0,015 puncte de mediană: a tranșat-o compoziția întâmplătoare a celor două generații, nu examenul. Banda din fundal arată cât de mult variază școlile individual: în aproape fiecare an, cel puțin o școală din oraș a avut cel mai bun an al ei (poziția 6) și cel puțin una cel mai slab (poziția 1). Media peste cele ~30-40 de școli ale orașului netezește mare parte din acest zgomot, dar nu tot — de aceea liniile diferă puțin între orașe, fără vreo cauză locală. Semnalul real e că toate trei liniile coboară și urcă împreună.</p>
+        <p>Un detaliu vizibil în bandă: la Timișoara, în 2021 și 2024, nicio școală nu a avut anul ei cel mai bun — maximul benzii e 5, nu 6. Anii slabi la nivel național au fost slabi pentru toate școlile din oraș, fără excepție.</p>
+      </div>
     </div>
 
     <div class="card">
       <h2>Teste efectuate</h2>
       <ul class="tests-list">
         <li>Kruskal-Wallis pe fiecare an în parte (2020&ndash;2025 separat), unitatea de analiză = școala, cu Dunn post-hoc (corecție Holm) pe perechile de orașe.</li>
-        <li>Friedman per oraș — blocuri = școlile prezente în toți cei 6 ani, tratament = anul (graficul de mai sus).</li>
+        <li>Friedman per oraș — blocuri = școlile prezente în toți cei 6 ani, tratament = anul, cu anii ordonați după mediana școlii (graficul de mai sus).</li>
       </ul>
       <h2>Ce spune imaginea completă, punând cele două teste cap la cap</h2>
       <div class="findings">
-        <p><b>Omogenitatea temporală e respinsă decisiv în toate trei orașele</b> — anul contează, și nu marginal. Kendall W (concordanța între școli după ordinea anilor) e cel mai mare la Iași (0,38): acolo școlile se mișcă cel mai sincron de la an la an; la Cluj (0,19) mișcarea anuală are o varianță mult mai mare între școli.</p>
-        <p><b>Efectul temporal e național, nu local.</b> Traiectoria rangurilor e practic identică în cele trei orașe: 2021 și 2024 sunt anii slabi peste tot (rang mediu 2,1&ndash;2,7), 2020 și 2025 anii buni (4,1&ndash;4,8), 2022&ndash;2023 intermediari. Dacă heterogeneitatea temporală ar fi fost determinată la nivelul orașului, traiectoriile ar fi fost divergente — ele sunt paralele. Deci ce izolăm e în principal un efect de examen/cohortă la nivel național (dificultatea subiectelor diferă de la an la an), care afectează toate orașele simultan.</p>
+        <p><b>Omogenitatea temporală e respinsă decisiv în toate trei orașele</b> — anul contează, și nu marginal. Kendall W (concordanța între școli după ordinea anilor) e ridicat la Iași (0,37) și la Timișoara (0,36): acolo școlile se mișcă cel mai sincron de la an la an; la Cluj (0,12) mișcarea anuală are o varianță mult mai mare între școli.</p>
+        <p><b>Efectul temporal e național, nu local.</b> Traiectoria rangurilor urmează același tipar în cele trei orașe: 2021 și 2024 sunt anii slabi peste tot (rang mediu 1,9&ndash;2,9), 2020 și 2025 anii buni (3,8&ndash;4,9), 2022&ndash;2023 intermediari. Dacă heterogeneitatea temporală ar fi fost determinată la nivelul orașului, traiectoriile ar fi fost divergente — ele coboară și urcă împreună. Deci ce izolăm e în principal un efect de examen/cohortă la nivel național (dificultatea subiectelor diferă de la an la an), care afectează toate orașele simultan.</p>
         <p><b>Consecința metodologică:</b> nu există interacțiune între efectul de oraș și efectul de an. Diferența între orașe (Cluj ≥ Iași &gt; Timișoara, susținută aproape exclusiv de contrastul cu Timișoara, cu efect mic ε²=0,02&ndash;0,06) e stabilă ca direcție an de an — deci nu e un artefact al vreunui an anume. Iar variația între ani e un efect comun care ar contamina orice comparație cu medii brute între ani — de aici, orice analiză longitudinală pe aceste date (inclusiv skew/kurtosis-ul calculat pe anii cumulați) ar trebui refăcută pe medii standardizate în interiorul anului, dacă vreți să o folosiți la ceva mai mult decât explorare.</p>
       </div>
     </div>
@@ -720,22 +725,33 @@ function renderFriedmanChart() {
   const cats = dark
     ? { blue: '#3987e5', aqua: '#199e70', yellow: '#c98500' }
     : { blue: '#2a78d6', aqua: '#1baf7a', yellow: '#eda100' };
+  const bandAlpha = 0.07;
+  const band = (label, minData, maxData, hex) => ([
+    { label: '_' + label + '_max', data: maxData, borderWidth: 0, pointRadius: 0, pointHoverRadius: 0, tension: 0.2, fill: false },
+    { label: '_' + label + '_min', data: minData, borderWidth: 0, pointRadius: 0, pointHoverRadius: 0, tension: 0.2, fill: '-1', backgroundColor: rgba(hex, bandAlpha) },
+  ]);
   friedmanChart = new Chart(fctx, {
     type: 'line',
     data: {
       labels: YEARS,
       datasets: [
-        { label: 'Iași', data: [4.38,2.08,3.86,3.81,2.08,4.78], borderColor: cats.blue, backgroundColor: cats.blue, borderWidth: 2, pointRadius: 4, tension: 0.2 },
-        { label: 'Cluj-Napoca', data: [4.15,2.71,3.93,3.85,2.24,4.12], borderColor: cats.aqua, backgroundColor: cats.aqua, borderWidth: 2, borderDash: [6,3], pointRadius: 4, pointStyle: 'triangle', tension: 0.2 },
-        { label: 'Timișoara', data: [4.56,2.19,3.78,3.88,2.38,4.22], borderColor: cats.yellow, backgroundColor: cats.yellow, borderWidth: 2, borderDash: [2,2], pointRadius: 4, pointStyle: 'rect', tension: 0.2 },
+        { label: 'Iași', data: [4.39,1.88,3.82,3.89,2.34,4.68], borderColor: cats.blue, backgroundColor: cats.blue, borderWidth: 2, pointRadius: 4, tension: 0.2 },
+        { label: 'Cluj-Napoca', data: [4.40,2.90,3.73,3.62,2.57,3.77], borderColor: cats.aqua, backgroundColor: cats.aqua, borderWidth: 2, borderDash: [6,3], pointRadius: 4, pointStyle: 'triangle', tension: 0.2 },
+        { label: 'Timișoara', data: [4.91,2.11,3.34,4.23,2.30,4.11], borderColor: cats.yellow, backgroundColor: cats.yellow, borderWidth: 2, borderDash: [2,2], pointRadius: 4, pointStyle: 'rect', tension: 0.2 },
+        ...band('Iași', [1,1,2,1,1,1], [6,6,6,6,6,6], cats.blue),
+        ...band('Cluj', [1,1,1,1,1,1], [6,6,6,6,6,6], cats.aqua),
+        ...band('Timișoara', [1,1,1,1,1,1], [6,5,6,6,5,6], cats.yellow),
       ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
       plugins: {
-        legend: { display: true, position: 'top', labels: { color: '#8b8378', usePointStyle: true, boxWidth: 8, font: { size: 12 } } },
-        tooltip: { callbacks: { label: c => c.dataset.label + ': rang mediu ' + c.parsed.y.toFixed(2) } }
+        legend: { display: true, position: 'top', labels: { color: '#8b8378', usePointStyle: true, boxWidth: 8, font: { size: 12 }, filter: item => !item.text.startsWith('_') } },
+        tooltip: {
+          filter: item => !item.dataset.label.startsWith('_'),
+          callbacks: { label: c => c.dataset.label + ': rang mediu ' + c.parsed.y.toFixed(2) }
+        }
       },
       scales: {
         x: { ticks: { color: '#8b8378' }, grid: { display: false } },

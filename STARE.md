@@ -29,7 +29,7 @@ Design: pagină editorială proprie (serif Georgia pt titluri, sans pt corp, pal
 - `date/` — 6× xlsx per-candidat de pe data.gov.ro (2020-2025; identificator școală = `COD SIIIR`).
   - ⚠️ **Fișierul 2020 are metadata de dimensiuni ruptă** → citește DOAR cu `openpyxl.load_workbook(path, read_only=False)`.
 - `date/Unitati de invatamant acreditate  i autorizate.xls` — registrul SIIIR→denumire/localitate/județ (`.xls` vechi → `xlrd`, nu `openpyxl`; normalizează Ş/Ţ→Ș/Ț la join).
-- Derivate cheie în `date/`: `shrinkage_mediana.json` (medie/mediană/shrink/CI per școală per an), `candidati_raw_timisoara.json` (note brute per candidat, Timișoara, toți anii — folosit direct în raport pt strip-plot), `medie_vs_mediana_percentil.json`, `dinamica_ranguri.json`, `kw_pe_ani.json`, `friedman_pe_orase.json`, `skew_kurt_2020_2025.json` (⚠️ pe ani cumulați, doar explorare).
+- Derivate cheie în `date/`: `shrinkage_mediana.json` (medie/mediană/shrink/CI per școală per an), `candidati_raw_timisoara.json` (note brute per candidat, Timișoara, toți anii — folosit direct în raport pt strip-plot), `medie_vs_mediana_percentil.json`, `dinamica_ranguri.json`, `kw_pe_ani.json`, `friedman_mediane.json` (**cel curent** — Friedman pe mediane școală-an + benzi min/max + exemplu pt text), `friedman_pe_orase.json` (⚠️ istoric, calculat pe MEDII școală-an — nu-l mai folosi), `skew_kurt_2020_2025.json` (⚠️ pe ani cumulați, doar explorare).
 
 ## Scripturi (`scripts/`)
 Pe lângă cele din sesiunea trecută: `shrinkage_mediana.py` (empirical-Bayes + bootstrap), `extract_candidati_raw.py`, `dinamica_ranguri.py`, `medie_vs_mediana_percentil.py`.
@@ -43,7 +43,7 @@ Pe lângă cele din sesiunea trecută: `shrinkage_mediana.py` (empirical-Bayes +
 
 ## Rezultate cheie (TM+CJ+IS)
 1. **KW pe fiecare an**: Cluj ≥ Iași > Timișoara stabil în toți anii; efect mic (ε²=0,02-0,06) — variația domină *între școli în același oraș*.
-2. **Friedman per oraș**: omogenitate temporală respinsă decisiv (p≤2,5·10⁻⁷); traiectorii aproape identice în toate 3 orașele (2021+2024 slabi, 2020+2025 buni) → efect de examen la nivel național, nu dinamică specifică orașului. **Nu există interacțiune oraș×an.**
+2. **Friedman per oraș** (recalculat 2026-07-15 pe MEDIANE școală-an, `friedman_mediane.py` — inițial fusese pe medii, inconsistent cu restul raportului): omogenitate temporală respinsă decisiv (p≤1,1·10⁻⁴); același tipar în toate 3 orașele (2021+2024 slabi, 2020+2025 buni) → efect de examen la nivel național, nu dinamică specifică orașului. **Nu există interacțiune oraș×an.** Kendall W pe mediane: Iași 0,37 / Timișoara 0,36 / Cluj 0,12. Graficul din raport are acum și benzi min-max per oraș (extremele rangurilor între școli — aproape mereu 1-6; excepție notabilă: TM 2021/2024 max=5, nicio școală nu a avut atunci anul ei cel mai bun) + explicație pe înțeles comun, cu exemplul real Șc. Nr.16 „Take Ionescu" (cerută de user, dictată ca structură).
 3. **Skew/kurtosis pe medii cumulate**: urmăresc mecanic media școlii (efect de plafon la 10) — doar explorare, invalidat de Friedman pt comparații riguroase.
 4. **Shrinkage 2025**: clasament aproape identic cu cel brut pt școli mari (w≈0,95-0,995); diferă vizibil la școli mici (ex. Vlad Țepeș n=19, w=0,476, interval foarte larg).
 5. **Dinamică ranguri**: Șc. Nr.6 și Lic. Teologic Baptist urcă constant; Lic. Ortodox „Antim Ivireanu" — urcare 2020-2024 urmată de cădere bruscă 2025 (posibil an atipic, n=40, de verificat).
