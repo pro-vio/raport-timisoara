@@ -1,4 +1,4 @@
-# Varianța structurală: cele 9 entități oraș × filieră.
+# Variația structurală: cele 9 entități oraș × filieră.
 #
 # PREZUMȚIA DE BAZĂ (decizia userului, 2026-07-17): în același oraș, cele trei filiere
 # sunt trei lumi sociale diferite. De aici, două consecințe care structurează tot:
@@ -12,7 +12,7 @@
 #     rezultat. Testul măsura că filiera contează, adică exact ce luăm ca dat, iar rangurile
 #     lui clasau licee teoretice față de tehnologice. Ambele, greșit.
 #
-# Ce face scriptul: descrie cele 9 entități și verifică varianța structurală ÎNTRE ORAȘE,
+# Ce face scriptul: descrie cele 9 entități și verifică variația structurală ÎNTRE ORAȘE,
 # în interiorul fiecărei filiere. Rolul celor 3 orașe e să ne spună cât din variație e
 # structurală; ce rămâne — diferența dintre licee în aceeași filieră și același oraș — e
 # subiectul raportului.
@@ -104,8 +104,8 @@ for an in YEARS:
                 linie += f'{"—":>12}'
     print(linie)
 
-# ---------- 3. varianța structurală între orașe, ÎN INTERIORUL fiecărei filiere ----------
-print('\n3. ÎNTRE ORAȘE, ÎN INTERIORUL FILIEREI — există varianță structurală?')
+# ---------- 3. variația structurală între orașe, ÎN INTERIORUL fiecărei filiere ----------
+print('\n3. ÎNTRE ORAȘE, ÎN INTERIORUL FILIEREI — există variație structurală?')
 print('   Kruskal-Wallis pe cele 3 orașe, cu ranguri calculate DOAR în interiorul')
 print('   filierei. Familia pre-specificată: 9 comparații pe an (3 filiere × 3 perechi),')
 print('   Holm pe familia asta.\n')

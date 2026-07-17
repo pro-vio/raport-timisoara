@@ -3,16 +3,16 @@
 #
 # DE CE ÎN INTERIORUL CELULEI: prezumția de bază a proiectului e că, în același oraș, cele
 # trei filiere sunt trei lumi sociale diferite. Populația de referință a unui liceu — media
-# spre care e tras și varianța față de care e judecat — trebuie deci să fie lumea lui, nu
+# spre care e tras și dispersia față de care e judecat — trebuie deci să fie lumea lui, nu
 # toate liceele la un loc. Un liceu tehnologic tras spre media tuturor liceelor ar fi
 # penalizat pentru că e tehnologic, ceea ce nu e o informație despre el.
 # Nici pooling temporal: Friedman l-a exclus (p < 1e-6 în toate orașele), deci și media, și
-# varianța priorului se estimează separat pe fiecare an.
+# dispersia priorului se estimează separat pe fiecare an.
 #
 # Mecanica (ca la EN):
 #   mediana liceului + SE prin bootstrap (B replici, resampling de candidați);
 #   mu_hat = media medianelor din celulă; tau2 = var(mediane) − media(SE²), tăiat la 0
-#      (metoda momentelor: varianța observată între licee minus cea explicabilă prin zgomot);
+#      (metoda momentelor: dispersia observată între licee minus cea explicabilă prin zgomot);
 #   w = tau2 / (tau2 + SE²)  — cât de mult se crede liceului pe cuvânt;
 #   theta = w·mediană + (1−w)·mu_hat;
 #   var posterioară = 1/(1/tau2 + 1/SE²);  interval = theta ± 1,96·SE_post.
