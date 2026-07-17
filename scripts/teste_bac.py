@@ -10,7 +10,7 @@
 #  1. KRUSKAL-WALLIS pe fiecare an: diferă cele 3 orașe între ele? Observațiile sunt
 #     medianele liceelor, grupate pe oraș. Post-hoc Dunn cu corecție Holm.
 #  2. FRIEDMAN pe fiecare oraș: blocuri = liceele prezente în toți anii, tratament = anul.
-#     Testează dacă anii sunt schimbabili între ei. Dacă ies diferiți, NU se face pooling
+#     Testează dacă anii sunt interschimbabili. Dacă ies diferiți, NU se face pooling
 #     temporal — regula proiectului: fără pooling fără test.
 import sys, os, json, math
 sys.stdout.reconfigure(encoding='utf-8')
@@ -108,7 +108,7 @@ for an in YEARS:
         mark = '*' if dd['p_holm'] < 0.05 else ' '
         print(f'        {mark} {dd["pereche"]:<28} z={dd["z"]:6.3f}  p_holm={dd["p_holm"]:.4g}')
 
-# ---------- 2. Friedman pe fiecare oraș: sunt anii schimbabili? ----------
+# ---------- 2. Friedman pe fiecare oraș: sunt anii interschimbabili? ----------
 print(f'\n2. FRIEDMAN pe fiecare oraș — blocuri = celulele liceu×filieră prezente în toți cei {len(YEARS)} anii, '
       f'tratament = anul')
 print('   (dacă anii diferă semnificativ, NU se face pooling temporal)')

@@ -169,7 +169,7 @@ tbody tr:hover{background:var(--chip)}
 <p>Intră doar candidații care au terminat clasa a XII-a în anul examenului — 89% din total. Ceilalți vin din promoții anterioare și rămân atașați în date liceului absolvit atunci; în fișierul din 2025 există candidați din promoția 2013–2014. A-i include ar însemna să atribuim unei școli rezultatul unei cohorte pe care a predat-o acum un deceniu, iar cum cei care revin sunt disproporționat cei care au eșuat, liceele cu multe picări ar fi penalizate de două ori.</p>
 
 <h3>Fără însumarea anilor</h3>
-<p>Anii nu se adună. Testul Friedman, pe liceele prezente în toți cei nouă ani, respinge ipoteza că anii ar fi schimbabili între ei, în toate cele trei orașe: cea mai mare valoare p din cele trei e 7,2×10⁻¹, iar coeficientul de concordanță Kendall stă între 0,13 și 0,59. Tiparul e consecvent — 2018 e cel mai slab an aproape pretutindeni, 2024 cel mai bun. De aceea fiecare an se citește separat.</p>
+<p>Anii nu se adună. Testul Friedman, pe liceele prezente în toți cei nouă ani, respinge ipoteza că anii ar fi interschimbabili, în toate cele trei orașe: cea mai mare valoare p din cele trei e 7,2×10⁻¹, iar coeficientul de concordanță Kendall stă între 0,13 și 0,59. Tiparul e consecvent — 2018 e cel mai slab an aproape pretutindeni, 2024 cel mai bun. De aceea fiecare an se citește separat.</p>
 
 <h2>Limitele</h2>
 <ul>
@@ -271,7 +271,7 @@ function renderFriedman(){
   const t=ORD.map(c=>`${c==='CLUJ-NAPOCA'?'Cluj':c==='IAȘI'?'Iași':'Timișoara'}: Q=${nf(F[c].Q,1)}, p=${F[c].p<0.001?F[c].p.toExponential(1).replace('.',','):nf(F[c].p,3)}, W=${nf(F[c].W)}, ${F[c].n} celule`).join(' · ');
   document.getElementById('v-fried').innerHTML=
     `<div class="card"><div class="card-h">Rangul mediu al anilor, pe orașe (testul Friedman)</div>
-     <p class="card-i">Pentru fiecare celulă liceu×filieră, cei nouă ani se ordonează după mediana din anul respectiv: anul cel mai slab primește poziția 1, cel mai bun poziția 9. Graficul arată media acestor poziții, la nivelul tuturor celulelor orașului. Dacă anii ar fi schimbabili între ei, liniile ar fi plate.</p>
+     <p class="card-i">Pentru fiecare celulă liceu×filieră, cei nouă ani se ordonează după mediana din anul respectiv: anul cel mai slab primește poziția 1, cel mai bun poziția 9. Graficul arată media acestor poziții, la nivelul tuturor celulelor orașului. Dacă anii ar fi interschimbabili, liniile ar fi plate.</p>
      <div class="scroll">${g}</div><div class="leg">${leg}</div>
      <p class="note">${t}</p>
      <p class="note">Dacă cele trei linii coboară și urcă împreună, efectul de an e național — de examen și de cohortă — nu local. Comută filiera: tiparele nu sunt aceleași. De aceea anii nu se adună, iar filierele nu se amestecă.</p></div>`;

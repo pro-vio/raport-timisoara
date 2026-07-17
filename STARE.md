@@ -90,6 +90,7 @@ cu assert că partiția profil→filieră ține (verificat: 9 profiluri, 1 filie
   sau „la nivelul". Termenii userului pentru despărțirea variației: **intra-grup / inter-grup**, folosiți
   de el într-un articol. Reisz NU are vocabular inter/intra-grup (zero apariții) — nu e autoritate acolo.
 - **„referent" e fals prieten** → „referință" (în română referentul e persoana care referă).
+- **„interschimbabili"**, nu „schimbabili între ei" (despre ani, la Friedman).
 
 ## Deschis
 
