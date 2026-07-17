@@ -1,6 +1,12 @@
 # surse brute mari, redescărcabile de pe data.gov.ro — nu intră în repo
 date/*.xlsx
 date/*.xls
+date/bac/*.xlsx
+date/bac/*.ods
 
 # scratch/temp
 *.tmp
+
+# cache Python
+__pycache__/
+*.pyc

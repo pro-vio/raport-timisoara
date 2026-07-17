@@ -1,4 +1,82 @@
-# STARE — raport-timisoara (handoff · 2026-07-15)
+# STARE — raport-timisoara (handoff · 2026-07-16)
+
+---
+
+# BAC Timișoara — stare la 2026-07-17 (sfârșit de zi)
+
+Analiza EN VIII de mai jos e **încheiată și livrată** — nu se atinge. Firul activ e replicarea pe Bacalaureat.
+
+**Livrabil: `bac.html`** → publicat ca artifact la https://claude.ai/code/artifact/c1a11bbf-3384-4038-bc9b-7fd10e339d45
+(republicare: `python scripts/build_bac_html.py`, apoi Artifact pe același `file_path` — păstrează URL-ul).
+
+Pași: 1. descărcare ✅ · 2. inventar ✅ · 3. extracție ✅ · 4. distribuții ✅ · 5. teste structurale ✅ ·
+6. shrinkage ✅ · 7. raport ✅ (3 taburi). **Fereastra: 2017-2025, 9 ani.**
+
+## Regula #1: NU CITI CSV-urile ministerului
+
+Greșeala zilei, și merită scrisă mare. Prima versiune prefera CSV-ul „ca să nu depindem de ODS" și
+pierdea 1,8% din rânduri în 2017 și 2019: separatorul zecimal e virgulă ne-quotată, „6,31" devine două
+câmpuri, iar nota **nu se poate reconstrui** — „5,6 · 9" și „5 · 6,9" sunt amândouă valide și dau medii
+diferite. Am construit un solver combinatoric cu ancore ca să compensez. Degeaba: aceleași seturi de pe
+data.gov.ro conțin **ODS (2017)** și **XLSX (2019)**, cu valorile ca numere.
+**Verifică toate resursele setului (`package_show`), nu doar prima.** Acum: pierdere zero (1 rând în 9 ani),
+validare 100% în toți anii, iar solverul, ancorele, `regula_contestatie.py` și `diagnostic_bac.py` sunt șterse.
+2017 e ODS, citit în flux cu `ods_reader.py` (odfpy ar încărca sute de MB în memorie). 2019 și 2020 au
+metadata XLSX ruptă → `read_only=False`. 2022 are schemă proprie, 74 col.
+
+## Deciziile metodologice (toate ale userului, toate confirmate)
+
+1. **Media se recalculează.** Coloana `Medie` există doar pentru cei cu ≥5 la fiecare probă (78% în 2025) —
+   e survivorship bias, iar selecția e mai dură la liceele slabe. Formula: media aritmetică a notelor finale,
+   **trunchiată** la 2 zecimale (nu rotunjită — ar greși în 33%). Nota finală = cea de la contestație,
+   necondiționat (2016 făcea excepție, cu prag ≥0,5 — de aceea e scos). Verificat: reproduce media publicată
+   în 100% din cazuri, toți anii. Acoperire 95,5-98,7% vs 83-90%.
+2. **Mediană, nu medie.** Decis pe datele BAC (nu prin analogie cu EN): 848 celule, 84% asimetrice la stânga,
+   50% semnificativ, gap −0,13, corelat −0,55 cu nivelul școlii. Efectul pe clasament e mic (Spearman 0,99).
+3. **Doar promoția curentă** (89% din candidați).
+4. **Filierele sunt trei lumi sociale distincte** — prezumție de bază, nu ipoteză testată. Consecințe:
+   nimic nu se compară peste filiere; **rangurile se calculează în interiorul filierei**. Un KW omnibus peste
+   cele 9 entități a fost ÎNCERCAT ȘI ABANDONAT: ieșea p<1e-8, ε²=0,4-0,6, dar aia era prezumția apărând în
+   rezultat, iar rangurile lui clasau teoretice față de tehnologice. Corecția a schimbat răspunsul: de la
+   1 comparație semnificativă din 81, la 4.
+5. **Neprezentații intră în mediană, așezați jos, fără notă** (`statistici.mediana_cenzurata`). Mediana e o
+   poziție, nu o medie. Santinela `SUB=0.0` — valoarea ei e irelevantă prin construcție (4,5 și 1,0 dau
+   identic); de aceea nu trebuie inventată. Asumpție asumată: neprezentatul stă sub oricine s-a prezentat.
+   Miza e inegală: <1% la teoretic/vocațional, 4% la tehnologic.
+6. **IRIS (liceu special) RĂMÂNE** în clasament (userul s-a răzgândit) — cu notă în text.
+7. **Liceele cu două filiere** apar pe două taburi, marcate „— teoretic" / „— vocațional".
+
+## Rezultate
+
+- **Fără pooling temporal.** Friedman: p max 4,3×10⁻⁸, W 0,22-0,26. 2018 cel mai slab an, 2024 cel mai bun.
+- **Timișoara e ultima din trei** la teoretic 9/9 ani și la tehnologic 9/9; la vocațional doar 2/9 — acolo
+  nu are o problemă. Semnificativ: teoretic vs Iași (2024, 2025), tehnologic vs Cluj (2020, 2025). Decalajul
+  se lărgește: ε² sare la ~0,28 în 2025.
+- **Nu e (doar) compoziție.** Cluj are 17-25% tehnologice, TM 27-34% — dar Iași are aceeași compoziție ca TM
+  și stă deasupra, în ambele filiere, în toți anii. (Retras: afirmasem pe tipul dedus din DENUMIRE că vârful
+  e în regulă — fals, teoreticele TM sunt sub cele clujene în fiecare an.)
+- **Shrinkage-ul aproape nu mișcă nimic**: τ² e mare față de zgomot, w=0,80-1,00, Δrang max 0-2. Liceele chiar
+  se disting: 13/17 la teoretic 2025. Doar vocaționalul e indistinct (3/8) — și acolo τ² chiar e mic.
+
+## Scripturi (`scripts/`, lanț în ordine)
+
+`download_bac.py` → `extract_bac.py` (+`ods_reader.py`) → `distributii_bac.py` → `teste_bac.py` →
+`filiera_bac.py` → `shrinkage_bac.py` → `build_bac_html.py` (+`operationalizare.py`).
+`statistici.py` = funcțiile comune (fără scipy; numpy există).
+**Cifrele din raport se calculează din JSON-uri la fiecare build** — au rămas o dată în urmă, nu se mai repetă.
+Arborele de operaționalizare la fel: `operationalizare.py` e sursa care aplică regula ȘI desenează figura,
+cu assert că partiția profil→filieră ține (verificat: 9 profiluri, 1 filieră fiecare, zero excepții).
+
+## Deschis
+
+- Textul e scris; niciun pas nu mai e în lucru.
+- Glosarul `statistica-ro`: 93 intrări; `cazuri cenzurate` [R m.181] adăugat. 18 termeni rămân nepropuși
+  (asimetrie-ca-formă, bootstrap, mărimea efectului, Friedman, comparații multiple, boltire ș.a.) — **nu sunt
+  în Reisz**, iar suporturile lui Hatos sunt pe ResearchGate, care cere verificare anti-bot. Userul: lasă-le.
+- Atenție la un fals pozitiv găsit: `asimetr` apare de 6× în Reisz, dar TOATE sunt „asimetria temporală a
+  cauzalității" — alt concept. Căutarea pe rădăcini fără citirea contextului umple glosarul cu potriviri false.
+
+# Analiza EN VIII (încheiată · handoff 2026-07-15)
 
 Analiză a rezultatelor Evaluării Naționale (clasa a VIII-a) pe școli, date deschise data.gov.ro, 2020-2025. **Un singur folder, un singur repo** — consolidat pe 2026-07-14 din foste 2 locații (`Documents/evaluare-nationala/` + `Documents/raport-timisoara/`), decizie user („am lucrat prost până acum, totul într-un singur folder").
 
@@ -56,13 +134,5 @@ Standardizare pe an (z-score în interiorul anului) pt orice analiză longitudin
 ### 1. Date EN VIII 2026 — nu există încă pe data.gov.ro
 Verificat 2026-07-08: rezultatele finale (după contestații) au fost publicate azi de minister (edu.ro, comunicat/sinteză), dar **fișierul brut per-candidat pt 2026 NU e încă pe data.gov.ro**. Tiparul anilor anteriori arată o întârziere de câteva luni (2025: examen iunie, fișier publicat octombrie). Recheck recomandat: toamna 2026.
 
-### 2. Extindere la BAC — propunere discutată, neîncepută
-Userul a cerut replicarea aceluiași tip de analiză pentru **Bacalaureat**. Date confirmate disponibile pe data.gov.ro (cel puțin din 2018+, sesiunea I și sesiunea II separat).
-**Recomandarea mea (neconfirmată încă de user când s-a intrat în pauză):**
-- Doar **sesiunea I** (vara) — sesiunea II e restanțieri/îmbunătățiri, populație auto-selectată, necomparabilă.
-- Adaugă **rata de promovare** ca metrică nouă (prag: medie ≥6,00 ȘI ≥5,00 la fiecare probă) — probabil statistica-fanion la BAC, spre deosebire de EN VIII unde toți candidații au o medie.
-- Universul de școli = **licee**, identificare nouă din registru (suprapunere parțială, dar nu identică, cu școlile EN VIII — ex. „C.D. Loga" are ambele cicluri, dar liceele tehnologice pot să nu aibă gimnaziu asociat în listă).
-- Păstrează aceeași fereastră **2020-2025** și aceleași 3 orașe (Timișoara/Cluj/Iași), ca să fie comparabil direct cu raportul EN VIII.
-- Restul pipeline-ului identic: mediană (nu medie), shrinkage empirical-Bayes+bootstrap, KW pe an + Friedman între orașe, aceeași structură de raport.
-
-**La reluare: cere confirmarea userului pe schema de mai sus înainte de a începe descărcarea/scripturile.**
+### 2. Extindere la BAC — ✅ aprobată și începută pe 2026-07-16
+Vezi secțiunea „FIRUL CURENT" din capul fișierului. Față de propunerea inițială de aici, userul a extins fereastra la **10 ani (2016-2025)** și a cerut un **pas de verificare a distribuțiilor** înainte de alegerea medianei.

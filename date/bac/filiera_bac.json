@@ -1,0 +1,1415 @@
+{
+  "prezumtie": "filierele sunt lumi sociale distincte; ranguri și comparații doar în interiorul filierei",
+  "min_candidati_celula": 8,
+  "min_licee_entitate": 3,
+  "familia_dunn": "aceeași filieră, între orașe — 9 comparații/an, Holm",
+  "compozitie": {
+    "CLUJ-NAPOCA|2017": {
+      "teoretica": 0.607,
+      "tehnologica": 0.21,
+      "vocationala": 0.184,
+      "n": 2451
+    },
+    "IAȘI|2017": {
+      "teoretica": 0.546,
+      "tehnologica": 0.297,
+      "vocationala": 0.157,
+      "n": 3162
+    },
+    "TIMIȘOARA|2017": {
+      "teoretica": 0.566,
+      "tehnologica": 0.298,
+      "vocationala": 0.136,
+      "n": 2249
+    },
+    "CLUJ-NAPOCA|2018": {
+      "teoretica": 0.6,
+      "tehnologica": 0.205,
+      "vocationala": 0.194,
+      "n": 2386
+    },
+    "IAȘI|2018": {
+      "teoretica": 0.538,
+      "tehnologica": 0.301,
+      "vocationala": 0.161,
+      "n": 3373
+    },
+    "TIMIȘOARA|2018": {
+      "teoretica": 0.504,
+      "tehnologica": 0.347,
+      "vocationala": 0.149,
+      "n": 2359
+    },
+    "CLUJ-NAPOCA|2019": {
+      "teoretica": 0.608,
+      "tehnologica": 0.198,
+      "vocationala": 0.194,
+      "n": 2479
+    },
+    "IAȘI|2019": {
+      "teoretica": 0.532,
+      "tehnologica": 0.317,
+      "vocationala": 0.152,
+      "n": 3458
+    },
+    "TIMIȘOARA|2019": {
+      "teoretica": 0.531,
+      "tehnologica": 0.316,
+      "vocationala": 0.153,
+      "n": 2411
+    },
+    "CLUJ-NAPOCA|2020": {
+      "teoretica": 0.559,
+      "tehnologica": 0.223,
+      "vocationala": 0.218,
+      "n": 2612
+    },
+    "IAȘI|2020": {
+      "teoretica": 0.499,
+      "tehnologica": 0.37,
+      "vocationala": 0.132,
+      "n": 3709
+    },
+    "TIMIȘOARA|2020": {
+      "teoretica": 0.506,
+      "tehnologica": 0.34,
+      "vocationala": 0.154,
+      "n": 2576
+    },
+    "CLUJ-NAPOCA|2021": {
+      "teoretica": 0.57,
+      "tehnologica": 0.223,
+      "vocationala": 0.207,
+      "n": 2588
+    },
+    "IAȘI|2021": {
+      "teoretica": 0.507,
+      "tehnologica": 0.346,
+      "vocationala": 0.148,
+      "n": 3499
+    },
+    "TIMIȘOARA|2021": {
+      "teoretica": 0.518,
+      "tehnologica": 0.317,
+      "vocationala": 0.164,
+      "n": 2410
+    },
+    "CLUJ-NAPOCA|2022": {
+      "teoretica": 0.589,
+      "tehnologica": 0.192,
+      "vocationala": 0.219,
+      "n": 2518
+    },
+    "IAȘI|2022": {
+      "teoretica": 0.506,
+      "tehnologica": 0.342,
+      "vocationala": 0.152,
+      "n": 3411
+    },
+    "TIMIȘOARA|2022": {
+      "teoretica": 0.498,
+      "tehnologica": 0.345,
+      "vocationala": 0.157,
+      "n": 2525
+    },
+    "CLUJ-NAPOCA|2023": {
+      "teoretica": 0.57,
+      "tehnologica": 0.202,
+      "vocationala": 0.228,
+      "n": 2672
+    },
+    "IAȘI|2023": {
+      "teoretica": 0.491,
+      "tehnologica": 0.366,
+      "vocationala": 0.142,
+      "n": 3569
+    },
+    "TIMIȘOARA|2023": {
+      "teoretica": 0.513,
+      "tehnologica": 0.322,
+      "vocationala": 0.165,
+      "n": 2519
+    },
+    "CLUJ-NAPOCA|2024": {
+      "teoretica": 0.552,
+      "tehnologica": 0.247,
+      "vocationala": 0.201,
+      "n": 3042
+    },
+    "IAȘI|2024": {
+      "teoretica": 0.473,
+      "tehnologica": 0.389,
+      "vocationala": 0.139,
+      "n": 3682
+    },
+    "TIMIȘOARA|2024": {
+      "teoretica": 0.489,
+      "tehnologica": 0.347,
+      "vocationala": 0.164,
+      "n": 2737
+    },
+    "CLUJ-NAPOCA|2025": {
+      "teoretica": 0.615,
+      "tehnologica": 0.177,
+      "vocationala": 0.209,
+      "n": 2283
+    },
+    "IAȘI|2025": {
+      "teoretica": 0.495,
+      "tehnologica": 0.354,
+      "vocationala": 0.152,
+      "n": 3150
+    },
+    "TIMIȘOARA|2025": {
+      "teoretica": 0.558,
+      "tehnologica": 0.286,
+      "vocationala": 0.155,
+      "n": 2189
+    }
+  },
+  "entitati": {
+    "2017": {
+      "CJ-teoretica": {
+        "mediana": 8.48,
+        "n_licee": 23
+      },
+      "IS-teoretica": {
+        "mediana": 8.75,
+        "n_licee": 16
+      },
+      "TM-teoretica": {
+        "mediana": 8.21,
+        "n_licee": 17
+      },
+      "CJ-tehnologica": {
+        "mediana": 6.835,
+        "n_licee": 13
+      },
+      "IS-tehnologica": {
+        "mediana": 6.065,
+        "n_licee": 12
+      },
+      "TM-tehnologica": {
+        "mediana": 4.732,
+        "n_licee": 12
+      },
+      "CJ-vocationala": {
+        "mediana": 7.78,
+        "n_licee": 11
+      },
+      "IS-vocationala": {
+        "mediana": 7.095,
+        "n_licee": 5
+      },
+      "TM-vocationala": {
+        "mediana": 7.865,
+        "n_licee": 7
+      }
+    },
+    "2018": {
+      "CJ-teoretica": {
+        "mediana": 8.418,
+        "n_licee": 24
+      },
+      "IS-teoretica": {
+        "mediana": 8.65,
+        "n_licee": 15
+      },
+      "TM-teoretica": {
+        "mediana": 7.818,
+        "n_licee": 16
+      },
+      "CJ-tehnologica": {
+        "mediana": 6.15,
+        "n_licee": 13
+      },
+      "IS-tehnologica": {
+        "mediana": 5.705,
+        "n_licee": 12
+      },
+      "TM-tehnologica": {
+        "mediana": 4.67,
+        "n_licee": 9
+      },
+      "CJ-vocationala": {
+        "mediana": 7.75,
+        "n_licee": 11
+      },
+      "IS-vocationala": {
+        "mediana": 7.07,
+        "n_licee": 5
+      },
+      "TM-vocationala": {
+        "mediana": 6.88,
+        "n_licee": 7
+      }
+    },
+    "2019": {
+      "CJ-teoretica": {
+        "mediana": 8.473,
+        "n_licee": 24
+      },
+      "IS-teoretica": {
+        "mediana": 8.775,
+        "n_licee": 16
+      },
+      "TM-teoretica": {
+        "mediana": 8.0,
+        "n_licee": 17
+      },
+      "CJ-tehnologica": {
+        "mediana": 6.33,
+        "n_licee": 13
+      },
+      "IS-tehnologica": {
+        "mediana": 5.793,
+        "n_licee": 12
+      },
+      "TM-tehnologica": {
+        "mediana": 5.11,
+        "n_licee": 13
+      },
+      "CJ-vocationala": {
+        "mediana": 7.44,
+        "n_licee": 11
+      },
+      "IS-vocationala": {
+        "mediana": 7.135,
+        "n_licee": 5
+      },
+      "TM-vocationala": {
+        "mediana": 7.03,
+        "n_licee": 7
+      }
+    },
+    "2020": {
+      "CJ-teoretica": {
+        "mediana": 8.8,
+        "n_licee": 25
+      },
+      "IS-teoretica": {
+        "mediana": 8.635,
+        "n_licee": 16
+      },
+      "TM-teoretica": {
+        "mediana": 8.26,
+        "n_licee": 17
+      },
+      "CJ-tehnologica": {
+        "mediana": 6.675,
+        "n_licee": 14
+      },
+      "IS-tehnologica": {
+        "mediana": 5.158,
+        "n_licee": 12
+      },
+      "TM-tehnologica": {
+        "mediana": 4.755,
+        "n_licee": 14
+      },
+      "CJ-vocationala": {
+        "mediana": 7.935,
+        "n_licee": 11
+      },
+      "IS-vocationala": {
+        "mediana": 7.05,
+        "n_licee": 5
+      },
+      "TM-vocationala": {
+        "mediana": 7.13,
+        "n_licee": 7
+      }
+    },
+    "2021": {
+      "CJ-teoretica": {
+        "mediana": 8.55,
+        "n_licee": 26
+      },
+      "IS-teoretica": {
+        "mediana": 8.86,
+        "n_licee": 16
+      },
+      "TM-teoretica": {
+        "mediana": 8.225,
+        "n_licee": 17
+      },
+      "CJ-tehnologica": {
+        "mediana": 6.675,
+        "n_licee": 14
+      },
+      "IS-tehnologica": {
+        "mediana": 5.595,
+        "n_licee": 13
+      },
+      "TM-tehnologica": {
+        "mediana": 4.68,
+        "n_licee": 13
+      },
+      "CJ-vocationala": {
+        "mediana": 7.76,
+        "n_licee": 11
+      },
+      "IS-vocationala": {
+        "mediana": 6.68,
+        "n_licee": 5
+      },
+      "TM-vocationala": {
+        "mediana": 6.845,
+        "n_licee": 7
+      }
+    },
+    "2022": {
+      "CJ-teoretica": {
+        "mediana": 8.89,
+        "n_licee": 24
+      },
+      "IS-teoretica": {
+        "mediana": 8.92,
+        "n_licee": 17
+      },
+      "TM-teoretica": {
+        "mediana": 8.24,
+        "n_licee": 16
+      },
+      "CJ-tehnologica": {
+        "mediana": 6.935,
+        "n_licee": 12
+      },
+      "IS-tehnologica": {
+        "mediana": 6.6,
+        "n_licee": 13
+      },
+      "TM-tehnologica": {
+        "mediana": 5.647,
+        "n_licee": 12
+      },
+      "CJ-vocationala": {
+        "mediana": 7.855,
+        "n_licee": 11
+      },
+      "IS-vocationala": {
+        "mediana": 6.79,
+        "n_licee": 5
+      },
+      "TM-vocationala": {
+        "mediana": 6.8,
+        "n_licee": 7
+      }
+    },
+    "2023": {
+      "CJ-teoretica": {
+        "mediana": 8.535,
+        "n_licee": 26
+      },
+      "IS-teoretica": {
+        "mediana": 8.78,
+        "n_licee": 15
+      },
+      "TM-teoretica": {
+        "mediana": 8.11,
+        "n_licee": 16
+      },
+      "CJ-tehnologica": {
+        "mediana": 6.98,
+        "n_licee": 14
+      },
+      "IS-tehnologica": {
+        "mediana": 6.5,
+        "n_licee": 13
+      },
+      "TM-tehnologica": {
+        "mediana": 6.105,
+        "n_licee": 13
+      },
+      "CJ-vocationala": {
+        "mediana": 7.63,
+        "n_licee": 11
+      },
+      "IS-vocationala": {
+        "mediana": 7.08,
+        "n_licee": 5
+      },
+      "TM-vocationala": {
+        "mediana": 7.195,
+        "n_licee": 8
+      }
+    },
+    "2024": {
+      "CJ-teoretica": {
+        "mediana": 8.825,
+        "n_licee": 26
+      },
+      "IS-teoretica": {
+        "mediana": 9.18,
+        "n_licee": 13
+      },
+      "TM-teoretica": {
+        "mediana": 8.332,
+        "n_licee": 18
+      },
+      "CJ-tehnologica": {
+        "mediana": 7.48,
+        "n_licee": 14
+      },
+      "IS-tehnologica": {
+        "mediana": 6.23,
+        "n_licee": 13
+      },
+      "TM-tehnologica": {
+        "mediana": 5.56,
+        "n_licee": 14
+      },
+      "CJ-vocationala": {
+        "mediana": 7.54,
+        "n_licee": 11
+      },
+      "IS-vocationala": {
+        "mediana": 7.235,
+        "n_licee": 5
+      },
+      "TM-vocationala": {
+        "mediana": 7.603,
+        "n_licee": 8
+      }
+    },
+    "2025": {
+      "CJ-teoretica": {
+        "mediana": 8.86,
+        "n_licee": 25
+      },
+      "IS-teoretica": {
+        "mediana": 9.18,
+        "n_licee": 13
+      },
+      "TM-teoretica": {
+        "mediana": 8.09,
+        "n_licee": 18
+      },
+      "CJ-tehnologica": {
+        "mediana": 6.76,
+        "n_licee": 13
+      },
+      "IS-tehnologica": {
+        "mediana": 6.25,
+        "n_licee": 13
+      },
+      "TM-tehnologica": {
+        "mediana": 4.655,
+        "n_licee": 13
+      },
+      "CJ-vocationala": {
+        "mediana": 7.93,
+        "n_licee": 11
+      },
+      "IS-vocationala": {
+        "mediana": 7.045,
+        "n_licee": 5
+      },
+      "TM-vocationala": {
+        "mediana": 7.475,
+        "n_licee": 8
+      }
+    }
+  },
+  "pe_ani": {
+    "2017": {
+      "teoretica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 23,
+          "IAȘI": 16,
+          "TIMIȘOARA": 17
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 8.48,
+          "IAȘI": 8.75,
+          "TIMIȘOARA": 8.21
+        },
+        "H": 3.756,
+        "p": 0.1529,
+        "epsilon2": 0.0331,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": -0.782,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.285,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 1.911,
+            "p_holm": 0.44848
+          }
+        ]
+      },
+      "tehnologica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 13,
+          "IAȘI": 12,
+          "TIMIȘOARA": 12
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 6.835,
+          "IAȘI": 6.065,
+          "TIMIȘOARA": 4.732
+        },
+        "H": 6.215,
+        "p": 0.04471,
+        "epsilon2": 0.124,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.778,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 2.451,
+            "p_holm": 0.12812
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 1.641,
+            "p_holm": 0.70611
+          }
+        ]
+      },
+      "vocationala": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 11,
+          "IAȘI": 5,
+          "TIMIȘOARA": 7
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 7.78,
+          "IAȘI": 7.095,
+          "TIMIȘOARA": 7.865
+        },
+        "H": 0.933,
+        "p": 0.6272,
+        "epsilon2": -0.0534,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.485,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": -0.614,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": -0.953,
+            "p_holm": 1.0
+          }
+        ]
+      }
+    },
+    "2018": {
+      "teoretica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 24,
+          "IAȘI": 15,
+          "TIMIȘOARA": 16
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 8.418,
+          "IAȘI": 8.65,
+          "TIMIȘOARA": 7.818
+        },
+        "H": 4.486,
+        "p": 0.1061,
+        "epsilon2": 0.0478,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": -0.465,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.719,
+            "p_holm": 0.51412
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 1.969,
+            "p_holm": 0.36873
+          }
+        ]
+      },
+      "tehnologica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 13,
+          "IAȘI": 12,
+          "TIMIȘOARA": 9
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 6.15,
+          "IAȘI": 5.705,
+          "TIMIȘOARA": 4.67
+        },
+        "H": 5.459,
+        "p": 0.06526,
+        "epsilon2": 0.1116,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.921,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 2.333,
+            "p_holm": 0.17685
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 1.458,
+            "p_holm": 0.72376
+          }
+        ]
+      },
+      "vocationala": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 11,
+          "IAȘI": 5,
+          "TIMIȘOARA": 7
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 7.75,
+          "IAȘI": 7.07,
+          "TIMIȘOARA": 6.88
+        },
+        "H": 4.013,
+        "p": 0.1345,
+        "epsilon2": 0.1006,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.87,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.995,
+            "p_holm": 0.36873
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 0.846,
+            "p_holm": 1.0
+          }
+        ]
+      }
+    },
+    "2019": {
+      "teoretica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 24,
+          "IAȘI": 16,
+          "TIMIȘOARA": 17
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 8.473,
+          "IAȘI": 8.775,
+          "TIMIȘOARA": 8.0
+        },
+        "H": 3.983,
+        "p": 0.1365,
+        "epsilon2": 0.0367,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": -0.751,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.383,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 1.954,
+            "p_holm": 0.40534
+          }
+        ]
+      },
+      "tehnologica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 13,
+          "IAȘI": 12,
+          "TIMIȘOARA": 13
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 6.33,
+          "IAȘI": 5.793,
+          "TIMIȘOARA": 5.11
+        },
+        "H": 7.676,
+        "p": 0.02153,
+        "epsilon2": 0.1622,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 1.357,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 2.771,
+            "p_holm": 0.05035
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 1.357,
+            "p_holm": 1.0
+          }
+        ]
+      },
+      "vocationala": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 11,
+          "IAȘI": 5,
+          "TIMIȘOARA": 7
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 7.44,
+          "IAȘI": 7.135,
+          "TIMIȘOARA": 7.03
+        },
+        "H": 1.548,
+        "p": 0.4611,
+        "epsilon2": -0.0226,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.636,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.224,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 0.425,
+            "p_holm": 1.0
+          }
+        ]
+      }
+    },
+    "2020": {
+      "teoretica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 25,
+          "IAȘI": 16,
+          "TIMIȘOARA": 17
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 8.8,
+          "IAȘI": 8.635,
+          "TIMIȘOARA": 8.26
+        },
+        "H": 3.208,
+        "p": 0.2011,
+        "epsilon2": 0.022,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.72,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.791,
+            "p_holm": 0.44275
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 0.955,
+            "p_holm": 1.0
+          }
+        ]
+      },
+      "tehnologica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 14,
+          "IAȘI": 12,
+          "TIMIȘOARA": 14
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 6.675,
+          "IAȘI": 5.158,
+          "TIMIȘOARA": 4.755
+        },
+        "H": 11.56,
+        "p": 0.003089,
+        "epsilon2": 0.2584,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 2.23,
+            "p_holm": 0.2059
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 3.322,
+            "p_holm": 0.00804
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 0.962,
+            "p_holm": 1.0
+          }
+        ]
+      },
+      "vocationala": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 11,
+          "IAȘI": 5,
+          "TIMIȘOARA": 7
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 7.935,
+          "IAȘI": 7.05,
+          "TIMIȘOARA": 7.13
+        },
+        "H": 4.389,
+        "p": 0.1114,
+        "epsilon2": 0.1194,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 1.556,
+            "p_holm": 0.5989
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.857,
+            "p_holm": 0.44275
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 0.101,
+            "p_holm": 1.0
+          }
+        ]
+      }
+    },
+    "2021": {
+      "teoretica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 26,
+          "IAȘI": 16,
+          "TIMIȘOARA": 17
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 8.55,
+          "IAȘI": 8.86,
+          "TIMIȘOARA": 8.225
+        },
+        "H": 3.042,
+        "p": 0.2185,
+        "epsilon2": 0.0186,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": -0.753,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.158,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 1.724,
+            "p_holm": 0.5935
+          }
+        ]
+      },
+      "tehnologica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 14,
+          "IAȘI": 13,
+          "TIMIȘOARA": 13
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 6.675,
+          "IAȘI": 5.595,
+          "TIMIȘOARA": 4.68
+        },
+        "H": 7.54,
+        "p": 0.02305,
+        "epsilon2": 0.1497,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.843,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 2.696,
+            "p_holm": 0.06311
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 1.82,
+            "p_holm": 0.54976
+          }
+        ]
+      },
+      "vocationala": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 11,
+          "IAȘI": 5,
+          "TIMIȘOARA": 7
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 7.76,
+          "IAȘI": 6.68,
+          "TIMIȘOARA": 6.845
+        },
+        "H": 2.222,
+        "p": 0.3292,
+        "epsilon2": 0.0111,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 1.392,
+            "p_holm": 0.98413
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 0.986,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": -0.468,
+            "p_holm": 1.0
+          }
+        ]
+      }
+    },
+    "2022": {
+      "teoretica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 24,
+          "IAȘI": 17,
+          "TIMIȘOARA": 16
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 8.89,
+          "IAȘI": 8.92,
+          "TIMIȘOARA": 8.24
+        },
+        "H": 6.19,
+        "p": 0.04528,
+        "epsilon2": 0.0776,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.087,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 2.306,
+            "p_holm": 0.18986
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 2.058,
+            "p_holm": 0.27719
+          }
+        ]
+      },
+      "tehnologica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 12,
+          "IAȘI": 13,
+          "TIMIȘOARA": 12
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 6.935,
+          "IAȘI": 6.6,
+          "TIMIȘOARA": 5.647
+        },
+        "H": 4.871,
+        "p": 0.08755,
+        "epsilon2": 0.0844,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.943,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 2.197,
+            "p_holm": 0.22397
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 1.298,
+            "p_holm": 0.8584
+          }
+        ]
+      },
+      "vocationala": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 11,
+          "IAȘI": 5,
+          "TIMIȘOARA": 7
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 7.855,
+          "IAȘI": 6.79,
+          "TIMIȘOARA": 6.8
+        },
+        "H": 4.23,
+        "p": 0.1206,
+        "epsilon2": 0.1115,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 1.367,
+            "p_holm": 0.8584
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.917,
+            "p_holm": 0.33155
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 0.324,
+            "p_holm": 1.0
+          }
+        ]
+      }
+    },
+    "2023": {
+      "teoretica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 26,
+          "IAȘI": 15,
+          "TIMIȘOARA": 16
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 8.535,
+          "IAȘI": 8.78,
+          "TIMIȘOARA": 8.11
+        },
+        "H": 5.746,
+        "p": 0.05654,
+        "epsilon2": 0.0694,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": -0.904,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.722,
+            "p_holm": 0.59536
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 2.338,
+            "p_holm": 0.17451
+          }
+        ]
+      },
+      "tehnologica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 14,
+          "IAȘI": 13,
+          "TIMIȘOARA": 13
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 6.98,
+          "IAȘI": 6.5,
+          "TIMIȘOARA": 6.105
+        },
+        "H": 4.192,
+        "p": 0.1229,
+        "epsilon2": 0.0593,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 1.31,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 2.01,
+            "p_holm": 0.35541
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 0.688,
+            "p_holm": 1.0
+          }
+        ]
+      },
+      "vocationala": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 11,
+          "IAȘI": 5,
+          "TIMIȘOARA": 8
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 7.63,
+          "IAȘI": 7.08,
+          "TIMIȘOARA": 7.195
+        },
+        "H": 1.032,
+        "p": 0.597,
+        "epsilon2": -0.0461,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.81,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 0.865,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": -0.062,
+            "p_holm": 1.0
+          }
+        ]
+      }
+    },
+    "2024": {
+      "teoretica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 26,
+          "IAȘI": 13,
+          "TIMIȘOARA": 18
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 8.825,
+          "IAȘI": 9.18,
+          "TIMIȘOARA": 8.332
+        },
+        "H": 11.961,
+        "p": 0.002527,
+        "epsilon2": 0.1845,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": -1.972,
+            "p_holm": 0.34056
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.913,
+            "p_holm": 0.34056
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 3.451,
+            "p_holm": 0.00502
+          }
+        ]
+      },
+      "tehnologica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 14,
+          "IAȘI": 13,
+          "TIMIȘOARA": 14
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 7.48,
+          "IAȘI": 6.23,
+          "TIMIȘOARA": 5.56
+        },
+        "H": 5.703,
+        "p": 0.05776,
+        "epsilon2": 0.0974,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 1.552,
+            "p_holm": 0.60283
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 2.343,
+            "p_holm": 0.15306
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 0.747,
+            "p_holm": 1.0
+          }
+        ]
+      },
+      "vocationala": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 11,
+          "IAȘI": 5,
+          "TIMIȘOARA": 8
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 7.54,
+          "IAȘI": 7.235,
+          "TIMIȘOARA": 7.603
+        },
+        "H": 0.253,
+        "p": 0.8811,
+        "epsilon2": -0.0832,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 0.479,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 0.317,
+            "p_holm": 1.0
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": -0.195,
+            "p_holm": 1.0
+          }
+        ]
+      }
+    },
+    "2025": {
+      "teoretica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 25,
+          "IAȘI": 13,
+          "TIMIȘOARA": 18
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 8.86,
+          "IAȘI": 9.18,
+          "TIMIȘOARA": 8.09
+        },
+        "H": 16.821,
+        "p": 0.0002226,
+        "epsilon2": 0.2796,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": -2.049,
+            "p_holm": 0.2428
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 2.513,
+            "p_holm": 0.08374
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 4.059,
+            "p_holm": 0.00044
+          }
+        ]
+      },
+      "tehnologica": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 13,
+          "IAȘI": 13,
+          "TIMIȘOARA": 13
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 6.76,
+          "IAȘI": 6.25,
+          "TIMIȘOARA": 4.655
+        },
+        "H": 10.938,
+        "p": 0.004214,
+        "epsilon2": 0.2483,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 1.496,
+            "p_holm": 0.46679
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 3.303,
+            "p_holm": 0.00767
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": 1.806,
+            "p_holm": 0.35455
+          }
+        ]
+      },
+      "vocationala": {
+        "n_licee": {
+          "CLUJ-NAPOCA": 11,
+          "IAȘI": 5,
+          "TIMIȘOARA": 8
+        },
+        "mediane": {
+          "CLUJ-NAPOCA": 7.93,
+          "IAȘI": 7.045,
+          "TIMIȘOARA": 7.475
+        },
+        "H": 3.095,
+        "p": 0.2128,
+        "epsilon2": 0.0521,
+        "dunn": [
+          {
+            "pereche": "CJ vs IS",
+            "z": 1.569,
+            "p_holm": 0.46679
+          },
+          {
+            "pereche": "CJ vs TM",
+            "z": 1.311,
+            "p_holm": 0.46679
+          },
+          {
+            "pereche": "IS vs TM",
+            "z": -0.416,
+            "p_holm": 0.6777
+          }
+        ]
+      }
+    }
+  },
+  "rezumat": {
+    "teoretica": {
+      "ani": 9,
+      "tm_ultima": 9,
+      "tm_sub_cj_semnif": 0
+    },
+    "tehnologica": {
+      "ani": 9,
+      "tm_ultima": 9,
+      "tm_sub_cj_semnif": 2
+    },
+    "vocationala": {
+      "ani": 9,
+      "tm_ultima": 2,
+      "tm_sub_cj_semnif": 0
+    }
+  }
+}
