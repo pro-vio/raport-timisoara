@@ -107,8 +107,11 @@ for an in YEARS:
             continue
         ORASE[f'{f}|{an}'] = {'med': pf['mediane'], 'n': pf['n_licee'], 'p': pf['p'],
                               'eps2': pf['epsilon2'], 'dunn': pf['dunn']}
+FRIED = {c: {'rang': [v['rang_mediu_pe_an'][str(a)] for a in YEARS], 'W': v['kendall_W'],
+             'p': v['p'], 'n': v['n_celule_balansate'], 'Q': v['Q'], 'df': v['df']}
+         for c, v in teste['friedman_pe_orase'].items()}
 DATA = {'tm': TM, 'orase': ORASE, 'comp': fil['compozitie'], 'ani': YEARS,
-        'filiere': FILIERE, 'nume': NUME}
+        'filiere': FILIERE, 'nume': NUME, 'fried': FRIED}
 
 CSS = '''
 :root{
@@ -212,6 +215,11 @@ tbody tr:hover{background:var(--chip)}
 .chart .pt{stroke:var(--surface);stroke-width:2}
 .chart .ref{stroke:var(--muted);stroke-dasharray:3 3;stroke-width:1}
 .chart .reflbl{fill:var(--muted);font-size:10.5px}
+.fr-line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.fr-lbl{font-size:12px;font-weight:600}
+.leg{display:flex;gap:18px;flex-wrap:wrap;margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.leg span{display:inline-flex;align-items:center;gap:7px}
+.leg svg{flex:none}
 .chart .row:hover rect.hit{fill:var(--chip);opacity:1}
 .tip{position:fixed;pointer-events:none;background:var(--surface);border:1px solid var(--line);
   border-radius:5px;padding:8px 10px;font-size:12.5px;box-shadow:0 4px 14px rgba(0,0,0,.14);
@@ -283,6 +291,7 @@ BODY = f'''<div class="wrap">
 
 <section class="panel" id="p-orase" role="tabpanel" aria-labelledby="t-orase" hidden>
 <div class="prose"><p>Cele trei orașe nu sunt subiectul raportului; ele fixează scara. Dacă liceele din Timișoara ar semăna cu cele din Cluj și Iași, diferențele dintre ele ar trebui citite ca variație locală. Comparația se face <strong>în interiorul fiecărei filiere</strong>, cu rangurile calculate tot acolo.</p></div>
+<div id="v-fried"></div>
 <div class="ctrls" id="c-orase"></div>
 <div id="v-orase"></div>
 </section>
@@ -328,6 +337,44 @@ function segFiliera(sel, cur, cb){
   });
   const l=document.createElement('label'); l.className='lbl'; l.textContent='Filiera';
   sel.appendChild(l); sel.appendChild(s);
+}
+
+// ============ Friedman: rangul mediu al anilor, per oraș ============
+// Replică graficul din raportul EN. Identitatea orașului e purtată de culoare ȘI de
+// formă (linie plină/întreruptă + marcaj), ca să nu depindă de culoare singură.
+const FR_STIL = {
+  'IAȘI':        {col:'var(--f-teoretica)',   dash:'',      marc:'cerc'},
+  'CLUJ-NAPOCA': {col:'var(--f-tehnologica)', dash:'6 3',   marc:'triunghi'},
+  'TIMIȘOARA':   {col:'var(--f-vocationala)', dash:'2 2',   marc:'patrat'},
+};
+function marcaj(tip, x, y, col){
+  if(tip==='cerc')     return `<circle cx="${x}" cy="${y}" r="4" fill="${col}" stroke="var(--surface)" stroke-width="1.5"/>`;
+  if(tip==='triunghi') return `<path d="M${x},${y-4.6} L${x+4.2},${y+3.2} L${x-4.2},${y+3.2} Z" fill="${col}" stroke="var(--surface)" stroke-width="1.5"/>`;
+  return `<rect x="${x-3.6}" y="${y-3.6}" width="7.2" height="7.2" fill="${col}" stroke="var(--surface)" stroke-width="1.5"/>`;
+}
+function renderFriedman(){
+  const F=D.fried, ORD=['IAȘI','CLUJ-NAPOCA','TIMIȘOARA'].filter(c=>F[c]);
+  if(!ORD.length) return;
+  const K=D.ani.length, W=980, HH=330, PL=54, PR=22, PT=22, PB=42;
+  const X=i=>PL+i*(W-PL-PR)/(K-1), Y=r=>PT+(K-r)/(K-1)*(HH-PT-PB);
+  let g=`<svg class="chart" viewBox="0 0 ${W} ${HH}" role="img" aria-label="Rangul mediu al anilor, pe orașe: toate trei coboară și urcă împreună, cu 2018 slab și 2024 bun.">`;
+  for(let r=1;r<=K;r++) g+=`<line class="grid" x1="${PL}" y1="${Y(r)}" x2="${W-PR}" y2="${Y(r)}"/>`
+    + (r%2===1?`<text class="ax" x="${PL-9}" y="${Y(r)}" dy="0.32em" text-anchor="end">${r}</text>`:'');
+  D.ani.forEach((a,i)=>{ g+=`<text class="ax" x="${X(i)}" y="${HH-PB+20}" text-anchor="middle">${a}</text>`; });
+  g+=`<text class="ax" x="${PL-40}" y="${(PT+HH-PB)/2}" transform="rotate(-90 ${PL-40},${(PT+HH-PB)/2})" text-anchor="middle">rangul mediu al anului (1 = cel mai slab)</text>`;
+  ORD.forEach(c=>{ const st=FR_STIL[c], d=F[c].rang.map((r,i)=>`${i?'L':'M'}${X(i)},${Y(r)}`).join(' ');
+    g+=`<path class="fr-line" d="${d}" stroke="${st.col}" stroke-dasharray="${st.dash}"/>`;
+    F[c].rang.forEach((r,i)=>{ g+=marcaj(st.marc, X(i), Y(r), st.col); }); });
+  g+='</svg>';
+  const leg=ORD.map(c=>{const st=FR_STIL[c];
+    return `<span><svg width="26" height="12"><line x1="1" y1="6" x2="25" y2="6" stroke="${st.col}" stroke-width="2" stroke-dasharray="${st.dash}"/>${marcaj(st.marc,13,6,st.col)}</svg>${c==='CLUJ-NAPOCA'?'Cluj-Napoca':c==='IAȘI'?'Iași':'Timișoara'}</span>`;}).join('');
+  const t=ORD.map(c=>`${c==='CLUJ-NAPOCA'?'Cluj':c==='IAȘI'?'Iași':'Timișoara'}: Q=${nf(F[c].Q,1)}, p=${F[c].p<0.001?F[c].p.toExponential(1).replace('.',','):nf(F[c].p,3)}, W=${nf(F[c].W)}, ${F[c].n} celule`).join(' · ');
+  document.getElementById('v-fried').innerHTML=
+    `<div class="card"><div class="card-h">Rangul mediu al anilor, pe orașe (testul Friedman)</div>
+     <p class="card-i">Pentru fiecare celulă liceu×filieră, cei nouă ani se ordonează după mediana din anul respectiv: anul cel mai slab primește poziția 1, cel mai bun poziția 9. Graficul arată media acestor poziții peste toate celulele orașului. Dacă anii ar fi schimbabili între ei, liniile ar fi plate.</p>
+     <div class="scroll">${g}</div><div class="leg">${leg}</div>
+     <p class="note">${t}</p>
+     <p class="note">Cele trei linii coboară și urcă împreună: efectul e de examen și de cohortă, la nivel național, nu ceva local. De aceea anii nu se adună — fiecare se citește separat.</p></div>`;
 }
 
 // ============ TAB: trei orașe ============
@@ -430,7 +477,7 @@ function renderTM(){
     r.addEventListener('mouseleave',hideTip);
   });
 }
-renderOrase(); renderTM();
+renderFriedman(); renderOrase(); renderTM();
 '''.replace('%%DATA%%', json.dumps(DATA, ensure_ascii=False))
 
 with open(OUT, 'w', encoding='utf-8') as f:

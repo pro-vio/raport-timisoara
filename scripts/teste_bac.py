@@ -29,26 +29,32 @@ orase, den = data['orase'], data['denumiri']
 
 # liceu-an -> mediana mediilor (promoția curentă, media recalculată)
 # Celula = TOȚI candidații promoției curente; cei fără rezultat intră fără notă, jos.
+# Unitatea e celula LICEU × FILIERĂ, nu liceul. Sub prezumția că filierele sunt lumi
+# sociale distincte, o mediană a unui liceu calculată peste filiere n-are referent — nici
+# măcar în interiorul unui bloc Friedman, fiindcă valoarea comparată de la an la an ar
+# rămâne o mediană cross-filieră. Deci blocul e celula, iar un colegiu tehnic cu clase
+# teoretice și tehnologice contribuie cu două blocuri.
+FILIERE = ('teoretica', 'tehnologica', 'vocationala')
 acc = defaultdict(list)
 fara = Counter()
 for (an, siiir, forma, filiera, profil, promo, status,
      medie_pub, medie_calc) in data['candidati']:
-    if promo != 1:
+    if promo != 1 or filiera not in FILIERE:
         continue
     if medie_calc is not None:
-        acc[(siiir, an)].append(medie_calc)
+        acc[(siiir, filiera, an)].append(medie_calc)
     else:
-        fara[(siiir, an)] += 1
-matrix = defaultdict(dict)          # siiir -> {an: mediana}
+        fara[(siiir, filiera, an)] += 1
+matrix = defaultdict(dict)          # (siiir, filiera) -> {an: mediana}
 n_cand = defaultdict(dict)
 for k in set(acc) | set(fara):
-    siiir, an = k
+    siiir, filiera, an = k
     n = len(acc[k]) + fara[k]
     if n >= MIN_N:
         m = mediana_cenzurata(acc[k], fara[k])
         if m is not None:
-            matrix[siiir][an] = m
-            n_cand[siiir][an] = n
+            matrix[(siiir, filiera)][an] = m
+            n_cand[(siiir, filiera)][an] = n
 
 def rank_row(vals):
     return rank_all(vals)
@@ -61,7 +67,7 @@ print(f'Prag: minim {MIN_N} candidați pe liceu-an\n')
 print('1. KRUSKAL-WALLIS pe fiecare an — diferă cele 3 orașe?')
 for an in YEARS:
     groups = defaultdict(list)
-    for siiir, ys in matrix.items():
+    for (siiir, filiera), ys in matrix.items():
         if an in ys:
             groups[orase[siiir]].append(ys[an])
     glist = [groups[c] for c in CITIES]
@@ -103,19 +109,19 @@ for an in YEARS:
         print(f'        {mark} {dd["pereche"]:<28} z={dd["z"]:6.3f}  p_holm={dd["p_holm"]:.4g}')
 
 # ---------- 2. Friedman pe fiecare oraș: sunt anii schimbabili? ----------
-print(f'\n2. FRIEDMAN pe fiecare oraș — blocuri = liceele prezente în toți cei {len(YEARS)} anii, '
+print(f'\n2. FRIEDMAN pe fiecare oraș — blocuri = celulele liceu×filieră prezente în toți cei {len(YEARS)} anii, '
       f'tratament = anul')
 print('   (dacă anii diferă semnificativ, NU se face pooling temporal)')
 k = len(YEARS)
 for city in CITIES:
     blocks, coduri = [], []
-    for siiir, ys in matrix.items():
+    for (siiir, filiera), ys in matrix.items():
         if orase[siiir] == city and all(y in ys for y in YEARS):
             blocks.append([ys[y] for y in YEARS])
-            coduri.append(siiir)
+            coduri.append((siiir, filiera))
     n = len(blocks)
     if n < 3:
-        print(f'  {city}: doar {n} licee balansate — test nefăcut')
+        print(f'  {city}: doar {n} celule balansate — test nefăcut')
         continue
     rank_sums = [0.0] * k
     tie_num = 0.0
@@ -133,7 +139,7 @@ for city in CITIES:
     W = Q / (n * (k - 1))
     mean_ranks = [round(rs / n, 2) for rs in rank_sums]
     out['friedman_pe_orase'][city] = {
-        'n_licee_balansate': n, 'Q': round(Q, 3), 'df': k - 1,
+        'n_celule_balansate': n, 'Q': round(Q, 3), 'df': k - 1,
         'p': float(f'{p:.4g}'), 'kendall_W': round(W, 4),
         'rang_mediu_pe_an': dict(zip(map(str, YEARS), mean_ranks))}
     semn = '***' if p < 0.001 else '**' if p < 0.01 else '*' if p < 0.05 else 'ns'
