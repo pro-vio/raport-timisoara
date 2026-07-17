@@ -71,8 +71,6 @@ cu assert că partiția profil→filieră ține (verificat: 9 profiluri, 1 filie
 
 ## Deschis
 
-- **`bac.html` e o pagină ORFANĂ.** Planul cerea link reciproc cu `index.html` (raportul EN); nu s-a făcut.
-  Cine intră pe site nu are cum să afle că există raportul BAC, și invers. Câteva minute de lucru.
 - **Următorul fir (userul, 2026-07-17): contribuția netă a liceului** — puncte adăugate față de nota de
   intrare, cu normalizare. E exact ce lipsește acum: raportul spune la limite că măsoară selecția la intrare,
   nu valoarea adăugată. **Dar prima verificare nu e normalizarea, ci dacă legătura se poate face deloc:**
