@@ -50,7 +50,12 @@ metadata XLSX ruptă → `read_only=False`. 2022 are schemă proprie, 74 col.
 
 ## Rezultate
 
-- **Fără pooling temporal.** Friedman: p max 4,3×10⁻⁸, W 0,22-0,26. 2018 cel mai slab an, 2024 cel mai bun.
+- **Fără pooling temporal.** Friedman: p max 6,7×10⁻¹⁰, W 0,22-0,26. 2018 cel mai slab, 2024 cel mai bun.
+  Graficul rangului mediu pe ani (replică după cel din raportul EN) e pe tabul celor trei oraşe; liniile
+  coboară şi urcă împreună → efect naţional de examen/cohortă, nu local.
+  ATENŢIE: **Friedman blochează pe celula LICEU×FILIERĂ, nu pe liceu** (idem KW pe ani). Prima versiune
+  bloca pe liceu, cu mediana calculată peste filiere — inconsistent cu prezumţia. Blocarea pe liceu NU
+  salvează asta: valoarea comparată de la an la an rămânea o mediană cross-filieră.
 - **Timișoara e ultima din trei** la teoretic 9/9 ani și la tehnologic 9/9; la vocațional doar 2/9 — acolo
   nu are o problemă. Semnificativ: teoretic vs Iași (2024, 2025), tehnologic vs Cluj (2020, 2025). Decalajul
   se lărgește: ε² sare la ~0,28 în 2025.
