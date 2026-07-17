@@ -12,7 +12,14 @@ Analiza EN VIII de mai jos e **încheiată și livrată** — nu se atinge. Firu
 - În repo: 7,6 MB (bac.html + 5 JSON-uri derivate + 11 scripturi). Cele 281 MB de surse brute sunt în `.gitignore` — se redescarcă cu `download_bac.py`.
 
 Pași: 1. descărcare ✅ · 2. inventar ✅ · 3. extracție ✅ · 4. distribuții ✅ · 5. teste structurale ✅ ·
-6. shrinkage ✅ · 7. raport ✅ (3 taburi). **Fereastra: 2017-2025, 9 ani.**
+6. shrinkage ✅ · 7. raport ✅. **Fereastra: 2017-2025, 9 ani.**
+
+Raportul are 3 taburi: **Datele și definițiile** (proză + arborele profil→filieră) · **Variația
+structurală: trei orașe** (graficul Friedman + tabel, selector de filieră) · **Liceele din Timișoara**
+(evoluția medianelor cu comutator brut/reziduu + graficul de intervale + tabel; selector de filieră și de an).
+Ambele grafice sunt replici după cele din raportul EN, ca SVG inline (CSP-ul blochează Chart.js).
+La evoluția medianelor, linia groasă e **mediana FILIEREI**, nu a orașului (confirmat de user): o mediană
+de oraș calculată între filiere n-ar avea referință. Reziduul scade mediana filierei din același an.
 
 ## Regula #1: NU CITI CSV-urile ministerului
 
@@ -73,6 +80,16 @@ metadata XLSX ruptă → `read_only=False`. 2022 are schemă proprie, 74 col.
 **Cifrele din raport se calculează din JSON-uri la fiecare build** — au rămas o dată în urmă, nu se mai repetă.
 Arborele de operaționalizare la fel: `operationalizare.py` e sursa care aplică regula ȘI desenează figura,
 cu assert că partiția profil→filieră ține (verificat: 9 profiluri, 1 filieră fiecare, zero excepții).
+
+## Terminologie (decizii de vocabular, 2026-07-17)
+
+- **variația** = fenomenul (cât din ce vedem se împarte între grupuri) · **dispersia** = parametrul (τ²).
+  „Varianța" e calc — Reisz [R m.71]: termenii sunt „abaterea standard" și „dispersia". Userul: „perechea
+  variație-dispersie îmi place, mă ajută să îmi structurez vocabularul".
+- **„peste X" e calc după *across*** → „între" (inter) / „în interiorul" (intra); pentru agregare, „pe"
+  sau „la nivelul". Termenii userului pentru despărțirea variației: **intra-grup / inter-grup**, folosiți
+  de el într-un articol. Reisz NU are vocabular inter/intra-grup (zero apariții) — nu e autoritate acolo.
+- **„referent" e fals prieten** → „referință" (în română referentul e persoana care referă).
 
 ## Deschis
 
