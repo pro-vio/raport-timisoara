@@ -126,9 +126,9 @@ for f in FILIERE:
             scoli.setdefault(nume, {})[an] = x['mediana']
     EVO[f] = {'scoli': scoli, 'filiera': linia}
 
-FRIED = {c: {'rang': [v['rang_mediu_pe_an'][str(a)] for a in YEARS], 'W': v['kendall_W'],
+FRIED = {k: {'rang': [v['rang_mediu_pe_an'][str(a)] for a in YEARS], 'W': v['kendall_W'],
              'p': v['p'], 'n': v['n_celule_balansate'], 'Q': v['Q'], 'df': v['df']}
-         for c, v in teste['friedman_pe_orase'].items()}
+         for k, v in teste['friedman_pe_orase'].items()}
 DATA = {'tm': TM, 'orase': ORASE, 'comp': fil['compozitie'], 'ani': YEARS,
         'filiere': FILIERE, 'nume': NUME, 'fried': FRIED, 'evo': EVO}
 
@@ -265,6 +265,7 @@ BODY = f'''<div class="wrap">
 <nav role="tablist">
   <button class="tab" role="tab" id="t-date" aria-controls="p-date" aria-selected="true">Datele și definițiile</button>
   <button class="tab" role="tab" id="t-orase" aria-controls="p-orase" aria-selected="false">Variația structurală: trei orașe</button>
+  <button class="tab" role="tab" id="t-evo" aria-controls="p-evo" aria-selected="false">Evoluția medianelor</button>
   <button class="tab" role="tab" id="t-tm" aria-controls="p-tm" aria-selected="false">Liceele din Timișoara</button>
 </nav>
 
@@ -323,10 +324,15 @@ BODY = f'''<div class="wrap">
 <div id="v-orase"></div>
 </section>
 
+<section class="panel" id="p-evo" role="tabpanel" aria-labelledby="t-evo" hidden>
+<div class="prose"><p>Cum s-a mișcat fiecare liceu de la an la an, în interiorul lumii lui. Linia groasă e mediana filierei — o mediană a orașului, calculată între filiere, n-ar avea referință.</p></div>
+<div class="ctrls" id="c-evo"></div>
+<div id="v-evo"></div>
+</section>
+
 <section class="panel" id="p-tm" role="tabpanel" aria-labelledby="t-tm" hidden>
 <div class="prose"><p>Fiecare liceu e arătat cu mediana lui ajustată și cu intervalul în care datele o pot localiza. Ajustarea trage medianele nesigure spre media lumii lor, cu atât mai tare cu cât liceul are mai puțini candidați: un clasament naiv le-ar da un loc pe care datele nu-l susțin. Linia punctată e media filierei în anul respectiv.</p></div>
 <div class="ctrls" id="c-tm"></div>
-<div id="v-evo"></div>
 <div id="v-tm"></div>
 </section>
 </div>
@@ -338,7 +344,7 @@ const D = %%DATA%%;
 const FCOL = {teoretica:'var(--f-teoretica)', tehnologica:'var(--f-tehnologica)', vocationala:'var(--f-vocationala)'};
 const nf = (x,d=2)=> x==null ? '—' : x.toFixed(d).replace('.',',');
 const esc = s => s.replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const state = {orase:{f:'teoretica'}, tm:{f:'teoretica', an:2025}};
+const state = {orase:{f:'teoretica'}, evo:{f:'teoretica'}, tm:{f:'teoretica', an:2025}};
 
 // ---- taburi ----
 const tabs=[...document.querySelectorAll('.tab')];
@@ -381,11 +387,12 @@ function marcaj(tip, x, y, col){
   return `<rect x="${x-3.6}" y="${y-3.6}" width="7.2" height="7.2" fill="${col}" stroke="var(--surface)" stroke-width="1.5"/>`;
 }
 function renderFriedman(){
-  const F=D.fried, ORD=['IAȘI','CLUJ-NAPOCA','TIMIȘOARA'].filter(c=>F[c]);
+  const fl=state.orase.f, F={}, ORD=[];
+  ['IAȘI','CLUJ-NAPOCA','TIMIȘOARA'].forEach(c=>{ const k=c+'|'+fl; if(D.fried[k]){F[c]=D.fried[k]; ORD.push(c);} });
   if(!ORD.length) return;
   const K=D.ani.length, W=980, HH=330, PL=54, PR=22, PT=22, PB=42;
   const X=i=>PL+i*(W-PL-PR)/(K-1), Y=r=>PT+(K-r)/(K-1)*(HH-PT-PB);
-  let g=`<svg class="chart" viewBox="0 0 ${W} ${HH}" role="img" aria-label="Rangul mediu al anilor, pe orașe: toate trei coboară și urcă împreună, cu 2018 slab și 2024 bun.">`;
+  let g=`<svg class="chart" viewBox="0 0 ${W} ${HH}" role="img" aria-label="Rangul mediu al anilor, pe orașe, în filiera selectată">`;
   for(let r=1;r<=K;r++) g+=`<line class="grid" x1="${PL}" y1="${Y(r)}" x2="${W-PR}" y2="${Y(r)}"/>`
     + (r%2===1?`<text class="ax" x="${PL-9}" y="${Y(r)}" dy="0.32em" text-anchor="end">${r}</text>`:'');
   D.ani.forEach((a,i)=>{ g+=`<text class="ax" x="${X(i)}" y="${HH-PB+20}" text-anchor="middle">${a}</text>`; });
@@ -402,13 +409,13 @@ function renderFriedman(){
      <p class="card-i">Pentru fiecare celulă liceu×filieră, cei nouă ani se ordonează după mediana din anul respectiv: anul cel mai slab primește poziția 1, cel mai bun poziția 9. Graficul arată media acestor poziții, la nivelul tuturor celulelor orașului. Dacă anii ar fi schimbabili între ei, liniile ar fi plate.</p>
      <div class="scroll">${g}</div><div class="leg">${leg}</div>
      <p class="note">${t}</p>
-     <p class="note">Cele trei linii coboară și urcă împreună: efectul e de examen și de cohortă, la nivel național, nu ceva local. De aceea anii nu se adună — fiecare se citește separat.</p></div>`;
+     <p class="note">Dacă cele trei linii coboară și urcă împreună, efectul de an e național — de examen și de cohortă — nu local. Comută filiera: tiparele nu sunt aceleași. De aceea anii nu se adună, iar filierele nu se amestecă.</p></div>`;
 }
 
 // ============ TAB: trei orașe ============
 function renderOrase(){
   const c=document.getElementById('c-orase'); c.innerHTML='';
-  segFiliera(c, state.orase.f, f=>{state.orase.f=f; renderOrase();});
+  segFiliera(c, state.orase.f, f=>{state.orase.f=f; renderOrase(); renderFriedman();});
   const f=state.orase.f, v=document.getElementById('v-orase');
   const rows=D.ani.map(an=>{
     const o=D.orase[f+'|'+an]; if(!o) return null;
@@ -440,7 +447,9 @@ function renderOrase(){
 // ============ Evoluția medianelor, în interiorul filierei ============
 let evoMod='brut';
 function renderEvo(){
-  const f=state.tm.f, E=D.evo[f], col=FCOL[f], host=document.getElementById('v-evo');
+  const c=document.getElementById('c-evo'); c.innerHTML='';
+  segFiliera(c, state.evo.f, x=>{state.evo.f=x; renderEvo();});
+  const f=state.evo.f, E=D.evo[f], col=FCOL[f], host=document.getElementById('v-evo');
   const nume=Object.keys(E.scoli);
   if(!nume.length){host.innerHTML='';return;}
   const rez = evoMod==='reziduu';
@@ -495,7 +504,6 @@ function renderTM(){
   sel.onchange=e=>{state.tm.an=+e.target.value; renderTM();};
   wrap.appendChild(sel); c.appendChild(wrap);
 
-  renderEvo();
   const key=state.tm.f+'|'+state.tm.an, cel=D.tm[key], v=document.getElementById('v-tm');
   if(!cel){v.innerHTML='<div class="card"><p class="card-i">Prea puține licee peste prag în acest an — celula nu se raportează.</p></div>';return;}
   const col=FCOL[state.tm.f];
@@ -552,7 +560,7 @@ function renderTM(){
     r.addEventListener('mouseleave',hideTip);
   });
 }
-renderFriedman(); renderOrase(); renderTM();
+renderFriedman(); renderOrase(); renderEvo(); renderTM();
 '''.replace('%%DATA%%', json.dumps(DATA, ensure_ascii=False))
 
 with open(OUT, 'w', encoding='utf-8') as f:

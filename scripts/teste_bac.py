@@ -112,16 +112,20 @@ for an in YEARS:
 print(f'\n2. FRIEDMAN pe fiecare oraș — blocuri = celulele liceu×filieră prezente în toți cei {len(YEARS)} anii, '
       f'tratament = anul')
 print('   (dacă anii diferă semnificativ, NU se face pooling temporal)')
+# Câte un Friedman pe fiecare oraș ȘI filieră: filierele fiind lumi distincte, un rang
+# mediu al anilor calculat între ele ar amesteca trei traiectorii care n-au de ce să
+# semene. Așa se și vede dacă efectul de an e același în toate trei.
 k = len(YEARS)
+FILIERE_L = ('teoretica', 'tehnologica', 'vocationala')
 for city in CITIES:
-    blocks, coduri = [], []
+  for fil in FILIERE_L:
+    blocks = []
     for (siiir, filiera), ys in matrix.items():
-        if orase[siiir] == city and all(y in ys for y in YEARS):
+        if orase[siiir] == city and filiera == fil and all(y in ys for y in YEARS):
             blocks.append([ys[y] for y in YEARS])
-            coduri.append((siiir, filiera))
     n = len(blocks)
     if n < 3:
-        print(f'  {city}: doar {n} celule balansate — test nefăcut')
+        print(f'  {city} · {fil}: doar {n} celule balansate — test nefăcut')
         continue
     rank_sums = [0.0] * k
     tie_num = 0.0
@@ -138,14 +142,12 @@ for city in CITIES:
     p = chi2_sf(Q, k - 1)
     W = Q / (n * (k - 1))
     mean_ranks = [round(rs / n, 2) for rs in rank_sums]
-    out['friedman_pe_orase'][city] = {
+    out['friedman_pe_orase'][f'{city}|{fil}'] = {
         'n_celule_balansate': n, 'Q': round(Q, 3), 'df': k - 1,
         'p': float(f'{p:.4g}'), 'kendall_W': round(W, 4),
         'rang_mediu_pe_an': dict(zip(map(str, YEARS), mean_ranks))}
     semn = '***' if p < 0.001 else '**' if p < 0.01 else '*' if p < 0.05 else 'ns'
-    print(f'\n  {city}: n={n} licee, Q={Q:.2f}, df={k-1}, p={p:.4g} {semn}, W={W:.3f}')
-    print(f'    rang mediu pe an (1=cel mai slab, {k}=cel mai bun):')
-    print('      ' + '  '.join(f'{y}:{r:.1f}' for y, r in zip(YEARS, mean_ranks)))
+    print(f'  {city:<12} {fil:<12} n={n:>3} Q={Q:6.2f} p={p:9.4g} {semn:<3} W={W:.3f}  ' + '  '.join(f'{y}:{r:.1f}' for y, r in zip(YEARS, mean_ranks)))
 
 op = os.path.join(BASE, 'teste_bac.json')
 with open(op, 'w', encoding='utf-8') as f:
