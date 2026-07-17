@@ -99,6 +99,7 @@ tbody tr:hover{background:var(--chip)}
 .chart .nm{fill:var(--ink);font-size:12.5px}
 .chart .ci{stroke-width:2;stroke-linecap:round;opacity:.55}
 .chart .pt{stroke:var(--surface);stroke-width:2}
+.chart .brut{stroke:var(--muted);stroke-width:1.6}
 .chart .ref{stroke:var(--muted);stroke-dasharray:3 3;stroke-width:1}
 .chart .reflbl{fill:var(--muted);font-size:10.5px}
 .fr-line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
@@ -114,6 +115,17 @@ tbody tr:hover{background:var(--chip)}
 .leg{display:flex;gap:18px;flex-wrap:wrap;margin:10px 0 0;font-size:12.5px;color:var(--muted)}
 .leg span{display:inline-flex;align-items:center;gap:7px}
 .leg svg{flex:none}
+.tests{margin:0;padding-left:20px;font-size:14.5px;color:var(--ink)}
+.tests li{margin-bottom:9px}
+.comp td.num{font-variant-numeric:tabular-nums;text-align:right}
+svg.schema{min-width:620px;height:auto;font-family:var(--sans)}
+.schema .s-ci{stroke:var(--accent);stroke-width:2.5;opacity:.5;stroke-linecap:round}
+.schema .s-pt{fill:var(--accent);stroke:var(--surface);stroke-width:1.5}
+.schema .s-brut{stroke:var(--muted);stroke-width:2}
+.schema .s-lead{stroke:var(--line);stroke-width:1}
+.schema .s-lbl{fill:var(--ink);font-size:12.5px}
+.schema .s-lbl2{fill:var(--muted);font-size:11.5px}
+.schema .s-zone{fill:var(--chip)}
 .chart .row:hover rect.hit{fill:var(--chip);opacity:1}
 .tip{position:fixed;pointer-events:none;background:var(--surface);border:1px solid var(--line);
   border-radius:5px;padding:8px 10px;font-size:12.5px;box-shadow:0 4px 14px rgba(0,0,0,.14);
@@ -188,6 +200,33 @@ tbody tr:hover{background:var(--chip)}
 <div id="v-fried"></div>
 <div class="ctrls" id="c-orase"></div>
 <div id="v-orase"></div>
+
+<div class="card">
+  <div class="card-h">Compoziția orașelor</div>
+  <p class="card-i">Ponderea candidaților pe filieră, în fiecare oraș. E singura cifră din raport unde orașul apare întreg, fiindcă e o afirmație despre structura lui, nu o comparație de performanță.</p>
+  <div id="v-comp"></div>
+  <p class="note">Explicația comodă a decalajului Timișoarei ar fi că are mai multe licee tehnologice. Cluj chiar are mai puține — 18%–25% față de 29%–35% la Timișoara. Dar Iași are 30%–39%, adică aceeași compoziție ca Timișoara, și stă totuși deasupra ei în ambele filiere, în toți anii. Deci compoziția explică o parte din decalajul față de Cluj, dar nu poate fi toată explicația.</p>
+</div>
+
+<div class="card">
+  <div class="card-h">Testele efectuate</div>
+  <ul class="tests">
+    <li><strong>Kruskal-Wallis</strong> pe fiecare an și fiecare filieră separat, cu rangurile calculate doar în interiorul filierei. Unitatea de observație = celula liceu×filieră; observațiile sunt medianele celulelor, grupate pe oraș. Prag: minim 8 candidați pe celulă, minim 3 licee pe oraș ca filiera să intre în test într-un an.</li>
+    <li><strong>Dunn</strong> post-hoc, pe o familie <em>pre-specificată</em>: aceeași filieră, între orașe — 3 filiere × 3 perechi de orașe = 9 comparații pe an, cu corecție <strong>Holm</strong> peste ele. Familia e declarată dinainte fiindcă Dunn pe toate perechile ar da 36, iar Holm ar tăia puterea plătind pentru comparații fără interes (teoreticele din Timișoara față de tehnologicele din Cluj nu spun nimic).</li>
+    <li><strong>Friedman</strong> pe fiecare dintre cele 9 entități oraș×filieră: blocuri = celulele liceu×filieră prezente în toți cei nouă ani, tratament = anul, cu anii ordonați după mediana celulei (graficul de mai sus).</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-h">Ce spune imaginea completă</div>
+  <div class="prose" style="max-width:none;font-size:15.5px">
+  <p><strong>Anii nu sunt interschimbabili, dar filierele nu se mișcă la fel.</strong> Friedman respinge omogenitatea temporală în 8 din cele 9 entități; excepția e vocaționalul din Iași (5 licee, p=0,72), unde liceele sunt prea puține ca să vedem. Aici se oprește însă analogia cu Evaluarea Națională, unde cele trei orașe urcau și coborau împreună și de aceea efectul putea fi numit național. La bacalaureat, asta rămâne adevărat <em>între orașe, în interiorul aceleiași filiere</em> — dar nu între filiere: la Timișoara cel mai bun an e 2024 la teoretic, 2023 la tehnologic și 2017 la vocațional, iar concordanța dintre licee (Kendall W) sare de la 0,20 la teoretic până la 0,59 la tehnologic. Cele trei filiere trăiesc examene diferite.</p>
+  <p><strong>Între orașe, diferențele sunt mici și rareori semnificative.</strong> Din cele 27 de teste (fiecare an × fiecare filieră), 8 ies sub 0,05, cu mărimi de efect între ε²=-0,08 și ε²=0,28. Din cele 81 de comparații pre-specificate între perechi de orașe, doar 4 trec pragul după corecția Holm. Deci varianța structurală între orașe există, dar e modestă.</p>
+  <p><strong>Direcția, în schimb, e neverosimil de constantă.</strong> Timișoara e ultima din trei la teoretic în 9 ani din 9 și la tehnologic în 9 din 9. La vocațional, doar în 2 din 9 — acolo Timișoara nu are o problemă. Constanța asta nu se poate transforma în valoare p, fiindcă anii împart aceleași licee și nu sunt observații independente; dar nici nu e ceva care să se explice prin hazard.</p>
+  <p><strong>Decalajul se lărgește.</strong> În 2017, teoreticele timișorene erau sub cele clujene cu 0,27 puncte de mediană; în 2025, cu 0,77. La tehnologic, distanța trece de la 2,10 la 2,10. Cele patru comparații semnificative din nouă ani sunt concentrate la capătul recent: tehno vs CJ în 2020, teore vs IS în 2024, tehno vs CJ în 2025, teore vs IS în 2025.</p>
+  <p><strong>Consecința metodologică.</strong> Interacțiunea filieră × an e reală, deci nicio statistică nu se agregă între filiere — nici clasamentul, nici testul, nici distribuția, nici măcar în interiorul aceluiași liceu. Mulțimea de referință e întotdeauna celula oraș×filieră. Iar variația între ani fiind un efect comun tuturor liceelor unei filiere, ar contamina orice comparație multi-an pe valori brute: de aceea fiecare an se citește separat, iar evoluția în timp se privește pe reziduu.</p>
+  </div>
+</div>
 </section>
 
 <section class="panel" id="p-evo" role="tabpanel" aria-labelledby="t-evo" hidden>
@@ -200,6 +239,44 @@ tbody tr:hover{background:var(--chip)}
 <div class="prose"><p>Fiecare liceu e arătat cu mediana lui ajustată și cu intervalul în care datele o pot localiza. Ajustarea trage medianele nesigure spre media lumii lor, cu atât mai tare cu cât liceul are mai puțini candidați: un clasament naiv le-ar da un loc pe care datele nu-l susțin. Linia punctată e media filierei în anul respectiv.</p></div>
 <div class="ctrls" id="c-tm"></div>
 <div id="v-tm"></div>
+
+<div class="card">
+  <div class="card-h">Cum se citește graficul</div>
+  <p class="card-i">Punctul e mediana ajustată; bara e intervalul în care datele o pot localiza. Când barele a două licee se suprapun, diferența dintre ele nu se susține — oricât de departe ar fi punctele.</p>
+  <div class="scroll"><svg viewBox="0 0 660 218" class="schema" role="img" aria-label="Schemă: punctul e mediana ajustată, bara e intervalul de 95%. Când barele a două licee se suprapun, diferența nu e semnificativă; când sunt separate, diferența se susține.">
+    <line x1="150" y1="34" x2="410" y2="34" class="s-ci"/>
+    <line x1="250" y1="26" x2="250" y2="42" class="s-brut"/>
+    <circle cx="320" cy="34" r="5.5" class="s-pt"/>
+    <line x1="320" y1="12" x2="320" y2="27" class="s-lead"/>
+    <text x="320" y="9" text-anchor="middle" class="s-lbl">mediana ajustată</text>
+    <line x1="150" y1="41" x2="150" y2="58" class="s-lead"/>
+    <text x="150" y="71" text-anchor="middle" class="s-lbl2">interval 95%</text>
+    <line x1="250" y1="43" x2="250" y2="58" class="s-lead"/>
+    <text x="250" y="71" text-anchor="middle" class="s-lbl2">mediana brută</text>
+    <rect x="250" y="98" width="90" height="54" class="s-zone"/>
+    <text x="295" y="93" text-anchor="middle" class="s-lbl2">se suprapun</text>
+    <text x="16" y="112" class="s-lbl">Liceul A</text>
+    <line x1="170" y1="108" x2="340" y2="108" class="s-ci"/><circle cx="255" cy="108" r="5.5" class="s-pt"/>
+    <text x="16" y="146" class="s-lbl">Liceul B</text>
+    <line x1="250" y1="142" x2="420" y2="142" class="s-ci"/><circle cx="335" cy="142" r="5.5" class="s-pt"/>
+    <text x="440" y="118" class="s-lbl">diferența</text><text x="440" y="134" class="s-lbl">NU se susține</text>
+    <text x="16" y="184" class="s-lbl">Liceul C</text>
+    <line x1="170" y1="180" x2="275" y2="180" class="s-ci"/><circle cx="222" cy="180" r="5.5" class="s-pt"/>
+    <text x="16" y="210" class="s-lbl">Liceul D</text>
+    <line x1="345" y1="206" x2="450" y2="206" class="s-ci"/><circle cx="397" cy="206" r="5.5" class="s-pt"/>
+    <text x="470" y="194" class="s-lbl">diferența</text><text x="470" y="210" class="s-lbl">se susține</text>
+  </svg></div>
+</div>
+
+<div class="card">
+  <div class="card-h">Notă metodologică</div>
+  <div class="prose" style="max-width:none;font-size:15.5px">
+  <p>Pentru fiecare celulă liceu×filieră: <strong>mediana</strong> mediilor candidaților ei, cu <strong>eroarea standard prin bootstrap</strong> — 2.000 de reeșantionări cu înlocuire din candidații celulei, incluzându-i pe cei fără rezultat. Mediana e trasă apoi spre ancora lumii ei proporțional cu incertitudinea: liceele cu puțini candidați se apropie de ancoră și primesc interval larg, cele mari rămân aproape neatinse. Un clasament neajustat le-ar da celor mici un loc pe care datele nu-l susțin.</p>
+  <p><strong>Ancora e a celulei oraș×filieră×an, nu a orașului.</strong> Un liceu tehnologic tras spre media tuturor liceelor ar fi penalizat fiindcă e tehnologic, ceea ce nu e o informație despre el. Nici anii nu se amestecă: Friedman a arătat că nu sunt interschimbabili, deci și ancora, și dispersia priorului se estimează separat pe fiecare an.</p>
+  <p>Ancora e <strong>media</strong> medianelor liceelor din celulă, nu mediana lor. E o alegere impusă de formula de shrinkage, care descompune dispersia totală (τ² plus zgomotul de eșantionare) matematic față de medie. Soluția e deci intenționat hibridă: la nivelul candidaților, unde asimetria contează, statistica rămâne strict mediana; la nivelul agregării peste cele 7–18 licee ale unei celule, unde contează doar tendința centrală a unui set mult mai omogen, se folosește media — singura care face formula corectă.</p>
+  <p>τ² e estimat prin metoda momentelor: dispersia observată între licee minus cea explicabilă prin zgomot, tăiată la zero. Când iese mare față de zgomot — cum se întâmplă aici — ponderea w se apropie de 1, iar ajustarea aproape nu mișcă nimic. Asta nu e un defect al metodei, ci un rezultat: liceele chiar diferă între ele mai mult decât ne înșeală eșantionul.</p>
+  </div>
+</div>
 </section>
 </div>
 <div class="tip" id="tip"></div>
@@ -399,11 +476,12 @@ function renderTM(){
         data-i="${i}"/>
       <text class="nm" x="${PL-12}" y="${y}" dy="0.32em" text-anchor="end">${esc(s.d.replace(/ TIMIȘOARA/,'').replace(/^(LICEUL|COLEGIUL) /,''))}</text>
       <line class="ci" x1="${X(s.lo)}" y1="${y}" x2="${X(s.hi)}" y2="${y}" stroke="${col}"/>
+      <line class="brut" x1="${X(s.br)}" y1="${y-5}" x2="${X(s.br)}" y2="${y+5}"/>
       <circle class="pt" cx="${X(s.sh)}" cy="${y}" r="5" fill="${col}"/></g>`;
   });
   g+='</svg>';
   h+=`<div class="card"><div class="card-h">Mediana ajustată și intervalul ei</div>
-    <p class="card-i">Punctul e mediana după ajustare; bara e intervalul de 95% în care datele o pot localiza. Liceele ale căror bare se suprapun nu pot fi despărțite. Sortare după mediana ajustată.</p>
+    <p class="card-i">Punctul e mediana după ajustare; liniuța verticală e mediana brută, dinainte de ajustare; bara e intervalul de 95% în care datele o pot localiza. Liceele ale căror bare se suprapun nu pot fi despărțite — vezi schema de sub tabel. Sortare după mediana ajustată.</p>
     <div class="scroll">${g}</div></div>`;
 
   // --- tabelul ---
@@ -425,5 +503,18 @@ function renderTM(){
     r.addEventListener('mouseleave',hideTip);
   });
 }
+// compoziția: singurul loc unde orașul apare întreg — e o afirmație despre structura lui
+(function renderComp(){
+  const C=['CLUJ-NAPOCA','IAȘI','TIMIȘOARA'], NC={'CLUJ-NAPOCA':'Cluj-Napoca','IAȘI':'Iași','TIMIȘOARA':'Timișoara'};
+  let h='<div class="scroll"><table class="comp"><thead><tr><th class="l">An</th>';
+  C.forEach(c=>{h+='<th colspan="3" style="text-align:center">'+NC[c]+'</th>';});
+  h+='</tr><tr><th class="l"></th>'+C.map(()=>'<th>teor.</th><th>tehn.</th><th>voc.</th>').join('')+'</tr></thead><tbody>';
+  D.ani.forEach(a=>{ h+='<tr><td class="l">'+a+'</td>';
+    C.forEach(c=>{ const k=D.comp[c+'|'+a];
+      D.filiere.forEach(f=>{ h+='<td class="num">'+(k?Math.round(k[f]*100)+'%':'—')+'</td>'; }); });
+    h+='</tr>'; });
+  h+='</tbody></table></div>';
+  document.getElementById('v-comp').innerHTML=h;
+})();
 renderFriedman(); renderOrase(); renderEvo(); renderTM();
 </script>
