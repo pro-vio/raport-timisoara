@@ -113,7 +113,7 @@ def kruskal(glist):
 def dunn_raw(etichete, glist, rank_sums, N, perechi=None):
     """Z și p brut pentru perechile Dunn, FĂRĂ corecție. Rangurile sunt cele primite,
     deci apelantul decide în ce univers se clasează (vezi filiera_bac.py: rangurile se
-    calculează în interiorul filierei, nu peste filiere)."""
+    calculează în interiorul filierei, nu între filiere)."""
     k = len(glist)
     sizes = [len(g) for g in glist]
     mean_ranks = [rs / n for rs, n in zip(rank_sums, sizes)]
@@ -146,7 +146,7 @@ def dunn_holm(etichete, glist, rank_sums, N, perechi=None):
     """Post-hoc Dunn, cu corecție Holm.
 
     `perechi` = listă de (i, j) pentru o familie de comparații PRE-SPECIFICATĂ. Când e
-    dată, Holm se aplică doar peste ea, nu peste toate perechile. Asta contează la multe
+    dată, Holm se aplică doar pe ea, nu pe toate perechile. Asta contează la multe
     grupuri: cu 9 grupuri, toate perechile înseamnă 36 de comparații, iar Holm peste 36
     taie puterea plătind pentru comparații fără interes. Rangurile rămân cele din testul
     omnibus (așa lucrează Dunn) — se restrânge doar familia, nu clasarea.

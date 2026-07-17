@@ -247,7 +247,7 @@ BODY = f'''<div class="wrap">
 <p>Voi arăta, în prima parte, ce am numărat și cum; în a doua, cât de mult diferă cele trei orașe între ele, ceea ce fixează scara pe care se citește restul; în a treia, unde stă fiecare liceu timișorean în lumea lui.</p>
 
 <h2>Prezumția care structurează tot</h2>
-<p>Asum că, în același oraș, cele trei filiere sunt trei lumi sociale diferite. Un liceu teoretic și unul tehnologic nu recrutează aceiași elevi, nu-i pregătesc pentru aceleași examene și nu răspund acelorași așteptări. De aceea nimic nu se compară peste filiere: un clasament care le-ar amesteca ar fi, în fapt, un clasament al filierelor — primele locuri ar fi teoretice, ultimele tehnologice, iar cititorul ar crede că citește despre școli când citește despre tipuri de școli.</p>
+<p>Asum că, în același oraș, cele trei filiere sunt trei lumi sociale diferite. Un liceu teoretic și unul tehnologic nu recrutează aceiași elevi, nu-i pregătesc pentru aceleași examene și nu răspund acelorași așteptări. De aceea nimic nu se compară între filiere: un clasament care le-ar amesteca ar fi, în fapt, un clasament al filierelor — primele locuri ar fi teoretice, ultimele tehnologice, iar cititorul ar crede că citește despre școli când citește despre tipuri de școli.</p>
 <p>Prezumția nu e o ipoteză pe care o testăm, ci lentila prin care privim. Or, tocmai de aceea trebuie spusă deschis: cine nu o acceptă va citi altfel toate cifrele de mai jos.</p>
 
 <h3>Maparea profil → filieră</h3>
@@ -371,7 +371,7 @@ function renderFriedman(){
   const t=ORD.map(c=>`${c==='CLUJ-NAPOCA'?'Cluj':c==='IAȘI'?'Iași':'Timișoara'}: Q=${nf(F[c].Q,1)}, p=${F[c].p<0.001?F[c].p.toExponential(1).replace('.',','):nf(F[c].p,3)}, W=${nf(F[c].W)}, ${F[c].n} celule`).join(' · ');
   document.getElementById('v-fried').innerHTML=
     `<div class="card"><div class="card-h">Rangul mediu al anilor, pe orașe (testul Friedman)</div>
-     <p class="card-i">Pentru fiecare celulă liceu×filieră, cei nouă ani se ordonează după mediana din anul respectiv: anul cel mai slab primește poziția 1, cel mai bun poziția 9. Graficul arată media acestor poziții peste toate celulele orașului. Dacă anii ar fi schimbabili între ei, liniile ar fi plate.</p>
+     <p class="card-i">Pentru fiecare celulă liceu×filieră, cei nouă ani se ordonează după mediana din anul respectiv: anul cel mai slab primește poziția 1, cel mai bun poziția 9. Graficul arată media acestor poziții, la nivelul tuturor celulelor orașului. Dacă anii ar fi schimbabili între ei, liniile ar fi plate.</p>
      <div class="scroll">${g}</div><div class="leg">${leg}</div>
      <p class="note">${t}</p>
      <p class="note">Cele trei linii coboară și urcă împreună: efectul e de examen și de cohortă, la nivel național, nu ceva local. De aceea anii nu se adună — fiecare se citește separat.</p></div>`;

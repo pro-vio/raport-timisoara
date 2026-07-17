@@ -30,9 +30,9 @@ orase, den = data['orase'], data['denumiri']
 # liceu-an -> mediana mediilor (promoția curentă, media recalculată)
 # Celula = TOȚI candidații promoției curente; cei fără rezultat intră fără notă, jos.
 # Unitatea e celula LICEU × FILIERĂ, nu liceul. Sub prezumția că filierele sunt lumi
-# sociale distincte, o mediană a unui liceu calculată peste filiere n-are referent — nici
+# sociale distincte, o mediană a unui liceu calculată între filiere n-are referent — nici
 # măcar în interiorul unui bloc Friedman, fiindcă valoarea comparată de la an la an ar
-# rămâne o mediană cross-filieră. Deci blocul e celula, iar un colegiu tehnic cu clase
+# rămâne o mediană între filiere. Deci blocul e celula, iar un colegiu tehnic cu clase
 # teoretice și tehnologice contribuie cu două blocuri.
 FILIERE = ('teoretica', 'tehnologica', 'vocationala')
 acc = defaultdict(list)

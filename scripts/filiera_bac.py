@@ -2,12 +2,12 @@
 #
 # PREZUMȚIA DE BAZĂ (decizia userului, 2026-07-17): în același oraș, cele trei filiere
 # sunt trei lumi sociale diferite. De aici, două consecințe care structurează tot:
-#  1. Nu se compară nimic peste filiere. Un clasament al liceelor care amestecă filierele
+#  1. Nu se compară nimic între filiere. Un clasament al liceelor care amestecă filierele
 #     ar fi, în fapt, un clasament al filierelor: primele ar fi teoreticele, ultimele
 #     tehnologicele, iar cititorul ar crede că citește despre școli când citește despre
 #     tipuri de școli. Condiție de face validity, nu de statistică.
 #  2. RANGURILE SE CALCULEAZĂ ÎN INTERIORUL FILIEREI. O versiune anterioară făcea un
-#     Kruskal-Wallis omnibus peste toate cele 9 entități deodată: ieșea p<1e-8 și ε²=0,4-0,6
+#     Kruskal-Wallis omnibus pe toate cele 9 entități deodată: ieșea p<1e-8 și ε²=0,4-0,6
 #     în fiecare an, dar aia nu era o descoperire — era prezumția de mai sus apărând în
 #     rezultat. Testul măsura că filiera contează, adică exact ce luăm ca dat, iar rangurile
 #     lui clasau licee teoretice față de tehnologice. Ambele, greșit.
@@ -18,7 +18,7 @@
 # subiectul raportului.
 #
 # MULTIPLICITATE: o familie pe an, declarată dinainte — aceeași filieră, între orașe:
-# 3 filiere × 3 perechi de orașe = 9 comparații, Holm peste ele.
+# 3 filiere × 3 perechi de orașe = 9 comparații, Holm pe familia asta.
 #
 # Unitatea de observație = celula liceu × filieră (un colegiu tehnic poate avea și clase
 # teoretice, și tehnologice — filiera e proprietate a clasei, nu a școlii; deci un liceu
@@ -106,9 +106,9 @@ for an in YEARS:
 
 # ---------- 3. varianța structurală între orașe, ÎN INTERIORUL fiecărei filiere ----------
 print('\n3. ÎNTRE ORAȘE, ÎN INTERIORUL FILIEREI — există varianță structurală?')
-print('   Kruskal-Wallis peste cele 3 orașe, cu ranguri calculate DOAR în interiorul')
+print('   Kruskal-Wallis pe cele 3 orașe, cu ranguri calculate DOAR în interiorul')
 print('   filierei. Familia pre-specificată: 9 comparații pe an (3 filiere × 3 perechi),')
-print('   Holm peste ele.\n')
+print('   Holm pe familia asta.\n')
 rez = {}
 scor = defaultdict(lambda: {'ani': 0, 'tm_ultima': 0, 'tm_sub_cj_semnif': 0})
 for an in YEARS:
