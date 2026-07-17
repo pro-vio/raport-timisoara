@@ -6,8 +6,10 @@
 
 Analiza EN VIII de mai jos e **încheiată și livrată** — nu se atinge. Firul activ e replicarea pe Bacalaureat.
 
-**Livrabil: `bac.html`** → publicat ca artifact la https://claude.ai/code/artifact/c1a11bbf-3384-4038-bc9b-7fd10e339d45
-(republicare: `python scripts/build_bac_html.py`, apoi Artifact pe același `file_path` — păstrează URL-ul).
+**Livrabil: `bac.html`** — comis și publicat (commit `a51f051`, 2026-07-17).
+- **[pro-vio.github.io/raport-timisoara/bac.html](https://pro-vio.github.io/raport-timisoara/bac.html)** — linkul public, verificat live. Se reconstruiește la fiecare `git push` pe `main` (build Pages ~1 min; verifică cu `gh api repos/pro-vio/raport-timisoara/pages/builds/latest`).
+- [Artifact](https://claude.ai/code/artifact/c1a11bbf-3384-4038-bc9b-7fd10e339d45) — aceeași pagină, pt iterare din chat. Republicare: `python scripts/build_bac_html.py`, apoi Artifact pe același `file_path` (păstrează URL-ul).
+- În repo: 7,6 MB (bac.html + 5 JSON-uri derivate + 11 scripturi). Cele 281 MB de surse brute sunt în `.gitignore` — se redescarcă cu `download_bac.py`.
 
 Pași: 1. descărcare ✅ · 2. inventar ✅ · 3. extracție ✅ · 4. distribuții ✅ · 5. teste structurale ✅ ·
 6. shrinkage ✅ · 7. raport ✅ (3 taburi). **Fereastra: 2017-2025, 9 ani.**
@@ -69,7 +71,15 @@ cu assert că partiția profil→filieră ține (verificat: 9 profiluri, 1 filie
 
 ## Deschis
 
-- Textul e scris; niciun pas nu mai e în lucru.
+- **`bac.html` e o pagină ORFANĂ.** Planul cerea link reciproc cu `index.html` (raportul EN); nu s-a făcut.
+  Cine intră pe site nu are cum să afle că există raportul BAC, și invers. Câteva minute de lucru.
+- **Următorul fir (userul, 2026-07-17): contribuția netă a liceului** — puncte adăugate față de nota de
+  intrare, cu normalizare. E exact ce lipsește acum: raportul spune la limite că măsoară selecția la intrare,
+  nu valoarea adăugată. **Dar prima verificare nu e normalizarea, ci dacă legătura se poate face deloc:**
+  admiterea la liceu e alt set de date decât BAC-ul, joinul e pe ELEV, nu pe școală, iar noi nu avem un
+  identificator de elev între cele două. `Cod unic candidat` din BAC nu e evident același lucru cu ce apare
+  în datele de admitere — de verificat înainte de orice altceva. Userul a zis: după ce ne lămurim cu BAC-ul.
+- Textul raportului e scris și actualizat; niciun pas din cei 7 nu mai e în lucru.
 - Glosarul `statistica-ro`: 93 intrări; `cazuri cenzurate` [R m.181] adăugat. 18 termeni rămân nepropuși
   (asimetrie-ca-formă, bootstrap, mărimea efectului, Friedman, comparații multiple, boltire ș.a.) — **nu sunt
   în Reisz**, iar suporturile lui Hatos sunt pe ResearchGate, care cere verificare anti-bot. Userul: lasă-le.
