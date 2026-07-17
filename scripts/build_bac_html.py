@@ -382,8 +382,8 @@ BODY = f'''<div class="wrap">
 
 <section class="panel" id="p-orase" role="tabpanel" aria-labelledby="t-orase" hidden>
 <div class="prose"><p>Cele trei orașe nu sunt subiectul raportului; ele fixează scara. Dacă liceele din Timișoara ar semăna cu cele din Cluj și Iași, diferențele dintre ele ar trebui citite ca variație locală. Comparația se face <strong>în interiorul fiecărei filiere</strong>, cu rangurile calculate tot acolo.</p></div>
-<div id="v-fried"></div>
 <div class="ctrls" id="c-orase"></div>
+<div id="v-fried"></div>
 <div id="v-orase"></div>
 
 <div class="card">
@@ -533,8 +533,8 @@ function renderFriedman(){
     return `<span><svg width="26" height="12"><line x1="1" y1="6" x2="25" y2="6" stroke="${st.col}" stroke-width="2" stroke-dasharray="${st.dash}"/>${marcaj(st.marc,13,6,st.col)}</svg>${c==='CLUJ-NAPOCA'?'Cluj-Napoca':c==='IAȘI'?'Iași':'Timișoara'}</span>`;}).join('');
   const t=ORD.map(c=>`${c==='CLUJ-NAPOCA'?'Cluj':c==='IAȘI'?'Iași':'Timișoara'}: Q=${nf(F[c].Q,1)}, p=${F[c].p<0.001?F[c].p.toExponential(1).replace('.',','):nf(F[c].p,3)}, W=${nf(F[c].W)}, ${F[c].n} celule`).join(' · ');
   document.getElementById('v-fried').innerHTML=
-    `<div class="card"><div class="card-h">Rangul mediu al anilor, pe orașe (testul Friedman)</div>
-     <p class="card-i">Pentru fiecare celulă liceu×filieră, cei nouă ani se ordonează după mediana din anul respectiv: anul cel mai slab primește poziția 1, cel mai bun poziția 9. Graficul arată media acestor poziții, la nivelul tuturor celulelor orașului. Dacă anii ar fi interschimbabili, liniile ar fi plate.</p>
+    `<div class="card"><div class="card-h">Rangul mediu al anilor · ${D.nume[fl].toLowerCase()} (testul Friedman)</div>
+     <p class="card-i">Testul se face separat pe fiecare dintre cele 9 entități oraș×filieră — mulțimea de referință e întotdeauna celula, niciodată orașul întreg. Aici vezi filiera <strong>${D.nume[fl].toLowerCase()}</strong>: pentru fiecare liceu, cei nouă ani se ordonează după mediana lui din anul respectiv (1 = cel mai slab an al liceului, 9 = cel mai bun), iar linia arată media acestor poziții la nivelul liceelor orașului din filiera asta. Dacă anii ar fi interschimbabili, liniile ar fi plate. Comută filiera: tiparele nu sunt aceleași.</p>
      <div class="scroll">${g}</div><div class="leg">${leg}</div>
      <p class="note">${t}</p>
      <p class="note">Dacă cele trei linii coboară și urcă împreună, efectul de an e național — de examen și de cohortă — nu local. Comută filiera: tiparele nu sunt aceleași. De aceea anii nu se adună, iar filierele nu se amestecă.</p></div>`;
