@@ -40,11 +40,17 @@ metadata XLSX ruptă → `read_only=False`. 2022 are schemă proprie, 74 col.
    **trunchiată** la 2 zecimale (nu rotunjită — ar greși în 33%). Nota finală = cea de la contestație,
    necondiționat (2016 făcea excepție, cu prag ≥0,5 — de aceea e scos). Verificat: reproduce media publicată
    în 100% din cazuri, toți anii. Acoperire 95,5-98,7% vs 83-90%.
-2. **Mediană, nu medie.** Decis pe datele BAC (nu prin analogie cu EN): 848 celule, 84% asimetrice la stânga,
-   50% semnificativ, gap −0,13, corelat −0,55 cu nivelul școlii. Efectul pe clasament e mic (Spearman 0,99).
+2. **Mediană, nu medie.** Decis pe datele BAC (nu prin analogie cu EN), pe celulele liceu×filieră×an:
+   969 de celule, 82% asimetrice la stânga, 44% semnificativ, gap −0,12, corelat −0,53 cu nivelul liceului.
+   Pe clasament: Spearman medie-vs-mediană per celulă are minimul 0,70 și tipicul 0,98 — în celulele mici
+   alegerea chiar mută ranguri (vechiul „0,99" venea dintr-un clasament care amesteca filierele).
 3. **Doar promoția curentă** (89% din candidați).
-4. **Filierele sunt trei lumi sociale distincte** — prezumție de bază, nu ipoteză testată. Consecințe:
-   nimic nu se compară peste filiere; **rangurile se calculează în interiorul filierei**. Un KW omnibus peste
+4. **Filierele sunt trei lumi sociale distincte** — prezumție de bază, nu ipoteză testată. Consecința tare:
+   **MULȚIMEA DE REFERINȚĂ E ÎNTOTDEAUNA ORAȘ×FILIERĂ — orașul singur nu apare nicăieri.** Nimic nu se
+   compară între filiere; rangurile se calculează în interiorul filierei. Încălcări găsite și eliminate
+   (audit 2026-07-17, la cererea userului): KW pe an care grupa toate celulele unui oraș (șters din
+   teste_bac.py; varianta corectă e în filiera_bac.py), distribuțiile pasului 4 pe celule școală×an
+   (rekey liceu×filieră×an), Spearman-ul „0,99" din text. Un KW omnibus peste
    cele 9 entități a fost ÎNCERCAT ȘI ABANDONAT: ieșea p<1e-8, ε²=0,4-0,6, dar aia era prezumția apărând în
    rezultat, iar rangurile lui clasau teoretice față de tehnologice. Corecția a schimbat răspunsul: de la
    1 comparație semnificativă din 81, la 4.
@@ -57,12 +63,11 @@ metadata XLSX ruptă → `read_only=False`. 2022 are schemă proprie, 74 col.
 
 ## Rezultate
 
-- **Fără pooling temporal.** Friedman: p max 6,7×10⁻¹⁰, W 0,22-0,26. 2018 cel mai slab, 2024 cel mai bun.
-  Graficul rangului mediu pe ani (replică după cel din raportul EN) e pe tabul celor trei oraşe; liniile
-  coboară şi urcă împreună → efect naţional de examen/cohortă, nu local.
-  ATENŢIE: **Friedman blochează pe celula LICEU×FILIERĂ, nu pe liceu** (idem KW pe ani). Prima versiune
-  bloca pe liceu, cu mediana calculată peste filiere — inconsistent cu prezumţia. Blocarea pe liceu NU
-  salvează asta: valoarea comparată de la an la an rămânea o mediană cross-filieră.
+- **Fără pooling temporal.** Friedman pe fiecare din cele 9 entități oraș×filieră: respinge
+  interschimbabilitatea anilor în 8 din 9; excepția e vocaționalul din Iași (5 licee, p=0,72) — fără putere.
+  W între 0,14 și 0,59. Tiparul anilor DIFERĂ între filiere (la TM: cel mai bun an e 2024 la teoretic,
+  2023 la tehnologic, 2017 la vocațional) — graficul urmează selectorul de filieră. Deci nici anii nu se
+  adună, nici filierele nu se amestecă.
 - **Timișoara e ultima din trei** la teoretic 9/9 ani și la tehnologic 9/9; la vocațional doar 2/9 — acolo
   nu are o problemă. Semnificativ: teoretic vs Iași (2024, 2025), tehnologic vs Cluj (2020, 2025). Decalajul
   se lărgește: ε² sare la ~0,28 în 2025.

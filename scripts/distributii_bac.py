@@ -1,6 +1,9 @@
 # Pasul „verificarea distribuțiilor" (cerut de user, 2026-07-16): pe fiecare
-# școală × an (BAC, promoția curentă, cu medie calculată) măsoară forma
-# distribuției mediilor, ca să decidem empiric mediană vs medie:
+# celulă LICEU × FILIERĂ × AN (promoția curentă, cu medie calculată) măsoară forma
+# distribuției mediilor, ca să decidem empiric mediană vs medie. Mulțimea de
+# referință e celula liceu×filieră, nu liceul: sub prezumția că filierele sunt lumi
+# sociale distincte, o distribuție a unui liceu amestecată între filiere n-are
+# referință (o versiune anterioară exact asta făcea).
 #   - asimetrie g1 + testul D'Agostino de asimetrie (z, p) — implementare manuală,
 #     scipy nu e instalat;
 #   - boltire (exces g2);
@@ -24,11 +27,12 @@ den = data['denumiri']
 # Lucrăm pe medie_calc (media oficială recalculată, definită pentru toți cei prezenți
 # la toate probele), NU pe medie_pub — aceea există doar pentru cine a luat ≥5 la
 # fiecare probă, deci ar da distribuția supraviețuitorilor. Vezi STARE.md.
-grupe = defaultdict(list)   # (siiir, an) -> [medii], doar promoția curentă
+FILIERE = ('teoretica', 'tehnologica', 'vocationala')
+grupe = defaultdict(list)   # (siiir, filiera, an) -> [medii], doar promoția curentă
 for (an, siiir, forma, filiera, profil, promo, status,
      medie_pub, medie_calc) in data['candidati']:
-    if promo == 1 and medie_calc is not None:
-        grupe[(siiir, an)].append(medie_calc)
+    if promo == 1 and medie_calc is not None and filiera in FILIERE:
+        grupe[(siiir, filiera, an)].append(medie_calc)
 
 def momente(x):
     n = len(x)
@@ -65,7 +69,7 @@ def dagostino_skew_z(g1, n):
     return z
 
 rez = []
-for (siiir, an), medii in sorted(grupe.items()):
+for (siiir, filiera, an), medii in sorted(grupe.items()):
     n = len(medii)
     if n < N_MIN:
         continue
@@ -74,7 +78,7 @@ for (siiir, an), medii in sorted(grupe.items()):
     z = dagostino_skew_z(g1, n)
     p = 2 * (1 - norm_cdf(abs(z))) if z is not None else None
     rez.append({
-        'siiir': siiir, 'an': an, 'oras': orase[siiir], 'denumire': den[siiir],
+        'siiir': siiir, 'filiera': filiera, 'an': an, 'oras': orase[siiir], 'denumire': den[siiir],
         'n': n, 'medie': round(m, 3), 'mediana': round(med, 3),
         'gap': round(m - med, 3), 'skew_g1': round(g1, 3), 'kurt_g2': round(g2, 3),
         'z_skew': round(z, 3) if z is not None else None,
@@ -101,8 +105,8 @@ def cuartile(v):
         return s[lo] + (i - lo) * (s[hi] - s[lo])
     return q(0.25), q(0.5), q(0.75)
 
-print(f'școală-an cu n>={N_MIN}: {len(rez)} '
-      f'(din {len(grupe)} școală-an cu ≥1 medie, promoția curentă)')
+print(f'celule liceu×filieră-an cu n>={N_MIN}: {len(rez)} '
+      f'(din {len(grupe)} cu ≥1 medie, promoția curentă)')
 skews = [r['skew_g1'] for r in rez]
 q1, q2, q3 = cuartile(skews)
 print(f'asimetrie g1: Q1={q1:.2f}  mediană={q2:.2f}  Q3={q3:.2f}')

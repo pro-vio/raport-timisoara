@@ -33,6 +33,22 @@ def putere(x):
         x *= 10; e -= 1
     sup = str(-e).translate(str.maketrans('0123456789', '⁰¹²³⁴⁵⁶⁷⁸⁹'))
     return f'{d(x,1)}×10⁻{sup}'
+def spearman(a, b):
+    def rk(x):
+        o = sorted(range(len(x)), key=lambda i: x[i]); r = [0.0] * len(x); i = 0
+        while i < len(o):
+            j = i
+            while j + 1 < len(o) and x[o[j + 1]] == x[o[i]]:
+                j += 1
+            for t in range(i, j + 1):
+                r[o[t]] = (i + j) / 2 + 1
+            i = j + 1
+        return r
+    ra, rb = rk(a), rk(b); n = len(a)
+    ma, mb = sum(ra) / n, sum(rb) / n
+    sa = sum((v - ma) ** 2 for v in ra) ** .5
+    sb = sum((v - mb) ** 2 for v in rb) ** .5
+    return 1.0 if sa == 0 or sb == 0 else sum((x - ma) * (y - mb) for x, y in zip(ra, rb)) / (sa * sb)
 cel = dist['scoala_an']
 N_CEL = len(cel)
 N_NEG = sum(1 for r in cel if r['skew_g1'] < 0)
@@ -43,6 +59,21 @@ PLAFON = sum(1 for r in cel if r['pond_plafon_950'] >= 0.10)
 fr = teste['friedman_pe_orase']
 W_MIN, W_MAX = min(v['kendall_W'] for v in fr.values()), max(v['kendall_W'] for v in fr.values())
 P_MAX_FR = max(v['p'] for v in fr.values())
+FR_N = len(fr)
+FR_EXC = {k: v for k, v in fr.items() if v['p'] >= 0.05}
+FR_REJ = FR_N - len(FR_EXC)
+_NE = {'teoretica': 'teoreticul', 'tehnologica': 'tehnologicul', 'vocationala': 'vocaționalul'}
+_OL = {'IAȘI': 'din Iași', 'CLUJ-NAPOCA': 'din Cluj-Napoca', 'TIMIȘOARA': 'din Timișoara'}
+FR_EXC_FRAZA = ('; excepția e ' + '; '.join(
+    f"{_NE[k.split('|')[1]]} {_OL[k.split('|')[0]]} ({v['n_celule_balansate']} licee, p={d(v['p'])})"
+    for k, v in FR_EXC.items()) + ', unde liceele sunt prea puține ca să vedem') if FR_EXC else ''
+AN_TOP = {f: max(fr[f'TIMIȘOARA|{f}']['rang_mediu_pe_an'].items(), key=lambda kv: kv[1])[0]
+          for f in FILIERE}
+_gr = {}
+for r in cel:
+    _gr.setdefault((r['oras'], r['filiera'], r['an']), []).append((r['medie'], r['mediana']))
+_sp = [spearman([x[0] for x in v], [x[1] for x in v]) for v in _gr.values() if len(v) >= 5]
+SP_MIN, SP_MED = min(_sp), sorted(_sp)[len(_sp) // 2]
 pc = [r for r in cand['candidati'] if r[5] == 1]
 ACOP = {}
 for an in YEARS:
@@ -292,7 +323,7 @@ BODY = f'''<div class="wrap">
 <p>Câștigul e substanțial: acoperirea urcă de la {pct(PUB_MIN)}–{pct(PUB_MAX)} la {pct(AC_MIN,1)}–{pct(AC_MAX,1)} din candidați, adică între {ro(G_MIN)} și {ro(G_MAX)} de oameni recuperați în fiecare an, în cele trei orașe. Cei recuperați sunt, prin construcție, coada de jos — exact partea pe care coloana publicată o ascundea.</p>
 
 <h3>Mediana, nu media</h3>
-<p>Statistica fiecărui liceu e mediana mediilor candidaților lui. Alegerea nu e preluată din analiza anterioară, ci decisă pe datele acestea: din {ro(N_CEL)} de celule școală–an, {pct(N_NEG/N_CEL)} au distribuția asimetrică la stânga, iar {pct(N_SIG/N_CEL)} semnificativ. Media stă sub mediană cu {d(GAP_MED)} puncte în mod tipic, dar abaterea nu e neutră — corelează −{d(R_GAP)} cu nivelul școlii, deci media penalizează exact liceele bune. Cauza e plafonul: la {PLAFON} dintre celule, peste o zecime dintre candidați au medii de 9,50 sau peste. Desigur, în clasament diferența e mică: ordonarea după medie și cea după mediană dau un coeficient Spearman de 0,99. Dar corectitudinea unei alegeri nu se măsoară prin cât de mult schimbă rezultatul.</p>
+<p>Statistica fiecărui liceu e mediana mediilor candidaților lui. Alegerea nu e preluată din analiza anterioară, ci decisă pe datele acestea: din {ro(N_CEL)} de celule liceu×filieră×an, {pct(N_NEG/N_CEL)} au distribuția asimetrică la stânga, iar {pct(N_SIG/N_CEL)} semnificativ. Media stă sub mediană cu {d(GAP_MED)} puncte în mod tipic, dar abaterea nu e neutră — corelează −{d(R_GAP)} cu nivelul școlii, deci media penalizează exact liceele bune. Cauza e plafonul: la {PLAFON} dintre celule, peste o zecime dintre candidați au medii de 9,50 sau peste. Desigur, în clasament diferența e mică: în interiorul fiecărei celule oraș×filieră×an, ordonarea liceelor după medie și cea după mediană dau un coeficient Spearman de cel puțin {d(SP_MIN)}, tipic {d(SP_MED)}. Dar corectitudinea unei alegeri nu se măsoară prin cât de mult schimbă rezultatul.</p>
 
 <h3>Neprezentații</h3>
 <p>Cine se înscrie și nu se prezintă intră în calculul liceului, dar fără notă: e așezat sub toți cei care s-au prezentat. Se poate, fiindcă mediana e o poziție, nu o medie — ca să afli cine e la mijloc îți trebuie doar câți sunt sub el, nu cât au luat. În analiza de supraviețuire, cazurile despre care știi doar că valoarea lor cade dincolo de o limită se numesc <em>cazuri cenzurate</em>; aici limita e nota cea mai mică.</p>
@@ -303,7 +334,7 @@ BODY = f'''<div class="wrap">
 <p>Intră doar candidații care au terminat clasa a XII-a în anul examenului — {pct(PROMO_PCT)} din total. Ceilalți vin din promoții anterioare și rămân atașați în date liceului absolvit atunci; în fișierul din 2025 există candidați din promoția 2013–2014. A-i include ar însemna să atribuim unei școli rezultatul unei cohorte pe care a predat-o acum un deceniu, iar cum cei care revin sunt disproporționat cei care au eșuat, liceele cu multe picări ar fi penalizate de două ori.</p>
 
 <h3>Fără însumarea anilor</h3>
-<p>Anii nu se adună. Testul Friedman, pe liceele prezente în toți cei nouă ani, respinge ipoteza că anii ar fi interschimbabili, în toate cele trei orașe: cea mai mare valoare p din cele trei e {putere(P_MAX_FR)}, iar coeficientul de concordanță Kendall stă între {d(W_MIN)} și {d(W_MAX)}. Tiparul e consecvent — 2018 e cel mai slab an aproape pretutindeni, 2024 cel mai bun. De aceea fiecare an se citește separat.</p>
+<p>Anii nu se adună. Testul Friedman se face acolo unde are o referință — separat pe fiecare dintre cele {FR_N} entități oraș×filieră, cu blocuri = celulele liceu×filieră prezente în toți cei nouă ani — și respinge interschimbabilitatea anilor în {FR_REJ} din {FR_N}{FR_EXC_FRAZA}. Coeficientul de concordanță Kendall stă între {d(W_MIN)} și {d(W_MAX)}, iar tiparul anilor diferă între filiere: la Timișoara, cel mai bun an e {AN_TOP['teoretica']} la teoretic, {AN_TOP['tehnologica']} la tehnologic și {AN_TOP['vocationala']} la vocațional. De aceea nici anii nu se adună, nici filierele nu se amestecă.</p>
 
 <h2>Limitele</h2>
 <ul>
