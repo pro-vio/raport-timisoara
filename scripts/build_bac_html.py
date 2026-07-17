@@ -107,11 +107,30 @@ for an in YEARS:
             continue
         ORASE[f'{f}|{an}'] = {'med': pf['mediane'], 'n': pf['n_licee'], 'p': pf['p'],
                               'eps2': pf['epsilon2'], 'dunn': pf['dunn']}
+# Evoluția medianelor: pentru fiecare filieră, mediana BRUTĂ a fiecărui liceu pe ani, plus
+# mediana filierei în anul respectiv. Linia groasă e a filierei, nu a orașului: mediana unui
+# oraș calculată între filiere n-ar avea referință.
+def median_of(v):
+    q=sorted(v); n=len(q)
+    return q[n//2] if n%2 else (q[n//2-1]+q[n//2])/2
+EVO = {}
+for f in FILIERE:
+    scoli, linia = {}, {}
+    for an in YEARS:
+        c = shr['celule'].get(f'TIMIȘOARA|{f}|{an}')
+        if not c:
+            continue
+        linia[an] = round(median_of([x['mediana'] for x in c['scoli']]), 3)
+        for x in c['scoli']:
+            nume = x['denumire'].split(' — ')[0]
+            scoli.setdefault(nume, {})[an] = x['mediana']
+    EVO[f] = {'scoli': scoli, 'filiera': linia}
+
 FRIED = {c: {'rang': [v['rang_mediu_pe_an'][str(a)] for a in YEARS], 'W': v['kendall_W'],
              'p': v['p'], 'n': v['n_celule_balansate'], 'Q': v['Q'], 'df': v['df']}
          for c, v in teste['friedman_pe_orase'].items()}
 DATA = {'tm': TM, 'orase': ORASE, 'comp': fil['compozitie'], 'ani': YEARS,
-        'filiere': FILIERE, 'nume': NUME, 'fried': FRIED}
+        'filiere': FILIERE, 'nume': NUME, 'fried': FRIED, 'evo': EVO}
 
 CSS = '''
 :root{
@@ -216,6 +235,14 @@ tbody tr:hover{background:var(--chip)}
 .chart .ref{stroke:var(--muted);stroke-dasharray:3 3;stroke-width:1}
 .chart .reflbl{fill:var(--muted);font-size:10.5px}
 .fr-line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.ev-sc{fill:none;stroke-width:1.2;opacity:.42}
+.ev-sc:hover{opacity:1;stroke-width:2.4}
+.ev-fil{fill:none;stroke-width:3;stroke-linejoin:round}
+.modenav{display:inline-flex;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--surface);margin:0 0 12px}
+.modenav button{appearance:none;background:none;border:0;border-right:1px solid var(--line);font:inherit;font-size:13px;padding:6px 12px;color:var(--muted);cursor:pointer}
+.modenav button:last-child{border-right:0}
+.modenav button[aria-pressed="true"]{background:var(--chip);color:var(--ink);font-weight:600}
+.modenav button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .fr-lbl{font-size:12px;font-weight:600}
 .leg{display:flex;gap:18px;flex-wrap:wrap;margin:10px 0 0;font-size:12.5px;color:var(--muted)}
 .leg span{display:inline-flex;align-items:center;gap:7px}
@@ -299,6 +326,7 @@ BODY = f'''<div class="wrap">
 <section class="panel" id="p-tm" role="tabpanel" aria-labelledby="t-tm" hidden>
 <div class="prose"><p>Fiecare liceu e arătat cu mediana lui ajustată și cu intervalul în care datele o pot localiza. Ajustarea trage medianele nesigure spre media lumii lor, cu atât mai tare cu cât liceul are mai puțini candidați: un clasament naiv le-ar da un loc pe care datele nu-l susțin. Linia punctată e media filierei în anul respectiv.</p></div>
 <div class="ctrls" id="c-tm"></div>
+<div id="v-evo"></div>
 <div id="v-tm"></div>
 </section>
 </div>
@@ -409,6 +437,52 @@ function renderOrase(){
   v.innerHTML=h;
 }
 
+// ============ Evoluția medianelor, în interiorul filierei ============
+let evoMod='brut';
+function renderEvo(){
+  const f=state.tm.f, E=D.evo[f], col=FCOL[f], host=document.getElementById('v-evo');
+  const nume=Object.keys(E.scoli);
+  if(!nume.length){host.innerHTML='';return;}
+  const rez = evoMod==='reziduu';
+  const val=(sc,a)=> (E.scoli[sc][a]==null||E.filiera[a]==null) ? null
+                   : (rez ? E.scoli[sc][a]-E.filiera[a] : E.scoli[sc][a]);
+  const toate=nume.flatMap(sc=>D.ani.map(a=>val(sc,a))).filter(v=>v!=null);
+  let lo=Math.min(...toate), hi=Math.max(...toate);
+  const pad=(hi-lo)*0.06||0.5; lo-=pad; hi+=pad;
+  const W=980, HH=380, PL=52, PR=124, PT=18, PB=38;
+  const X=i=>PL+i*(W-PL-PR)/(D.ani.length-1), Y=v=>PT+(hi-v)/(hi-lo)*(HH-PT-PB);
+  const tick=(hi-lo)>6?2:((hi-lo)>2?1:0.5);
+  let g='<svg class="chart" viewBox="0 0 '+W+' '+HH+'" role="img" aria-label="Evoluția medianelor liceelor din Timișoara, filiera '+D.nume[f]+', 2017-2025">';
+  for(let t=Math.ceil(lo/tick)*tick; t<=hi; t+=tick){
+    g+='<line class="grid" x1="'+PL+'" y1="'+Y(t)+'" x2="'+(W-PR)+'" y2="'+Y(t)+'"/>'
+     + '<text class="ax" x="'+(PL-9)+'" y="'+Y(t)+'" dy="0.32em" text-anchor="end">'+nf(t, tick<1?1:0)+'</text>';}
+  D.ani.forEach((a,i)=>{g+='<text class="ax" x="'+X(i)+'" y="'+(HH-PB+19)+'" text-anchor="middle">'+a+'</text>';});
+  if(rez) g+='<line x1="'+PL+'" y1="'+Y(0)+'" x2="'+(W-PR)+'" y2="'+Y(0)+'" class="ref"/>';
+  nume.forEach(sc=>{
+    const pts=D.ani.map((a,i)=>[i,val(sc,a)]).filter(x=>x[1]!=null);
+    if(pts.length<2) return;
+    const dd=pts.map((pv,k)=>(k?'L':'M')+X(pv[0])+','+Y(pv[1])).join(' ');
+    g+='<path class="ev-sc" d="'+dd+'" stroke="'+col+'"><title>'+esc(sc)+'</title></path>';});
+  if(rez){
+    g+='<text class="reflbl" x="'+(W-PR+8)+'" y="'+Y(0)+'" dy="0.32em">mediana filierei</text>';
+  } else {
+    const fp=D.ani.map((a,i)=>[i,E.filiera[a]]).filter(x=>x[1]!=null);
+    if(fp.length>1){
+      g+='<path class="ev-fil" d="'+fp.map((pv,k)=>(k?'L':'M')+X(pv[0])+','+Y(pv[1])).join(' ')+'" stroke="'+col+'"/>';
+      g+='<text class="fr-lbl" x="'+(W-PR+8)+'" y="'+Y(fp[fp.length-1][1])+'" dy="0.32em" fill="'+col+'">mediana filierei</text>';}
+  }
+  g+='</svg>';
+  const notaBrut='Valorile brute conțin o <strong>evoluție structurală</strong> comună tuturor liceelor — un an de examen mai greu sau mai ușor mișcă toate liniile deodată (vezi tabul „Variația structurală"). O urcare sau o coborâre de la un an la altul nu înseamnă neapărat o schimbare reală a liceului; urmăriți dacă linia groasă se mișcă la fel.';
+  const notaRez='Reziduul arată poziția <em>relativă</em> a liceului: scade din mediana lui mediana filierei din același an, deci rămâne doar diferența față de restul filierei, fără evoluția structurală comună. Linia filierei devine o dreaptă la zero.';
+  host.innerHTML='<div class="card"><div class="card-h">Evoluția medianelor · '+D.nume[f].toLowerCase()+'</div>'
+   +'<p class="card-i">Fiecare linie subțire e un liceu (minimum 10 candidați în anul respectiv); linia groasă e mediana filierei. Treci cu mouse-ul peste o linie ca să-i vezi numele.</p>'
+   +'<div class="modenav"><button data-m="brut" aria-pressed="'+(!rez)+'">Valori brute</button>'
+   +'<button data-m="reziduu" aria-pressed="'+rez+'">Reziduu (față de mediana filierei)</button></div>'
+   +'<p class="note" style="margin:0 0 10px">'+(rez?notaRez:notaBrut)+'</p>'
+   +'<div class="scroll">'+g+'</div></div>';
+  host.querySelectorAll('.modenav button').forEach(b=>b.onclick=()=>{evoMod=b.dataset.m; renderEvo();});
+}
+
 // ============ TAB: Timișoara ============
 function renderTM(){
   const c=document.getElementById('c-tm'); c.innerHTML='';
@@ -421,6 +495,7 @@ function renderTM(){
   sel.onchange=e=>{state.tm.an=+e.target.value; renderTM();};
   wrap.appendChild(sel); c.appendChild(wrap);
 
+  renderEvo();
   const key=state.tm.f+'|'+state.tm.an, cel=D.tm[key], v=document.getElementById('v-tm');
   if(!cel){v.innerHTML='<div class="card"><p class="card-i">Prea puține licee peste prag în acest an — celula nu se raportează.</p></div>';return;}
   const col=FCOL[state.tm.f];
