@@ -14,12 +14,16 @@ Analiza EN VIII de mai jos e **încheiată și livrată** — nu se atinge. Firu
 Pași: 1. descărcare ✅ · 2. inventar ✅ · 3. extracție ✅ · 4. distribuții ✅ · 5. teste structurale ✅ ·
 6. shrinkage ✅ · 7. raport ✅. **Fereastra: 2017-2025, 9 ani.**
 
-Raportul are 3 taburi: **Datele și definițiile** (proză + arborele profil→filieră) · **Variația
-structurală: trei orașe** (graficul Friedman + tabel, selector de filieră) · **Liceele din Timișoara**
-(evoluția medianelor cu comutator brut/reziduu + graficul de intervale + tabel; selector de filieră și de an).
-Ambele grafice sunt replici după cele din raportul EN, ca SVG inline (CSP-ul blochează Chart.js).
-La evoluția medianelor, linia groasă e **mediana FILIEREI**, nu a orașului (confirmat de user): o mediană
-de oraș calculată între filiere n-ar avea referință. Reziduul scade mediana filierei din același an.
+Raportul are **4 taburi**, fiecare cu grafic + casetele care îi dau funcție (lectură, teste, sinteză,
+cum-se-citește, notă metodologică — modelate după EN, unde graficele nu stăteau singure):
+1. **Datele și definițiile** — proză + arborele profil→filieră.
+2. **Variația structurală: trei orașe** — grafic Friedman, tabelul medianelor, caseta *Compoziția
+   orașelor* (singurul loc unde orașul apare întreg), *Testele efectuate*, *Ce spune imaginea completă*.
+3. **Evoluția medianelor** — tab propriu (ca la EN), cu comutator brut/reziduu.
+4. **Liceele din Timișoara** — graficul de intervale (+ liniuța medianei brute), tabelul, *Cum se citește*
+   (schemă SVG), *Notă metodologică*.
+Toate graficele SVG inline, toate cu selector de filieră, hover pe toate. Cifrele din casete se CALCULEAZĂ
+din JSON-uri la fiecare build. Linia groasă la evoluție = mediana FILIEREI. Ancora shrinkage = celula oraș×filieră×an.
 
 ## Regula #1: NU CITI CSV-urile ministerului
 
@@ -97,6 +101,15 @@ cu assert că partiția profil→filieră ține (verificat: 9 profiluri, 1 filie
 - **„referent" e fals prieten** → „referință" (în română referentul e persoana care referă).
 - **„interschimbabili"**, nu „schimbabili între ei" (despre ani, la Friedman).
 
+## Lecție de proces (2026-07-17)
+
+De DOUĂ ori userul a văzut „graficul Friedman e per oraș, nu oraș×filieră” — și avea dreptate,
+deși DATELE erau corecte (statisticile se schimbau la comutarea filierei). Greșeala era în PREZENTARE:
+titlul rămăsese „pe orașe” (o înlocuire de șir eșuase în tăcere), iar selectorul stătea SUB grafic, nu deasupra.
+Verificările mele prin JS măsurau numere, nu titluri/layout. **Regulă: după orice schimbare, verifică și
+ce SPUNE pagina — titlu, etichetă de control, aria-label — nu doar ce calculează.** Un assert care pică
+într-un patch lasă fișierul nescris: verifică mereu că build-ul chiar a rulat.
+
 ## Deschis
 
 - **Următorul fir (userul, 2026-07-17): contribuția netă a liceului** — puncte adăugate față de nota de
@@ -105,7 +118,12 @@ cu assert că partiția profil→filieră ține (verificat: 9 profiluri, 1 filie
   admiterea la liceu e alt set de date decât BAC-ul, joinul e pe ELEV, nu pe școală, iar noi nu avem un
   identificator de elev între cele două. `Cod unic candidat` din BAC nu e evident același lucru cu ce apare
   în datele de admitere — de verificat înainte de orice altceva. Userul a zis: după ce ne lămurim cu BAC-ul.
-- Textul raportului e scris și actualizat; niciun pas din cei 7 nu mai e în lucru.
+- **Rămase din structura aprobată, deliberat neînceput e:** (a) tabul *Distribuțiile notelor* — beeswarm
+  pe licee (fiecare candidat un punct, neprezentații sub axă) + distanța medie–mediană ca argument empiric
+  al medianei; singurul cu muncă reală — cere mediile brute per candidat (~68k valori, ~300KB) și percentila
+  mediei calculată în distributii_bac.py (nu există acum). (b) tabul *Clasament (evoluție)* cu săgeți ↑↓ pe
+  ani, pe filieră — userul a zis explicit să NU-l fac încă.
+- Restul casetelor din structura EN sunt acum toate prezente; textul e scris și actualizat.
 - Glosarul `statistica-ro`: 93 intrări; `cazuri cenzurate` [R m.181] adăugat. 18 termeni rămân nepropuși
   (asimetrie-ca-formă, bootstrap, mărimea efectului, Friedman, comparații multiple, boltire ș.a.) — **nu sunt
   în Reisz**, iar suporturile lui Hatos sunt pe ResearchGate, care cere verificare anti-bot. Userul: lasă-le.
