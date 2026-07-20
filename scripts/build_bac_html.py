@@ -316,6 +316,8 @@ svg.schema{min-width:620px;height:auto;font-family:var(--sans)}
   opacity:0;transition:opacity .1s;max-width:280px;z-index:9}
 .tip b{display:block;margin-bottom:3px;font-size:12.5px}
 .tip .r{color:var(--muted);font-variant-numeric:tabular-nums}
+.tip span.r{display:flex;align-items:center;gap:6px;margin-top:2px;line-height:1.5}
+.tip .r .dot{width:7px;height:7px;flex:none;display:inline-block;border-radius:50%}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 '''
 
@@ -520,7 +522,7 @@ function renderFriedman(){
   if(!ORD.length) return;
   const K=D.ani.length, W=980, HH=330, PL=54, PR=22, PT=22, PB=42;
   const X=i=>PL+i*(W-PL-PR)/(K-1), Y=r=>PT+(K-r)/(K-1)*(HH-PT-PB);
-  let g=`<svg class="chart" viewBox="0 0 ${W} ${HH}" role="img" aria-label="Rangul mediu al anilor, pe orașe, în filiera selectată">`;
+  let g=`<svg class="chart" viewBox="0 0 ${W} ${HH}" role="img" aria-label="Rangul mediu al anilor, pe orașe, în filiera ${D.nume[fl].toLowerCase()}">`;
   for(let r=1;r<=K;r++) g+=`<line class="grid" x1="${PL}" y1="${Y(r)}" x2="${W-PR}" y2="${Y(r)}"/>`
     + (r%2===1?`<text class="ax" x="${PL-9}" y="${Y(r)}" dy="0.32em" text-anchor="end">${r}</text>`:'');
   D.ani.forEach((a,i)=>{ g+=`<text class="ax" x="${X(i)}" y="${HH-PB+20}" text-anchor="middle">${a}</text>`; });
@@ -528,16 +530,28 @@ function renderFriedman(){
   ORD.forEach(c=>{ const st=FR_STIL[c], d=F[c].rang.map((r,i)=>`${i?'L':'M'}${X(i)},${Y(r)}`).join(' ');
     g+=`<path class="fr-line" d="${d}" stroke="${st.col}" stroke-dasharray="${st.dash}"/>`;
     F[c].rang.forEach((r,i)=>{ g+=marcaj(st.marc, X(i), Y(r), st.col); }); });
+  // bandă invizibilă pe fiecare an: ținta de hover e toată coloana, nu doar marcajul
+  D.ani.forEach((a,i)=>{ const w=(W-PL-PR)/(K-1);
+    g+=`<rect class="hit-an" x="${X(i)-w/2}" y="${PT-14}" width="${w}" height="${HH-PT-PB+18}" fill="transparent" data-i="${i}"/>`; });
   g+='</svg>';
   const leg=ORD.map(c=>{const st=FR_STIL[c];
     return `<span><svg width="26" height="12"><line x1="1" y1="6" x2="25" y2="6" stroke="${st.col}" stroke-width="2" stroke-dasharray="${st.dash}"/>${marcaj(st.marc,13,6,st.col)}</svg>${c==='CLUJ-NAPOCA'?'Cluj-Napoca':c==='IAȘI'?'Iași':'Timișoara'}</span>`;}).join('');
   const t=ORD.map(c=>`${c==='CLUJ-NAPOCA'?'Cluj':c==='IAȘI'?'Iași':'Timișoara'}: Q=${nf(F[c].Q,1)}, p=${F[c].p<0.001?F[c].p.toExponential(1).replace('.',','):nf(F[c].p,3)}, W=${nf(F[c].W)}, ${F[c].n} celule`).join(' · ');
-  document.getElementById('v-fried').innerHTML=
+  const host=document.getElementById('v-fried');
+  host.innerHTML=
     `<div class="card"><div class="card-h">Rangul mediu al anilor · ${D.nume[fl].toLowerCase()} (testul Friedman)</div>
      <p class="card-i">Testul se face separat pe fiecare dintre cele 9 entități oraș×filieră — mulțimea de referință e întotdeauna celula, niciodată orașul întreg. Aici vezi filiera <strong>${D.nume[fl].toLowerCase()}</strong>: pentru fiecare liceu, cei nouă ani se ordonează după mediana lui din anul respectiv (1 = cel mai slab an al liceului, 9 = cel mai bun), iar linia arată media acestor poziții la nivelul liceelor orașului din filiera asta. Dacă anii ar fi interschimbabili, liniile ar fi plate. Comută filiera: tiparele nu sunt aceleași.</p>
      <div class="scroll">${g}</div><div class="leg">${leg}</div>
      <p class="note">${t}</p>
      <p class="note">Dacă cele trei linii coboară și urcă împreună, efectul de an e național — de examen și de cohortă — nu local. Comută filiera: tiparele nu sunt aceleași. De aceea anii nu se adună, iar filierele nu se amestecă.</p></div>`;
+  const NC={'CLUJ-NAPOCA':'Cluj-Napoca','IAȘI':'Iași','TIMIȘOARA':'Timișoara'};
+  host.querySelectorAll('rect.hit-an').forEach(r=>{
+    const i=+r.dataset.i;
+    const rows=ORD.map(c=>`<span class="r"><span class="dot" style="background:${FR_STIL[c].col}"></span>${NC[c]}: rangul ${nf(F[c].rang[i])}</span>`).join('');
+    const h=`<b>${D.ani[i]} · ${D.nume[fl].toLowerCase()}</b>${rows}`;
+    r.addEventListener('mousemove', e=>showTip(e, h));
+    r.addEventListener('mouseleave', hideTip);
+  });
 }
 
 // ============ TAB: trei orașe ============
@@ -599,7 +613,7 @@ function renderEvo(){
     const pts=D.ani.map((a,i)=>[i,val(sc,a)]).filter(x=>x[1]!=null);
     if(pts.length<2) return;
     const dd=pts.map((pv,k)=>(k?'L':'M')+X(pv[0])+','+Y(pv[1])).join(' ');
-    g+='<path class="ev-sc" d="'+dd+'" stroke="'+col+'"><title>'+esc(sc)+'</title></path>';});
+    g+='<path class="ev-sc" d="'+dd+'" stroke="'+col+'" data-sc="'+esc(sc)+'"/>';});
   if(rez){
     g+='<text class="reflbl" x="'+(W-PR+8)+'" y="'+Y(0)+'" dy="0.32em">mediana filierei</text>';
   } else {
@@ -618,6 +632,15 @@ function renderEvo(){
    +'<p class="note" style="margin:0 0 10px">'+(rez?notaRez:notaBrut)+'</p>'
    +'<div class="scroll">'+g+'</div></div>';
   host.querySelectorAll('.modenav button').forEach(b=>b.onclick=()=>{evoMod=b.dataset.m; renderEvo();});
+  host.querySelectorAll('path.ev-sc').forEach(pth=>{
+    const sc=pth.dataset.sc;
+    pth.addEventListener('mousemove', e=>{
+      const serie=D.ani.map(a=>{const v=val(sc,a); return v==null?null:a+': '+nf(v);}).filter(Boolean).join(' · ');
+      showTip(e, '<b>'+sc+'</b><span class="r">'+serie+'</span>');
+      pth.parentNode.appendChild(pth);   // linia trecută cu mouse-ul urcă deasupra celorlalte
+    });
+    pth.addEventListener('mouseleave', hideTip);
+  });
 }
 
 // ============ TAB: Timișoara ============
