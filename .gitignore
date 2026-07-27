@@ -10,3 +10,7 @@ date/bac/*.ods
 # cache Python
 __pycache__/
 *.pyc
+
+# admitere: date brute de la static.admitere.edu.ro / Wayback — redescărcabile
+date/admitere/*.json
+date/admitere/*.html

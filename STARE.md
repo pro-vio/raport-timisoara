@@ -110,6 +110,62 @@ Verificările mele prin JS măsurau numere, nu titluri/layout. **Regulă: după 
 ce SPUNE pagina — titlu, etichetă de control, aria-label — nu doar ce calculează.** Un assert care pică
 într-un patch lasă fișierul nescris: verifică mereu că build-ul chiar a rulat.
 
+## FIRUL VALOARE ADĂUGATĂ (explorat 2026-07-21, BLOCAT PE DATE)
+
+Scop: delta = nota BAC − nota de intrare (media de admitere), per liceu. „Valoare adăugată contextuală"
+(CVA): judeci liceul după rezultatul lui FAȚĂ DE ce prezicea intrarea, nu brut.
+
+### Sursa de intrare — GĂSITĂ și verificată
+Repartizarea computerizată de la `static.admitere.edu.ro/{an}/repartizare/{JUDET}/data/candidate`
+(2024-2025 fără `.json`; anii vechi cu `.json` + `?_=timestamp`). JSON per candidat repartizat, cheile:
+`madm`=media de admitere (NOTA DE INTRARE), `mev`=media EN, `mabs`=media claselor V-VIII, `nro`/`nmate`=
+note RO/mate, `h`=liceul unde a ajuns (nume în HTML), `sp`=specializarea, `sc`=codul gimnaziului.
+**Joinul cu BAC merge pe COD SIIIR** (nume→cod prin endpoint-ul `highschool`): 30/37 licee TM se potrivesc;
+cei 7 lipsă = vocaționalele (sport/artă), admitere separată pe aptitudini. Specializarea→filieră: real/uman
+→ teoretic, servicii/tehnic/resurse → tehnologic. Din 2025 admiterea e 100% EN, deci `madm`==`mev`; la anii
+vechi diferă (amestec EN + media gimnaziu). Am în `date/admitere/` (gitignore): TM 2025 (test) + TM 2023 (Wayback).
+
+### ZIDUL: nu există pereche cohortă-corectă pentru orașele noastre
+Intrare an E → BAC an E+4. Ne trebuie E≤2021 (BAC-ul nostru ≤2025). DAR datele de intrare pentru TM/CJ/IS
+supraviețuiesc doar din 2023 (Wayback; live are doar 2024-2025). Intrarea 2013-2021 pt orașele noastre:
+ștearsă de pe live, iar crawler-ul Wayback n-a rulat JS-ul care încarcă `candidate.json` → a salvat doar
+paginile index. Ce s-a prins din anii vechi = județe la întâmplare (BC/CT 2017, CS/SJ 2019, B 2021), niciodată
+TM/CJ/IS. Gol structural de 2 ani: intrarea începe 2023 (→BAC 2027), BAC-ul se termină 2025 (→intrare 2021).
+Extracția de pe Wayback FUNCȚIONEAZĂ (TM 2023 = 3985 candidați, complet) — dar perechea lui e în viitor.
+
+### Decizii metodologice stabilite în discuție (de reținut, sunt corecte)
+- **Media diferențelor = diferența mediilor**, fără join individual — ADEVĂRAT, dar DOAR pentru MEDIE. Pentru
+  DISTRIBUȚIA delta trebuie covarianța = împerecherea individului, pe care n-o avem (codul candidatului admitere
+  ≠ „Cod unic candidat" BAC). Deci delta individuală e în afara datelor.
+- **Mediana nu se compune** (mediana(δ) ≠ mediana(BAC)−mediana(intrare)); doar media. Deci pt delta e mai bună
+  MEDIA, cu prețul că neprezentații cer o notă (nu-i mai poți cenzura ca la mediană). Nivelul rămâne pe mediană.
+- **Comonoton (împerechere după rang)** = diferența cuantilelor δ(p)=Q_BAC(p)−Q_intrare(p), un Q-Q. Face vizibilă
+  regresia spre medie (coada de jos „urcă", vârful plat), DAR interzice încrucișările → NU se agregă pe școală
+  (media lui pe școală = diferența mediilor oricum; forța zero valoarea adăugată dacă imputezi note). Bun pt
+  DESCRIEREA distribuției, inutil pt clasament.
+- **Panta din perechi comonotone = „linia SD"** (σ_BAC/σ_intrare), nu linia de regresie (ρ·σ_BAC/σ_intrare).
+  Comonoton presupune ρ=1 (rang perfect păstrat), deci panta MAXIMĂ; injectează regresia spre medie prin pantă.
+- **Banda comonoton↔countermonoton** mărginește valoarea adăugată peste ρ∈[−1,+1], DAR capătul de jos (ρ=−1,
+  cei mai buni la intrare iau cele mai mici note) e SUBSTANȚIAL IMPOSIBIL → banda conține adevărul trivial, prea
+  largă. Nu importa ρ național/internațional: restricția de amplitudine (intrare comprimată la colegii, diferită
+  pe școală) îl face netransferabil.
+- **CONCLUZIA CURATĂ:** pt valoare adăugată la nivel de LICEU (unitatea proiectului) NU e nevoie de ρ individual.
+  Relația de care e nevoie — media BAC vs media intrare ÎNTRE școli — e direct estimabilă pe datele noastre
+  (reziduu din regresia mediilor de școală, cu shrinkage pt școlile mici, ca la BAC). Ruta individuală (Fréchet/
+  comonoton) ne-a servit doar ca să înțelegem limita; livrabilul onest nu trece de școală.
+
+### Demo cross-cohortă (2025 intrare vs 2025 BAC, cohorte DIFERITE — doar forma)
+Reziduul din regresie BAC~intrare, în interiorul filierei: la teoretic vârful adaugă valoare (Bănățean +0,46,
+Loga +0,44), teologicele subperformează (Antim −1,00, Baptist −0,73); la tehnologic, unele licee cu intrare
+slabă duc elevii peste predicție (Silvicultură +1,54). Clasamentul de valoare adăugată e ALTUL decât cel brut.
+Cifrele sunt de aruncat (cohorte nepotrivite), forma e reală.
+
+### Opțiuni la reluare
+A. Aștepți BAC 2027+ pt cohorta 2023 (capturabilă acum). B. Alt arhiv pt intrarea istorică TM (ISJ Timiș,
+mirror-uri) — incert. C. Proxy pe PRAG: „ultima medie de intrare" din planul de școlarizare e disponibilă
+istoric, cohortă-corectă, dar slabă/părtinitoare (pragul, nu distribuția). D. Demo cross-cohortă (forma metodei).
+Firul e AMBIȚIOS și se lovește de o limită de DATE, nu de metodă. Proiectul BAC în sine e livrat și solid.
+
 ## Deschis
 
 - **Următorul fir (userul, 2026-07-17): contribuția netă a liceului** — puncte adăugate față de nota de
