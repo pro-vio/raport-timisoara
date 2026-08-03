@@ -151,6 +151,14 @@ assert _sag_sus * 10 < _sag_tot, \
 _NUME_SAG = {0: 'niciuna nu se susține', 1: 'una singură se susține'}
 FRAZA_SAG = _NUME_SAG.get(_sag_sus, f'{_sag_sus} se susțin')
 
+# mărimea școlilor, înainte și după tăietură
+_ms_i = sm['marimea_scolilor']['inainte']
+_ms_d = sm['marimea_scolilor']['dupa']
+# afirmația din text: tăietura abia apropie distribuțiile, deci cele cinci sunt o coadă,
+# nu vârful unei diferențe de mărime
+_dks = _ms_i['ks']['CLUJ-NAPOCA vs TIMIȘOARA'] - _ms_d['ks']['CLUJ-NAPOCA vs TIMIȘOARA']
+assert 0 <= _dks < 0.05, f'tăietura mută acum mult distribuțiile de mărime ({_dks:.3f})'
+
 # școlile pe care pragul testelor le scoate — toate dintr-un singur oraș
 _sm_cel = sm['celule_sub_prag']
 assert all(v == 0 for c, v in _sm_cel.items() if c != 'TIMIȘOARA'), \
@@ -286,6 +294,12 @@ JETOANE = {
     'SM_ANI_CU': enumera(sm['ani_semnificativi_cu_pragul']),
     'SM_ANI_FARA': enumera(sm['ani_semnificativi_fara_pragul']),
     'SM_NEDEF': _SM_NEDEF,
+    'MS_KS_INAINTE': d(_ms_i['ks']['CLUJ-NAPOCA vs TIMIȘOARA'], 3),
+    'MS_KS_DUPA': d(_ms_d['ks']['CLUJ-NAPOCA vs TIMIȘOARA'], 3),
+    'MS_IS': str(round(_ms_d['marime_mediana']['IAȘI'])),
+    'MS_CJ': str(round(_ms_d['marime_mediana']['CLUJ-NAPOCA'])),
+    'MS_TM': str(round(_ms_d['marime_mediana']['TIMIȘOARA'])),
+
     'SM_N_CU': str(len(sm['ani_semnificativi_cu_pragul'])),
     'SM_N_FARA': str(len(sm['ani_semnificativi_fara_pragul'])),
     'MIN_N_TESTE_VECHI': str(sm['prag_curent'] - 1),

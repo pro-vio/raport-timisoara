@@ -68,6 +68,38 @@ for an in YEARS:
                                  if reg.get(k) == oras and len(rr['note']) >= PRAG)
                      if x is not None]), 3)})
 
+# Cât cumpără pragul în comparabilitate: distribuțiile de mărime a școlilor, pe oraș,
+# înainte și după tăietură, cu distanța Kolmogorov-Smirnov între perechi de orașe.
+# Dacă tăietura mută mult distanțele, școlile scoase sunt vârful unei diferențe de mărime;
+# dacă nu, sunt o coadă anormală pe care celelalte orașe n-o au.
+def marimi(p):
+    d = {c: [] for c in ORASE}
+    for an in YEARS:
+        for cod, r in NOTE['ani'][an]['scoli'].items():
+            oras = reg.get(cod)
+            if oras and len(r['note']) >= p:
+                d[oras].append(len(r['note']))
+    return d
+
+
+def ks(a, b):
+    praguri_ = sorted(set(a) | set(b))
+    return round(max(abs(sum(1 for x in a if x <= t) / len(a) -
+                         sum(1 for x in b if x <= t) / len(b)) for t in praguri_), 3)
+
+
+marime = {}
+for eticheta, p in (('inainte', PRAG - 1), ('dupa', PRAG)):
+    d = marimi(p)
+    marime[eticheta] = {
+        'prag': p,
+        'n_celule': {c: len(d[c]) for c in ORASE},
+        'marime_minima': {c: min(d[c]) for c in ORASE},
+        'marime_mediana': {c: median_of(d[c]) for c in ORASE},
+        'ks': {f'{a} vs {b}': ks(d[a], d[b])
+               for i, a in enumerate(ORASE) for b in ORASE[i + 1:]},
+    }
+
 ani_sig_cu = [a for a in YEARS if cu[a]['perechi_semnificative']]
 ani_sig_fara = [a for a in YEARS if fara[a]['perechi_semnificative']]
 tm = diferenta['TIMIȘOARA']
@@ -88,6 +120,7 @@ out = {
     'scoli_timisoara': diferenta['TIMIȘOARA'],
     'oras_mereu_ultimul': sorted(ultima),
     'mediane_nedefinite': nedefinite,
+    'marimea_scolilor': marime,
 }
 json.dump(out, io.open(OUT, 'w', encoding='utf-8', newline='\n'),
           ensure_ascii=False, indent=1)

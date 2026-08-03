@@ -309,5 +309,53 @@
    "mediana": null,
    "mediana_orasului": 7.885
   }
- ]
+ ],
+ "marimea_scolilor": {
+  "inainte": {
+   "prag": 8,
+   "n_celule": {
+    "CLUJ-NAPOCA": 259,
+    "IAȘI": 233,
+    "TIMIȘOARA": 217
+   },
+   "marime_minima": {
+    "CLUJ-NAPOCA": 9,
+    "IAȘI": 9,
+    "TIMIȘOARA": 8
+   },
+   "marime_mediana": {
+    "CLUJ-NAPOCA": 54,
+    "IAȘI": 63,
+    "TIMIȘOARA": 49
+   },
+   "ks": {
+    "CLUJ-NAPOCA vs IAȘI": 0.126,
+    "CLUJ-NAPOCA vs TIMIȘOARA": 0.105,
+    "IAȘI vs TIMIȘOARA": 0.202
+   }
+  },
+  "dupa": {
+   "prag": 9,
+   "n_celule": {
+    "CLUJ-NAPOCA": 259,
+    "IAȘI": 233,
+    "TIMIȘOARA": 208
+   },
+   "marime_minima": {
+    "CLUJ-NAPOCA": 9,
+    "IAȘI": 9,
+    "TIMIȘOARA": 9
+   },
+   "marime_mediana": {
+    "CLUJ-NAPOCA": 54,
+    "IAȘI": 63,
+    "TIMIȘOARA": 50.0
+   },
+   "ks": {
+    "CLUJ-NAPOCA vs IAȘI": 0.126,
+    "CLUJ-NAPOCA vs TIMIȘOARA": 0.089,
+    "IAȘI vs TIMIȘOARA": 0.175
+   }
+  }
+ }
 }
