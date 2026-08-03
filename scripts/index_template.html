@@ -156,6 +156,15 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
   z-index: 10; display: none; white-space: nowrap;
 }
 #stripCanvas { touch-action: none; }
+.nav-eticheta { font-size: 12.5px; color: var(--ink-muted); align-self: center; margin-right: 4px; }
+td.col-activa { background: var(--row-alt); font-weight: 600; }
+tbody tr:nth-child(even) td.col-activa { background: rgba(45,74,99,0.09); }
+thead th.col-activa { color: var(--accent); }
+@media (prefers-color-scheme: dark) {
+  tbody tr:nth-child(even) td.col-activa { background: rgba(127,176,212,0.12); }
+}
+:root[data-theme="dark"] tbody tr:nth-child(even) td.col-activa { background: rgba(127,176,212,0.12); }
+:root[data-theme="light"] tbody tr:nth-child(even) td.col-activa { background: rgba(45,74,99,0.09); }
 .duo { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 1.6rem; align-items: start; }
 .duo .plot { position: relative; width: 100%; aspect-ratio: 1 / 1; }
 .duo .say p { margin: 0 0 0.8rem; font-size: 14px; color: var(--ink); }
@@ -366,6 +375,7 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
   <div class="card">
     <h2>Clasament, cu intervalul de rang</h2>
     <p class="note">Fiecare celulă e intervalul de locuri în care poate sta școala în anul respectiv, obținut refăcând clasamentul întreg de {{N_BOOT}} de ori prin bootstrap. Punctul „·” înseamnă că școala n-a avut destui candidați în acel an. Rândurile sunt ordonate după poziția din {{AN_ULTIM}}.</p>
+    <div class="modenav" id="rankYearNav" role="group" aria-label="Anul după care se ordonează"></div>
     <div class="table-scroll">
       <table id="rankTable">
         <thead>
@@ -582,19 +592,38 @@ function celulaRang(cod, an) {
   return lo === hi ? `${lo}` : `${lo}&ndash;${hi}`;
 }
 
-const ordinea = SCHOOLS.slice().sort((a, b) => {
-  const ra = RANGURI['2025'] && RANGURI['2025'][a.cod];
-  const rb = RANGURI['2025'] && RANGURI['2025'][b.cod];
-  if (ra && rb) return ra.rang_publicat - rb.rang_publicat;
-  if (ra) return -1;
-  if (rb) return 1;
-  return 0;
-});
+let anOrdonare = YEARS[YEARS.length - 1];
 
-document.getElementById('rankBody').innerHTML = ordinea.map(s => `<tr>
+function randeazaClasament() {
+  const ordinea = SCHOOLS.slice().sort((a, b) => {
+    const ra = RANGURI[anOrdonare] && RANGURI[anOrdonare][a.cod];
+    const rb = RANGURI[anOrdonare] && RANGURI[anOrdonare][b.cod];
+    if (ra && rb) return ra.rang_publicat - rb.rang_publicat;
+    if (ra) return -1;
+    if (rb) return 1;
+    return 0;
+  });
+  document.getElementById('rankBody').innerHTML = ordinea.map(s => `<tr>
     <td class="school">${s.nume}</td>
-    ${YEARS.map(y => `<td>${celulaRang(s.cod, y)}</td>`).join('')}
+    ${YEARS.map(y => `<td${y === anOrdonare ? ' class="col-activa"' : ''}>${celulaRang(s.cod, y)}</td>`).join('')}
   </tr>`).join('');
+  document.querySelectorAll('#rankTable thead th').forEach((th, i) => {
+    th.classList.toggle('col-activa', i > 0 && YEARS[i - 1] === anOrdonare);
+  });
+  document.querySelectorAll('#rankYearNav .mode-btn').forEach(b => {
+    const activ = b.dataset.an === anOrdonare;
+    b.classList.toggle('active', activ);
+    b.setAttribute('aria-pressed', activ ? 'true' : 'false');
+  });
+}
+
+document.getElementById('rankYearNav').innerHTML =
+  '<span class="nav-eticheta">ordonează după</span>' +
+  YEARS.map(y => `<button class="mode-btn" data-an="${y}" aria-pressed="false">${y}</button>`).join('');
+document.querySelectorAll('#rankYearNav .mode-btn').forEach(b => {
+  b.addEventListener('click', () => { anOrdonare = b.dataset.an; randeazaClasament(); });
+});
+randeazaClasament();
 
 const SHRINK_DATA = {{JS_SHRINK_DATA}};
 const SHRINK_YEARS = {{JS_SHRINK_YEARS}};
