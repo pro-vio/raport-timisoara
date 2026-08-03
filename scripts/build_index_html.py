@@ -52,6 +52,15 @@ def cuvant_f(n):
     return _CUVINTE_F.get(n, str(n))
 
 
+_MICI = {'De', 'Din', 'Cu', 'La', 'Și', 'Pentru', 'Al', 'A', 'Pe'}
+
+
+def titlu_ro(s):
+    """Majuscule inițiale, dar prepozițiile rămân mici: „Liceul de Arte Plastice"."""
+    return ' '.join(w.lower() if i and w in _MICI else w
+                    for i, w in enumerate(s.title().split()))
+
+
 def numar(n, substantiv):
     """Numeralul cu „de" acolo unde româna îl cere: 9 situații, dar 21 de situații."""
     return f'{n} de {substantiv}' if n % 100 == 0 or n % 100 > 19 else f'{n} {substantiv}'
@@ -205,7 +214,8 @@ for an in YEARS:
                       'n': n, 'med': round(med, 3),
                       'q1': round(dif[n // 4], 3), 'q3': round(dif[(3 * n) // 4], 3),
                       'elevi': [[a, b] for a, b in per]})
-    scoli.sort(key=lambda x: -x['med'])
+    # cel mai mic decalaj sus: școala a cărei notă anticipă cel mai bine examenul
+    scoli.sort(key=lambda x: x['med'])
     _DTM[an] = scoli
 assert all(_DTM[a] for a in YEARS), 'nu mai există școli peste prag la Timișoara'
 
@@ -219,12 +229,18 @@ _top = _dtm['primele'][:4]
 # afirmația din text: excepțiile se strâng la școlile de sus
 assert _top[0]['pondere'] > 3 * _dtm['pondere'], 'excepțiile nu se mai strâng nicăieri'
 _DEP_TOP = ' '.join(
-    f"La {NUME_SCURT.get(x['cod'], x['denumire']).title()}, în {x['an']}, "
+    f"La {titlu_ro(NUME_SCURT.get(x['cod'], x['denumire']))}, în {x['an']}, "
     f"{x['peste']} din {x['n']} de elevi ({d(100 * x['pondere'], 0)}%)."
     for x in _top[:3])
 _cel_q1 = [c for c in pr['celule']
            if c['oras'] == 'TIMIȘOARA' and any(y['cod'] == c['cod'] and y['an'] == c['an']
                                                for y in _q1n)]
+
+
+# extremele și mijlocul listei, pentru caseta „Cum se citește"
+_prz = _DTM[AN_DEC]
+_prz_med = _prz[len(_prz) // 2]
+assert _prz[0]['med'] < _prz[-1]['med'], 'lista nu mai e ordonată crescător după decalaj'
 
 _tm = pr['intre_scoli']['TIMIȘOARA'][AN_DEC]
 _tmk = pr['kw_delta']['TIMIȘOARA']['la_gramada']
@@ -306,7 +322,7 @@ assert sm['oras_mereu_ultimul'] == ['TIMIȘOARA'], \
 assert len(sm['mediane_nedefinite']) >= 1, 'nu mai există mediana nedefinită din text'
 _nd = sm['mediane_nedefinite'][0]
 # denumirea din registru e cu majuscule și lipită („ȘCOALA GIMNAZIALĂ NR.15 TIMIȘOARA")
-_SM_NEDEF = re.sub(r'\bNr\.\s*(\d)', r'nr. \1', _nd['denumire'].title()) + f" în {_nd['an']}"
+_SM_NEDEF = re.sub(r'\bNr\.\s*(\d)', r'nr. \1', titlu_ro(_nd['denumire'])) + f" în {_nd['an']}"
 
 # schimbările de nivel de la un an la altul, și unde se strâng
 _sch = det['schimbari_an_la_an']
@@ -443,13 +459,16 @@ JETOANE = {
     'SAGETI_TOTAL': str(_sag_tot), 'SAGETI_SUSTINUTE': FRAZA_SAG,
     'RANG_DIST_MIN': str(min(_dist)), 'RANG_DIST_MAX': str(max(_dist)),
     'RANG_K': str(round(sum(_k) / len(_k))),
+    'PRZ_PRIMA': titlu_ro(_prz[0]['nume']), 'PRZ_PRIMA_VAL': d(_prz[0]['med']),
+    'PRZ_ULTIMA': titlu_ro(_prz[-1]['nume']), 'PRZ_ULTIMA_VAL': d(_prz[-1]['med']),
+    'PRZ_MEDIANA': d(_prz_med['med']),
     'DEP_TM_N': str(_dtm['elevi_peste']),
     'DEP_TM_TOT': f"{_dtm['elevi']:,}".replace(',', '.'),
     'DEP_TM_PCT': d(100 * _dtm['pondere'], 1) + '%',
     'DEP_CJ_PCT': d(100 * _dep['CLUJ-NAPOCA']['pondere'], 1) + '%',
     'DEP_IS_PCT': d(100 * _dep['IAȘI']['pondere'], 1) + '%',
     'DEP_TM_CELULE': str(_dtm['celule']),
-    'DEP_TM_Q1NEG': (NUME_SCURT.get(_q1n[0]['cod'], _q1n[0]['denumire']).title()
+    'DEP_TM_Q1NEG': (titlu_ro(NUME_SCURT.get(_q1n[0]['cod'], _q1n[0]['denumire']))
                      + f", în {_q1n[0]['an']}") if _q1n else 'niciuna',
     'DEP_TM_TOP': _DEP_TOP,
     'SM_SITUATII': numar(_sm_cel['TIMIȘOARA'], 'situații'),

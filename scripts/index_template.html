@@ -156,6 +156,10 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
   z-index: 10; display: none; white-space: nowrap;
 }
 #stripCanvas { touch-action: none; }
+.duo-larg { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.scoli-lista { display: flex; flex-wrap: wrap; gap: 5px; align-content: flex-start; }
+.scoli-lista .mode-btn { font-size: 12px; padding: 4px 10px; }
+.scoli-lista .nav-eticheta { flex-basis: 100%; margin: 0 0 2px; }
 .nav-eticheta { font-size: 12.5px; color: var(--ink-muted); align-self: center; margin-right: 4px; }
 td.col-activa { background: var(--row-alt); font-weight: 600; }
 tbody tr:nth-child(even) td.col-activa { background: rgba(45,74,99,0.09); }
@@ -422,20 +426,32 @@ thead th.col-activa { color: var(--accent); }
     </div>
 
     <div class="card">
-      <h2>Cât notează peste examen fiecare școală</h2>
-      <p class="note">Punctul e decalajul median al școlii, în puncte de notă; bara e intervalul în care se află jumătatea din mijloc a elevilor ei. O bară scurtă înseamnă că decalajul e cam același pentru toți elevii școlii; una lungă, că unii sunt notați mult peste examen și alții aproape deloc.</p>
+      <h2>Cât de bine prezice nota de la școală nota de la evaluare</h2>
+      <p class="note">Școlile sunt ordonate după cât de aproape stă nota dată de ele de nota de la examen. Sus, cele la care cele două aproape coincid.</p>
       <div class="modenav" id="ani-dtm" role="group" aria-label="Anul"></div>
       <div id="dtmRoot" style="position:relative;"></div>
       <p class="hint">Treceți mausul peste un rând pentru cifre. Apăsați pe o școală ca să-i vedeți elevii în graficul de mai jos.</p>
     </div>
 
     <div class="card">
+      <h2>Cum se citește</h2>
+      <div class="findings">
+        <p>Punctul e diferența mediană dintre nota dată de școală și nota de la examen, la elevii ei. Cu cât punctul e mai aproape de zero, cu atât nota de la clasă anticipă mai bine ce va ieși la examen.</p>
+        <p>Sus stă {{PRZ_PRIMA}}, cu {{PRZ_PRIMA_VAL}} puncte: elevii ei iau la examen aproape cât le-a dat școala. Jos stă {{PRZ_ULTIMA}}, cu {{PRZ_ULTIMA_VAL}} puncte &mdash; acolo nota de la clasă spune foarte puțin despre ce urmează. Școala din mijlocul listei are {{PRZ_MEDIANA}} puncte &mdash; atât e distanța obișnuită între ce scrie în catalog și ce iese la examen.</p>
+        <p>Bara arată jumătatea din mijloc a elevilor școlii. Una scurtă înseamnă că decalajul e cam același pentru toți; una lungă, că unii elevi sunt notați mult peste examen și alții aproape deloc &mdash; deci nota de la clasă e un semnal inegal chiar în interiorul aceleiași școli.</p>
+      </div>
+    </div>
+
+    <div class="card">
       <h2>Elevii unei școli</h2>
       <p class="note">Fiecare punct e un elev: pe orizontală media pe care i-a dat-o școala în clasele V&ndash;VIII, pe verticală media pe care a luat-o la examen. Linia întreruptă e locul unde cele două ar fi egale; distanța de la punct la linie e decalajul lui.</p>
-      <div class="modenav" id="scoli-dtm" role="group" aria-label="Școala"></div>
-      <div class="duo">
-        <div class="plot"><canvas id="scatter-elevi" role="img" aria-label="Nor de puncte: elevii unei școli, nota dată de școală față de nota de la examen."></canvas></div>
-        <div class="say" id="say-elevi"></div>
+      <div class="modenav" id="ani-elevi" role="group" aria-label="Anul"></div>
+      <div class="duo duo-larg">
+        <div>
+          <div class="plot"><canvas id="scatter-elevi" role="img" aria-label="Nor de puncte: elevii unei școli, nota dată de școală față de nota de la examen."></canvas></div>
+          <div class="say" id="say-elevi"></div>
+        </div>
+        <div class="scoli-lista" id="scoli-dtm" role="group" aria-label="Școala"></div>
       </div>
     </div>
 
@@ -662,7 +678,8 @@ function deseneazaElevi() {
 }
 
 (function initDTM() {
-  const nav = document.getElementById('ani-dtm');
+  ['ani-dtm', 'ani-elevi'].forEach(id => {
+  const nav = document.getElementById(id);
   if (!nav) return;
   nav.innerHTML = '<span class="nav-eticheta">anul</span>';
   YEARS.forEach(y => {
@@ -672,6 +689,7 @@ function deseneazaElevi() {
     b.textContent = y;
     b.addEventListener('click', () => { anDTM = y; deseneazaDTM(); });
     nav.appendChild(b);
+  });
   });
 })();
 </script>
@@ -1287,7 +1305,8 @@ function deseneazaElevi() {
 }
 
 (function initDTM() {
-  const nav = document.getElementById('ani-dtm');
+  ['ani-dtm', 'ani-elevi'].forEach(id => {
+  const nav = document.getElementById(id);
   if (!nav) return;
   nav.innerHTML = '<span class="nav-eticheta">anul</span>';
   YEARS.forEach(y => {
@@ -1297,6 +1316,7 @@ function deseneazaElevi() {
     b.textContent = y;
     b.addEventListener('click', () => { anDTM = y; deseneazaDTM(); });
     nav.appendChild(b);
+  });
   });
 })();
 </script>
