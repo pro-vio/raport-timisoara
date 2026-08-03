@@ -209,6 +209,23 @@ for an in YEARS:
     _DTM[an] = scoli
 assert all(_DTM[a] for a in YEARS), 'nu mai există școli peste prag la Timișoara'
 
+
+# elevii care iau la examen peste media de la clasă
+_dep = pr['depasiri']
+_dtm = _dep['TIMIȘOARA']
+assert _dtm['celule_cu_mediana_negativa'] == 0, 'există acum școli cu mediana decalajului negativă'
+_q1n = [x for x in _dtm['primele'] if x['q1'] < 0]
+_top = _dtm['primele'][:4]
+# afirmația din text: excepțiile se strâng la școlile de sus
+assert _top[0]['pondere'] > 3 * _dtm['pondere'], 'excepțiile nu se mai strâng nicăieri'
+_DEP_TOP = ' '.join(
+    f"La {NUME_SCURT.get(x['cod'], x['denumire']).title()}, în {x['an']}, "
+    f"{x['peste']} din {x['n']} de elevi ({d(100 * x['pondere'], 0)}%)."
+    for x in _top[:3])
+_cel_q1 = [c for c in pr['celule']
+           if c['oras'] == 'TIMIȘOARA' and any(y['cod'] == c['cod'] and y['an'] == c['an']
+                                               for y in _q1n)]
+
 _tm = pr['intre_scoli']['TIMIȘOARA'][AN_DEC]
 _tmk = pr['kw_delta']['TIMIȘOARA']['la_gramada']
 _tmf = pr['friedman_delta']['TIMIȘOARA']
@@ -426,6 +443,15 @@ JETOANE = {
     'SAGETI_TOTAL': str(_sag_tot), 'SAGETI_SUSTINUTE': FRAZA_SAG,
     'RANG_DIST_MIN': str(min(_dist)), 'RANG_DIST_MAX': str(max(_dist)),
     'RANG_K': str(round(sum(_k) / len(_k))),
+    'DEP_TM_N': str(_dtm['elevi_peste']),
+    'DEP_TM_TOT': f"{_dtm['elevi']:,}".replace(',', '.'),
+    'DEP_TM_PCT': d(100 * _dtm['pondere'], 1) + '%',
+    'DEP_CJ_PCT': d(100 * _dep['CLUJ-NAPOCA']['pondere'], 1) + '%',
+    'DEP_IS_PCT': d(100 * _dep['IAȘI']['pondere'], 1) + '%',
+    'DEP_TM_CELULE': str(_dtm['celule']),
+    'DEP_TM_Q1NEG': (NUME_SCURT.get(_q1n[0]['cod'], _q1n[0]['denumire']).title()
+                     + f", în {_q1n[0]['an']}") if _q1n else 'niciuna',
+    'DEP_TM_TOP': _DEP_TOP,
     'SM_SITUATII': numar(_sm_cel['TIMIȘOARA'], 'situații'),
     'SM_SCOLI_CUVANT': cuvant_f(sm['scoli_distincte_sub_prag']['TIMIȘOARA']),
     'SM_SCOLI': str(sm['scoli_distincte_sub_prag']['TIMIȘOARA']),

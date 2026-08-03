@@ -221,8 +221,122 @@ for o, v in fr_delta.items():
         print(f"{o:>13}{v['n_scoli']:>7}{v['p']:>11.4g}{v['kendall_W']:>8.3f}   "
               + ' '.join(f"{a}:{v['rang_mediu'][a]:.1f}" for a in YEARS))
 
+
+# Coboară notele date de școală în anii în care coboară examenul?
+# Întrebarea userului, 3 august 2026, după ce a respins presupunerea contrară din text.
+# Același design ca la examen: blocuri = școlile prezente în toți anii, tratament = anul,
+# valoarea = mediana notelor V-VIII ale școlii în acel an. Apoi se compară tiparul anilor
+# cu cel de la examen. Dacă notele școlii urmăresc examenul, cele două merg împreună.
+def friedman_pe(oras, cheie):
+    matrice = {}
+    for c in celule:
+        if c['oras'] == oras:
+            matrice.setdefault(c['cod'], {})[c['an']] = c[cheie]
+    blocuri = [[m[a] for a in YEARS] for m in matrice.values() if all(a in m for a in YEARS)]
+    n, k = len(blocuri), len(YEARS)
+    if n < 5:
+        return None
+    sume = [0.0] * k
+    tie = 0.0
+    from collections import Counter
+    for b in blocuri:
+        for i, x in enumerate(rank_all(b)):
+            sume[i] += x
+        tie += sum(t ** 3 - t for t in Counter(b).values())
+    Q = 12.0 / (n * k * (k + 1)) * sum(x * x for x in sume) - 3 * n * (k + 1)
+    den_ = 1 - tie / (n * k * (k * k - 1))
+    if den_ > 0:
+        Q /= den_
+    return {'n_scoli': n, 'p': float(f'{chi2_sf(Q, k - 1):.4g}'),
+            'kendall_W': round(Q / (n * (k - 1)), 4),
+            'rang_mediu': {a: round(x / n, 2) for a, x in zip(YEARS, sume)}}
+
+
+urmarire = {}
+for oras in ORASE:
+    f_v8 = friedman_pe(oras, 'v8_mediana')
+    f_en = friedman_pe(oras, 'en_mediana')
+    if not (f_v8 and f_en):
+        continue
+    rv = [f_v8['rang_mediu'][a] for a in YEARS]
+    re_ = [f_en['rang_mediu'][a] for a in YEARS]
+    # la nivel de școală: se mișcă cele două împreună, de-a lungul celor șase ani?
+    matrice = {}
+    for c in celule:
+        if c['oras'] == oras:
+            matrice.setdefault(c['cod'], {})[c['an']] = (c['v8_mediana'], c['en_mediana'])
+    pe_scoala = []
+    for m in matrice.values():
+        if all(a in m for a in YEARS):
+            r = spearman([m[a][0] for a in YEARS], [m[a][1] for a in YEARS])
+            if r is not None:
+                pe_scoala.append(round(r, 3))
+    urmarire[oras] = {
+        'friedman_v8': f_v8, 'friedman_en': f_en,
+        'corelatie_tipar_v8_vs_examen': round(pearson(rv, re_), 3),
+        'n_scoli_complete': len(pe_scoala),
+        'scoli_corelatie_mediana': round(median_of(pe_scoala), 3) if pe_scoala else None,
+        'scoli_cu_corelatie_pozitiva': sum(1 for x in pe_scoala if x > 0),
+    }
+
+print()
+print('Urmăresc notele de la clasă dificultatea examenului?')
+print(f"{'oraș':>13}{'W la V-VIII':>13}{'W la examen':>13}{'tipar V-VIII vs examen':>24}")
+for o, v in urmarire.items():
+    print(f"{o:>13}{v['friedman_v8']['kendall_W']:>13.3f}{v['friedman_en']['kendall_W']:>13.3f}"
+          f"{v['corelatie_tipar_v8_vs_examen']:>24.3f}")
+print()
+print('La nivel de școală, pe cei șase ani (Spearman între mediana V-VIII și mediana EN):')
+for o, v in urmarire.items():
+    print(f"  {o:>13} mediană {v['scoli_corelatie_mediana']:+.3f}  "
+          f"pozitivă la {v['scoli_cu_corelatie_pozitiva']}/{v['n_scoli_complete']} școli")
+for o, v in urmarire.items():
+    print(f"  {o:>13} rang mediu V-VIII: " + ' '.join(
+        f"{a}:{v['friedman_v8']['rang_mediu'][a]:.1f}" for a in YEARS))
+
+
+# Câți elevi iau la examen PESTE media dată de școală, și unde se strâng.
+# Întrebarea userului: diferența ar trebui să fie și pozitivă, și negativă. Este — dar rar,
+# iar raritatea e ea însăși rezultatul.
+depasiri = {}
+for oras in ORASE:
+    tot = neg = 0
+    celule_o = []
+    for c in celule:
+        if c['oras'] != oras:
+            continue
+        per = NOTE['ani'][c['an']]['scoli'][c['cod']]['v8_en']
+        dif = sorted(a - b for a, b in per)
+        n = len(dif)
+        k = sum(1 for x in dif if x < 0)
+        tot += n
+        neg += k
+        celule_o.append({'an': c['an'], 'cod': c['cod'], 'denumire': c['denumire'],
+                         'n': n, 'peste': k, 'pondere': round(k / n, 4),
+                         'q1': round(dif[n // 4], 3),
+                         'mediana': round(median_of(dif), 3)})
+    celule_o.sort(key=lambda x: -x['pondere'])
+    depasiri[oras] = {
+        'elevi': tot, 'elevi_peste': neg, 'pondere': round(neg / tot, 4),
+        'celule': len(celule_o),
+        'celule_cu_q1_negativ': sum(1 for x in celule_o if x['q1'] < 0),
+        'celule_cu_mediana_negativa': sum(1 for x in celule_o if x['mediana'] < 0),
+        'primele': celule_o[:6],
+    }
+
+print()
+print('Elevi care iau la examen peste media dată de școală')
+for o, v in depasiri.items():
+    print(f"  {o:>13} {v['elevi_peste']}/{v['elevi']} ({100 * v['pondere']:.1f}%) · "
+          f"celule cu q1 negativ: {v['celule_cu_q1_negativ']}/{v['celule']} · "
+          f"cu mediana negativă: {v['celule_cu_mediana_negativa']}")
+print()
+print('unde se strâng, la Timișoara:')
+for x in depasiri['TIMIȘOARA']['primele']:
+    print(f"  {x['an']} {x['denumire'][:46]:46s} {x['peste']}/{x['n']} ({100 * x['pondere']:.0f}%)")
+
 json.dump({'min_candidati': MIN_N, 'pe_oras': pe_oras, 'intre_scoli': intre_scoli,
-           'kw_delta': kw_pe_oras, 'friedman_delta': fr_delta, 'celule': celule},
+           'kw_delta': kw_pe_oras, 'friedman_delta': fr_delta, 'urmarire_examen': urmarire, 'depasiri': depasiri, 'celule': celule},
           io.open(OUT, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
 
 print()

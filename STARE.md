@@ -200,7 +200,10 @@ Analiză a rezultatelor Evaluării Naționale (clasa a VIII-a) pe școli, date d
 ## ✅ Livrabil gata: `index.html`
 - **[pro-vio.github.io/raport-timisoara](https://pro-vio.github.io/raport-timisoara/)** — **linkul public de trimis** (GitHub Pages, verificat live 2026-07-15). Se actualizează automat la fiecare `git push` pe `main`.
 - **[Artifact claude.ai](https://claude.ai/code/artifact/84c74049-6070-4d70-9fd4-798190532f1c)** — aceeași pagină, util pt iterare rapidă din chat (artifactele sunt private by default; linkul Pages e cel de distribuit).
-- fișier local `index.html` (rădăcina proiectului), **~160 KB — trimis fără probleme pe mail/WhatsApp**.
+- fișier local `index.html` (rădăcina proiectului), **~684 KB**. Era 160 KB și se trimitea pe mail;
+  a crescut cu perechile de note ale elevilor din Timișoara (197 KB), care alimentează graficul cu
+  elevii unei școli. **Userul, 3 august 2026: „e ok, rămâne așa, nu îl mai trimitem pe mail"** —
+  deci mărimea nu mai e o constrângere, linkul Pages e calea de distribuție.
 
 ⚠️ Toate încarcă Chart.js de pe CDN extern (cdnjs.cloudflare.com) → cine deschide are nevoie de internet în acel moment, altfel graficele nu se randează (restul e self-contained, date inline).
 
@@ -259,6 +262,43 @@ căi relative la script (19 locuri, 9 scripturi) — până atunci niciun script
 - **Neprezentații intră în mediană și la EN** (3 august 2026; decizia luată la BAC pe 17 iulie, extinsă acum). Pragul rămâne pe candidații CU NOTĂ, ca setul de școli să nu se schimbe odată cu statistica. Efect: 5-8 mediane și 4-8 ranguri mutate pe an, din ~30 de școli; cea mai mare mișcare Șc.19 „Avram Iancu" 2025 (13 neprezentați, mediana 8,570→8,400, rangul 6→9).
   **Verificat că poziția Timișoarei NU ține de ei** (`neprezentati.py` → `date/neprezentati.json`): ponderea se încrucișează între orașe de la an la an, iar mediana orașului se mișcă cu ≤0,07, cu semne diferite. Ce ține: la școlile ale căror elevi iau note mai mici se prezintă mai puțini — corelație −0,49, iar **nu e circulară**: iese −0,50 pe medie și −0,55 pe `MEDIA V-VIII`, care nu vine din examen.
 - **Două praguri, deliberat** (aprobat de user, 3 august 2026): 8 la teste (Friedman, KW), 15 la graficele care numesc școli. Un test adună peste zeci de școli și suportă unități mai zgomotoase; un grafic numește o școală anume, unde o mediană șubredă devine o afirmație despre ea. La TM diferența e de 4-8 școli pe an.
+
+## Notele de la clasă față de examen (3 august 2026)
+
+`predictie_scoala.py` → `date/predictie_scoala.json`. Unitatea e ELEVUL: fiecare are media
+V-VIII dată de școala lui și media de la examen, pe aceeași scală, deci diferența e definită
+individual. Extracția comună păstrează perechea (`note_en.json`, câmpul `v8_en`) — fără ea se
+putea calcula decalajul, dar nu și ordonarea, fiindcă lista de note e sortată.
+
+- **Decalaj median**: TM 1,17 puncte, CJ 0,96, IS 0,89. Toate școlile din toate cele trei orașe
+  stau sub linia notei egale, în toți anii.
+- **Ordonarea e bună**: Spearman pe elevi 0,83-0,86. Panta ~1,9-2,0 — examenul împrăștie de
+  aproape două ori mai mult decât notele de la clasă (V-VIII stă între 7,8 și 9,9, EN între
+  3,2 și 9,8).
+- **Corelația ÎNTRE ȘCOLI** (ce arată norul, nu cea pe elevi): TM are cea mai mică valoare în
+  **toți cei 6 ani** (0,70-0,84) față de CJ 0,85-0,93 și IS 0,89-0,94, și scade (0,83 → 0,70).
+- **KW pe elevi, grupuri = școlile**: ε²=0,25 la TM — școlile diferă între ele prin decalaj mult
+  mai mult decât diferă orașele prin rezultate. Decalajul median al școlii: 0,25 … 3,49.
+- **Friedman pe decalaj**: W=0,52, iar tiparul anilor e OGLINDA celui de la examen (r=−0,94).
+- **Doar 2,6% dintre elevii TM** iau la examen peste media de la școală, iar excepțiile se strâng
+  la vârf (Loga 2020: 17 din 59). O singură celulă școală×an are q1 negativ.
+
+### Urmăresc notele de la clasă examenul? (testul cerut de user)
+Userul a respins presupunerea că o școală care notează raportându-se la propriii elevi n-ar
+coborî pentru o generație mai slabă: „O fac!!!". Textul a fost șters, apoi măsurat:
+
+- **La nivel de școală, pe cei 6 ani, DA**: Spearman median între mediana V-VIII și mediana EN
+  a aceleiași școli e +0,43 CJ / +0,41 IS / +0,37 TM, pozitiv la 29/36, 29/33, 17/25 de școli.
+- **Tiparul anilor, NU**: corelația dintre ordinea anilor la V-VIII și cea de la examen e −0,48
+  CJ / +0,24 IS / −0,21 TM. Fără direcție. Iar concordanța între școli e slabă la notele de
+  clasă (W 0,12-0,23) față de examen (0,14-0,46).
+- **Citirea propusă, NEAPROBATĂ încă**: notele de la clasă urmăresc generația, nu dificultatea
+  subiectelor — deci partea din mișcarea anuală pe care notele școlii n-o însoțesc ar fi
+  candidata pentru efectul de subiecte. E interpretare, nu măsurătoare; nu e pe pagină.
+
+⚠️ Restricția de amplitudine e tratată explicit: la o școală cu elevi omogeni corelația scade
+mecanic. De aceea se raportează și panta, și IQR-ul notelor școlii. Se vede la Loga: cea mai
+mică corelație din oraș (0,71) și cea mai mică împrăștiere (IQR 0,26).
 
 ## Clasamentul e o hartă de zone, nu o ordine (3 august 2026)
 
