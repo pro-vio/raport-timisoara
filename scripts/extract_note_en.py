@@ -53,8 +53,12 @@ for year in YEARS:
     it = wsx.iter_rows(min_row=1, values_only=True)
     hd = list(next(it))
     hi = {h.strip(): i for i, h in enumerate(hd) if isinstance(h, str)}
-    i_cod, i_med = hi['COD SIIIR'], hi['MEDIA']
+    i_cod, i_med, i_v8 = hi['COD SIIIR'], hi['MEDIA'], hi['MEDIA V-VIII']
     note = defaultdict(list)
+    # Perechea (media dată de școală în clasele V-VIII, media de la examen), PER ELEV.
+    # Se păstrează aici fiindcă doar aici există împerecherea — lista de note se sortează
+    # și o pierde. Din perechi se obțin și decalajul, și cât de bine ordonează școala.
+    perechi = defaultdict(list)
     fara = defaultdict(int)
     straine = fara_cod = 0
     for row in it:
@@ -68,14 +72,17 @@ for year in YEARS:
         m = row[i_med]
         if isinstance(m, (int, float)):
             note[c].append(round(float(m), 2))
+            if isinstance(row[i_v8], (int, float)):
+                perechi[c].append([round(float(row[i_v8]), 2), round(float(m), 2)])
         else:
             fara[c] += 1          # înscris, fără medie: neprezentat sau eliminat
     wbx.close()
 
-    scoli = {c: {'note': sorted(v), 'neprezentati': fara.get(c, 0)} for c, v in note.items()}
+    scoli = {c: {'note': sorted(v), 'neprezentati': fara.get(c, 0),
+                 'v8_en': perechi.get(c, [])} for c, v in note.items()}
     # școli din care s-au înscris doar neprezentați: există în an, cu zero note
     for c, n in fara.items():
-        scoli.setdefault(c, {'note': [], 'neprezentati': n})
+        scoli.setdefault(c, {'note': [], 'neprezentati': n, 'v8_en': []})
     out['ani'][str(year)] = {'scoli': scoli, 'coduri_straine': straine,
                              'candidati_fara_cod': fara_cod}
     np = sum(s['neprezentati'] for s in scoli.values())

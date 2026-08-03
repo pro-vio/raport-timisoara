@@ -156,6 +156,12 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
   z-index: 10; display: none; white-space: nowrap;
 }
 #stripCanvas { touch-action: none; }
+.duo { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 1.6rem; align-items: start; }
+.duo .plot { position: relative; width: 100%; aspect-ratio: 1 / 1; }
+.duo .say p { margin: 0 0 0.8rem; font-size: 14px; color: var(--ink); }
+.duo .say p:last-child { margin-bottom: 0; }
+.duo .say .num { font-variant-numeric: tabular-nums; font-weight: 600; }
+@media (max-width: 780px) { .duo { grid-template-columns: 1fr; } }
 
 </style>
 
@@ -172,6 +178,7 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
     <button class="tab-btn" data-tab="bootstrap" role="tab" aria-selected="false">Mediane cu bootstrap</button>
     <button class="tab-btn" data-tab="mediane" role="tab" aria-selected="false">Dinamica medianelor</button>
     <button class="tab-btn" data-tab="clasament" role="tab" aria-selected="false">Clasament</button>
+    <button class="tab-btn" data-tab="decalaj" role="tab" aria-selected="false">Notele la clasă și examenul</button>
   </div>
 
   <div id="tab-temporal" class="tabpanel">
@@ -387,10 +394,108 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
 
   </div>
 
+  <div id="tab-decalaj" class="tabpanel hidden">
+    <div class="card">
+      <h2>Diferența dintre notele de la clasă și notele de la Evaluarea Națională</h2>
+      <p class="note">Fiecare elev are două note pe aceeași scală: media pe care i-a dat-o școala în clasele V&ndash;VIII și media pe care a luat-o la examen. Diferența dintre ele se poate calcula pentru fiecare elev în parte, apoi se strânge la nivelul școlii.</p>
+    </div>
+
+    <div class="card">
+      <h2>Timișoara</h2>
+      <p class="note">Fiecare punct e o școală, în 2025. Pe orizontală mediana notelor pe care le dă școala în clasele V&ndash;VIII, pe verticală mediana notelor pe care le iau aceiași elevi la examen.</p>
+      <div class="duo">
+        <div class="plot"><canvas id="scatter-tm" role="img" aria-label="Nor de puncte, Timișoara, 2025: fiecare punct e o școală, notele date de școală față de notele de la examen. Toate punctele stau sub linia notei egale."></canvas></div>
+        <div class="say">
+          <p>Toate cele 30 de școli stau sub linie: fiecare notează peste ce iese la examen.</p>
+          <p>Decalajul median al unei școli e <span class="num">1,27</span> puncte, iar între școli merge de la <span class="num">0,23</span> la <span class="num">3,08</span>.</p>
+          <p>Corelația dintre cele două mediane, calculată între școli, e <span class="num">0,70</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Cluj</h2>
+      <p class="note">Fiecare punct e o școală, în 2025. Pe orizontală mediana notelor pe care le dă școala în clasele V&ndash;VIII, pe verticală mediana notelor pe care le iau aceiași elevi la examen.</p>
+      <div class="duo">
+        <div class="plot"><canvas id="scatter-cj" role="img" aria-label="Nor de puncte, Cluj, 2025: fiecare punct e o școală, notele date de școală față de notele de la examen. Toate punctele stau sub linia notei egale."></canvas></div>
+        <div class="say">
+          <p>Toate cele 40 de școli stau sub linie: fiecare notează peste ce iese la examen.</p>
+          <p>Decalajul median al unei școli e <span class="num">0,92</span> puncte, iar între școli merge de la <span class="num">0,38</span> la <span class="num">2,62</span>.</p>
+          <p>Corelația dintre cele două mediane, calculată între școli, e <span class="num">0,89</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Iași</h2>
+      <p class="note">Fiecare punct e o școală, în 2025. Pe orizontală mediana notelor pe care le dă școala în clasele V&ndash;VIII, pe verticală mediana notelor pe care le iau aceiași elevi la examen.</p>
+      <div class="duo">
+        <div class="plot"><canvas id="scatter-is" role="img" aria-label="Nor de puncte, Iași, 2025: fiecare punct e o școală, notele date de școală față de notele de la examen. Toate punctele stau sub linia notei egale."></canvas></div>
+        <div class="say">
+          <p>Toate cele 37 de școli stau sub linie: fiecare notează peste ce iese la examen.</p>
+          <p>Decalajul median al unei școli e <span class="num">0,85</span> puncte, iar între școli merge de la <span class="num">0,22</span> la <span class="num">2,96</span>.</p>
+          <p>Corelația dintre cele două mediane, calculată între școli, e <span class="num">0,93</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Ce se vede la Timișoara</h2>
+      <div class="findings">
+        <p>Elevii pe care o școală îi notează mai sus ies mai sus și la examen: corelația dintre cele două note, calculată pe cei 13.225 de elevi ai Timișoarei, e 0,834. Ce diferă e cât de sus notează fiecare școală.</p>
+        <p>Corelația dintre notele de la clasă și cele de la examen, calculată între școli, e 0,70 la Timișoara, față de 0,89 la Cluj și 0,93 la Iași. La Timișoara, ce notează o școală spune mai puțin despre ce vor lua elevii ei la examen decât în celelalte două orașe.</p>
+        <p>Școlile din oraș diferă între ele prin decalaj mai mult decât diferă orașele între ele prin rezultate: la un test cu elevii ca unități și școlile ca grupuri, mărimea efectului e ε²=0,25, față de -0,004&ndash;0,059 cât e între orașe. Decalajul median al unei școli merge de la 0,25 la 3,49 puncte.</p>
+        <p>Decalajul se mișcă de la un an la altul în același fel la toate școlile (25 de școli prezente în toți anii, W=0,52), iar tiparul lui e oglinda celui de la examen: corelația dintre ordinea anilor la examen și ordinea lor la decalaj e &minus;0,94. Când examenul coboară, notele școlii stau pe loc și decalajul crește.</p>
+        <p>Asta spune ceva despre ce se poate afla din datele astea și ce nu: notele date de școală nu urmăresc dificultatea examenului de la un an la altul. Cât din mișcarea anuală vine de la subiecte și cât de la generație rămâne însă nedespărțit, fiindcă o școală care notează raportându-se la propriii elevi n-ar coborî nici pentru o generație mai slabă.</p>
+      </div>
+    </div>
+  </div>
+
   <footer>Sursă: rezultate individuale Evaluare Națională, date deschise data.gov.ro (2020&ndash;2025) · mediana per școală; graficele arată mediane brute, iar mediana ajustată apare în tabul „Mediane cu bootstrap".</footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js">
+const DECALAJ = {"limite": [4.7, 10.0], "orase": [{"id": "tm", "nume": "Timișoara", "culoare": "#eda100", "culoare_dark": "#c98500", "puncte": [[9.14, 8.5, "LICEUL TEORETIC \"NIKOLAUS LENAU\" TIMIȘOARA"], [9.6, 8.72, "COLEGIUL NAȚIONAL BĂNĂȚEAN TIMIȘOARA"], [9.84, 9.63, "COLEGIUL NAȚIONAL \"CONSTANTIN DIACONOVICI LOGA\" TIMIȘOARA"], [9.54, 8.7, "COLEGIUL NAȚIONAL PEDAGOGIC \"CARMEN SYLVA\" TIMIȘOARA"], [9.23, 7.7, "ȘCOALA GIMNAZIALĂ NR.2 TIMIȘOARA"], [8.75, 7.25, "LICEUL TEORETIC \"VLAD ȚEPEȘ\" TIMIȘOARA"], [9.3, 7.92, "ȘCOALA GIMNAZIALĂ NR.27 TIMIȘOARA"], [9.63, 7.92, "ȘCOALA GIMNAZIALĂ NR.6 TIMIȘOARA"], [9.23, 7.66, "LICEUL TEORETIC \"BARTÓK BÉLA\" TIMIȘOARA"], [9.19, 7.9, "LICEUL TEORETIC \"WILLIAM SHAKESPEARE\" TIMIȘOARA"], [9.62, 9.2, "LICEUL TEORETIC \"GRIGORE MOISIL\" TIMIȘOARA"], [9.47, 8.35, "LICEUL WALDORF TIMIȘOARA"], [9.35, 8.17, "ȘCOALA GIMNAZIALĂ NR.13 TIMIȘOARA"], [9.11, 6.92, "LICEUL CU PROGRAM SPORTIV \"BANATUL\" TIMIȘOARA"], [9.42, 7.02, "LICEUL DE ARTĂ \"ION VIDU\" TIMIȘOARA"], [9.54, 8.73, "ȘCOALA GIMNAZIALĂ NR.16 \"TAKE IONESCU\" TIMIȘOARA"], [9.34, 8.5, "ȘCOALA GIMNAZIALĂ NR.24 TIMIȘOARA"], [9.19, 6.19, "LICEUL DE ARTE PLASTICE TIMIȘOARA"], [9.59, 8.37, "LICEUL TEOLOGIC BAPTIST TIMIȘOARA"], [9.16, 7.68, "LICEUL TEOLOGIC ORTODOX \"SFÂNTUL ANTIM IVIREANU\" TIMIȘOARA"], [9.09, 8.04, "LICEUL TEORETIC \"JEAN LOUIS CALDERON\" TIMIȘOARA"], [9.38, 8.0, "LICEUL TEOLOGIC PENTICOSTAL \"LOGOS\" TIMIȘOARA"], [8.93, 6.64, "LICEUL TEOLOGIC ROMANO-CATOLIC \"GERHARDINUM\" TIMIȘOARA"], [9.67, 8.31, "LICEUL TEORETIC \"BABEL\" TIMIȘOARA"], [9.07, 8.07, "ȘCOALA GIMNAZIALĂ NR.18 TIMIȘOARA"], [9.48, 8.57, "ȘCOALA GIMNAZIALĂ NR.19 \"AVRAM IANCU\" TIMIȘOARA"], [8.98, 7.12, "ȘCOALA GIMNAZIALĂ NR.21 \"VICENȚIU BABEȘ\" TIMIȘOARA"], [9.2, 7.3, "ȘCOALA GIMNAZIALĂ NR.25 TIMIȘOARA"], [9.27, 8.47, "ȘCOALA GIMNAZIALĂ NR.30 TIMIȘOARA"], [9.17, 7.75, "ȘCOALA GIMNAZIALĂ NR.7 \"SFÂNTA MARIA\" TIMIȘOARA"]]}, {"id": "cj", "nume": "Cluj", "culoare": "#1baf7a", "culoare_dark": "#199e70", "puncte": [[9.33, 7.55, "COLEGIUL DE MUZICĂ \"SIGISMUND TODUȚĂ\" CLUJ-NAPOCA"], [9.29, 8.47, "TRANSYLVANIA COLLEGE THE CAMBRIDGE INTERNATIONAL SCHOOL IN CLUJ"], [8.6, 7.0, "LICEUL TEORETIC \"BRASSAI SAMUEL\" CLUJ-NAPOCA"], [9.61, 8.75, "LICEUL TEORETIC \"LUCIAN BLAGA\" CLUJ-NAPOCA"], [9.59, 8.89, "COLEGIUL NAȚIONAL UNITARIAN \"JANOS ZSIGMOND\" CLUJ-NAPOCA"], [9.67, 9.29, "COLEGIUL NAȚIONAL \"EMIL RACOVIȚĂ\" CLUJ-NAPOCA"], [9.31, 8.06, "COLEGIUL NAȚIONAL \"GEORGE BARIȚIU\" CLUJ-NAPOCA"], [9.49, 8.78, "COLEGIUL NAȚIONAL \"GEORGE COȘBUC\" CLUJ-NAPOCA"], [9.35, 7.87, "LICEUL WALDORF CLUJ-NAPOCA"], [9.59, 8.85, "COLEGIUL NAȚIONAL \"GHEORGHE ȘINCAI\" CLUJ-NAPOCA"], [9.72, 9.32, "LICEUL TEORETIC \"ELF\" CLUJ-NAPOCA"], [9.34, 8.41, "LICEUL TEORETIC CREȘTIN \"PRO DEO\" CLUJ-NAPOCA"], [9.4, 8.84, "LICEUL INTERNAȚIONAL DE INFORMATICĂ \"SPECTRUM\" CLUJ-NAPOCA"], [9.16, 8.21, "COLEGIUL NAȚIONAL PEDAGOGIC \"GHEORGHE LAZĂR\" CLUJ-NAPOCA"], [9.63, 8.62, "COLEGIUL ORTODOX MITROPOLITUL \"NICOLAE COLAN\" CLUJ-NAPOCA"], [9.47, 8.55, "LICEUL TEORETIC \"ONISIFOR GHIBU\" CLUJ-NAPOCA"], [9.21, 7.72, "LICEUL TEORETIC \"MIHAI EMINESCU\" CLUJ-NAPOCA"], [8.99, 7.8, "LICEUL TEORETIC \"EUGEN PORA\" CLUJ-NAPOCA"], [9.33, 8.55, "LICEUL TEORETIC \"APACZAI CSERE JANOS\" CLUJ-NAPOCA"], [9.0, 8.32, "LICEUL TEOLOGIC REFORMAT CLUJ-NAPOCA"], [9.25, 8.34, "ȘCOALA GIMNAZIALĂ \"LIVIU REBREANU\" CLUJ-NAPOCA"], [8.98, 7.31, "ȘCOALA GIMNAZIALĂ \"ALEXANDRU VAIDA VOEVOD\" CLUJ-NAPOCA"], [9.4, 8.2, "ȘCOALA GIMNAZIALĂ \"IULIU HAȚIEGANU\" CLUJ-NAPOCA"], [9.16, 8.27, "ȘCOALA GIMNAZIALĂ \"ION AGÂRBICEANU\" CLUJ-NAPOCA"], [9.53, 8.62, "LICEUL TEORETIC \"BATHORY ISTVAN\" CLUJ-NAPOCA"], [9.46, 7.98, "ȘCOALA GIMNAZIALĂ \"ION CREANGĂ\" CLUJ-NAPOCA"], [9.52, 8.59, "ȘCOALA GIMNAZIALĂ \"NICOLAE TITULESCU\" CLUJ-NAPOCA"], [9.52, 8.34, "LICEUL DE INFORMATICĂ \"TIBERIU POPOVICIU\" CLUJ-NAPOCA"], [9.49, 8.42, "LICEUL TEOLOGIC BAPTIST \"EMANUEL\" CLUJ-NAPOCA"], [8.96, 8.1, "ȘCOALA GIMNAZIALĂ \"EMIL ISAC\" CLUJ-NAPOCA"], [8.88, 7.3, "LICEUL GRECO-CATOLIC \"INOCHENTIE MICU\" CLUJ-NAPOCA"], [8.23, 5.72, "LICEUL CU PROGRAM SPORTIV CLUJ-NAPOCA"], [9.27, 7.7, "LICEUL DE COREGRAFIE ȘI ARTĂ DRAMATICĂ \"OCTAVIAN STROIA\" CLUJ-NAPOCA"], [9.72, 9.12, "ȘCOALA GIMNAZIALĂ \"IOAN BOB\" CLUJ-NAPOCA"], [9.68, 9.27, "LICEUL TEORETIC \"AVRAM IANCU\" CLUJ-NAPOCA"], [9.23, 8.37, "ȘCOALA GIMNAZIALĂ \"CONSTANTIN BRÂNCUȘI\" CLUJ-NAPOCA"], [9.6, 9.0, "LICEUL TEORETIC \"NICOLAE BĂLCESCU\" CLUJ-NAPOCA"], [9.06, 7.61, "ȘCOALA GIMNAZIALĂ \"OCTAVIAN GOGA\" CLUJ-NAPOCA"], [9.24, 7.55, "ȘCOALA GIMNAZIALĂ \"HOREA\" CLUJ-NAPOCA"], [9.03, 7.02, "LICEUL DE ARTE VIZUALE \"ROMULUS LADEA\" CLUJ-NAPOCA"]]}, {"id": "is", "nume": "Iași", "culoare": "#2a78d6", "culoare_dark": "#3987e5", "puncte": [[9.0, 7.38, "ȘCOALA GIMNAZIALĂ \"ELENA CUZA\", IAȘI"], [9.22, 8.32, "ȘCOALA GIMNAZIALĂ \"DIMITRIE A. STURDZA\", IAȘI"], [9.59, 8.84, "COLEGIUL \"RICHARD WURMBRAND\", IAȘI"], [9.65, 9.17, "LICEUL TEORETIC \"VARLAAM MITROPOLITUL\", IAȘI"], [9.1, 7.96, "ȘCOALA GIMNAZIALĂ \"ION GHICA\", IAȘI"], [8.01, 4.98, "ȘCOALA GIMNAZIALĂ \"VERONICA MICLE\", IAȘI"], [9.53, 9.2, "COLEGIUL NAȚIONAL \"MIHAI EMINESCU\", IAȘI"], [9.34, 7.45, "COLEGIUL NAȚIONAL DE ARTĂ \"OCTAV BĂNCILĂ\", IAȘI"], [9.33, 8.18, "ȘCOALA GIMNAZIALĂ \"ION SIMIONESCU\", IAȘI"], [9.62, 8.5, "LICEUL TEORETIC WALDORF, IAȘI"], [9.43, 8.59, "ȘCOALA GIMNAZIALĂ \"ALEXANDRU CEL BUN\", IAȘI"], [8.89, 7.63, "ȘCOALA GIMNAZIALĂ \"GHEORGHE I. BRĂTIANU\", IAȘI"], [9.61, 9.09, "LICEUL TEORETIC INTERNAȚIONAL \"SPECTRUM\", IAȘI"], [9.51, 9.07, "COLEGIUL NAȚIONAL \"VASILE ALECSANDRI\", IAȘI"], [9.84, 9.6, "COLEGIUL NAȚIONAL \"EMIL RACOVIȚĂ\", IAȘI"], [9.46, 8.5, "LICEUL TEORETIC \"ALEXANDRU IOAN CUZA\", IAȘI"], [9.26, 8.37, "ȘCOALA GIMNAZIALĂ \"OTILIA CAZIMIR\", IAȘI"], [9.81, 9.42, "COLEGIUL NAȚIONAL \"COSTACHE NEGRUZZI\", IAȘI"], [9.59, 8.9, "ȘCOALA GIMNAZIALĂ \"ȘTEFAN BÂRSĂNESCU\", IAȘI"], [9.22, 8.32, "ȘCOALA GIMNAZIALĂ \"BOGDAN PETRICEICU HAȘDEU\", IAȘI"], [8.81, 6.95, "ȘCOALA GIMNAZIALĂ \"GEORGE CĂLINESCU\", IAȘI"], [9.12, 8.18, "LICEUL TEORETIC \"MIRON COSTIN\", IAȘI"], [8.73, 5.81, "LICEUL CU PROGRAM SPORTIV, IAȘI"], [9.18, 8.62, "COLEGIUL NAȚIONAL \"GARABET IBRĂILEANU\", IAȘI"], [9.36, 8.38, "ȘCOALA GIMNAZIALĂ \"ION CREANGĂ\", IAȘI"], [9.07, 7.95, "ȘCOALA GIMNAZIALĂ \"VASILE CONTA\", IAȘI"], [9.45, 8.79, "LICEUL UNIVERSITĂȚII \"ALEXANDRU IOAN CUZA\" DIN IAȘI, IAȘI"], [9.29, 8.35, "COLEGIUL NAȚIONAL PEDAGOGIC \"VASILE LUPU\", IAȘI"], [9.37, 8.62, "ȘCOALA GIMNAZIALĂ \"TITU MAIORESCU\", IAȘI"], [8.59, 6.62, "ȘCOALA GIMNAZIALĂ \"IONEL TEODOREANU\", IAȘI"], [8.86, 7.4, "ȘCOALA GIMNAZIALĂ \"GEORGE COȘBUC\", IAȘI"], [8.71, 7.8, "ȘCOALA GIMNAZIALĂ \"NICOLAE IORGA\", IAȘI"], [9.53, 8.95, "LICEUL TEORETIC \"DIMITRIE CANTEMIR\", IAȘI"], [9.73, 9.34, "LICEUL TEORETIC DE INFORMATICĂ \"GRIGORE MOISIL\", IAȘI"], [9.19, 7.62, "ȘCOALA GIMNAZIALĂ \"ALECU RUSSO\", IAȘI"], [8.71, 6.2, "ȘCOALA GIMNAZIALĂ \"ALEXANDRU VLAHUȚĂ\", IAȘI"], [9.84, 9.55, "COLEGIUL NAȚIONAL, IAȘI"]]}]};
+let decalajDesenat = false;
+function deseneazaDecalaj() {
+  if (decalajDesenat) { Object.values(DECALAJ.charts || {}).forEach(c => c.resize()); return; }
+  decalajDesenat = true;
+  DECALAJ.charts = {};
+  const dark = isDark();
+  const grid = dark ? 'rgba(240,237,230,0.10)' : 'rgba(32,29,26,0.08)';
+  const ink = dark ? '#b4ada0' : '#5c564c';
+  DECALAJ.orase.forEach(o => {
+    const el = document.getElementById('scatter-' + o.id);
+    if (!el) return;
+    const lim = DECALAJ.limite;
+    DECALAJ.charts[o.id] = new Chart(el, {
+      type: 'scatter',
+      data: { datasets: [
+        { label: 'școli', data: o.puncte.map(p => ({x: p[0], y: p[1], n: p[2]})),
+          backgroundColor: dark ? o.culoare_dark : o.culoare, borderColor: '#ffffff',
+          borderWidth: 1.2, pointRadius: 5, pointHoverRadius: 8, order: 2 },
+        { label: 'notă egală', type: 'line', data: [{x: lim[0], y: lim[0]}, {x: lim[1], y: lim[1]}],
+          borderColor: ink, borderWidth: 1, borderDash: [5, 4], pointRadius: 0, order: 1 },
+      ]},
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          x: { min: lim[0], max: lim[1], title: {display: true, text: 'mediana notelor V–VIII', color: ink},
+               grid: {color: grid}, ticks: {color: ink} },
+          y: { min: lim[0], max: lim[1], title: {display: true, text: 'mediana la examen', color: ink},
+               grid: {color: grid}, ticks: {color: ink} },
+        },
+        plugins: {
+          legend: {display: false},
+          tooltip: { callbacks: { label: c => c.raw.n
+            ? [c.raw.n, `V–VIII ${c.raw.x.toFixed(2)} · examen ${c.raw.y.toFixed(2)}`]
+            : 'notă egală la școală și la examen' } },
+        },
+      },
+    });
+  });
+}
+</script>
 <script>
 const SCHOOLS = [{"cod": "3561101683", "nume": "COLEGIUL NAȚIONAL \"C.D. LOGA\"", "ani": {"2020": {"rank": 1, "med": 9.75}, "2021": {"rank": 1, "med": 9.46}, "2022": {"rank": 1, "med": 9.47}, "2023": {"rank": 1, "med": 9.585}, "2024": {"rank": 1, "med": 9.52}, "2025": {"rank": 1, "med": 9.635}}}, {"cod": "3561101656", "nume": "LICEUL TEORETIC \"GRIGORE MOISIL\"", "ani": {"2020": {"rank": 2, "med": 9.37}, "2021": {"rank": 6, "med": 8.57}, "2022": {"rank": 2, "med": 8.92}, "2023": {"rank": 2, "med": 9.35}, "2024": {"rank": 2, "med": 9.07}, "2025": {"rank": 2, "med": 9.2}}}, {"cod": "3561102069", "nume": "LICEUL TEORETIC \"NIKOLAUS LENAU\"", "ani": {"2020": {"rank": 3, "med": 9.03}, "2021": {"rank": 2, "med": 8.84}, "2022": {"rank": 6, "med": 8.65}, "2023": {"rank": 6, "med": 8.66}, "2024": {"rank": 6, "med": 8.3}, "2025": {"rank": 6, "med": 8.5}}}, {"cod": "3561100922", "nume": "COL. NAȚ. PEDAGOGIC \"CARMEN SYLVA\"", "ani": {"2020": {"rank": 4, "med": 8.96}, "2021": {"rank": 4, "med": 8.75}, "2022": {"rank": 3, "med": 8.9}, "2023": {"rank": 4, "med": 8.8}, "2024": {"rank": 4, "med": 8.625}, "2025": {"rank": 5, "med": 8.695}}}, {"cod": "3561100085", "nume": "ȘC. GIMN. NR.16 \"TAKE IONESCU\"", "ani": {"2020": {"rank": 5, "med": 8.95}, "2021": {"rank": 3, "med": 8.82}, "2022": {"rank": 4, "med": 8.835}, "2023": {"rank": 3, "med": 9.02}, "2024": {"rank": 3, "med": 8.7}, "2025": {"rank": 4, "med": 8.735}}}, {"cod": "3561106417", "nume": "COLEGIUL NAȚIONAL BĂNĂȚEAN", "ani": {"2020": {"rank": 6, "med": 8.85}, "2021": {"rank": 5, "med": 8.585}, "2022": {"rank": 5, "med": 8.68}, "2023": {"rank": 5, "med": 8.7}, "2024": {"rank": 5, "med": 8.6}, "2025": {"rank": 3, "med": 8.72}}}, {"cod": "3561101543", "nume": "ȘC. GIMN. NR.19 \"AVRAM IANCU\"", "ani": {"2020": {"rank": 7, "med": 8.75}, "2021": {"rank": 7, "med": 8.55}, "2022": {"rank": 8, "med": 8.45}, "2023": {"rank": 10, "med": 8.5}, "2024": {"rank": 7, "med": 8.16}, "2025": {"rank": 9, "med": 8.4}}}, {"cod": "3561102205", "nume": "ȘCOALA GIMNAZIALĂ NR.30", "ani": {"2020": {"rank": 8, "med": 8.57}, "2021": {"rank": 10, "med": 7.85}, "2022": {"rank": 11, "med": 8.07}, "2023": {"rank": 14, "med": 8.1}, "2024": {"rank": 9, "med": 8.0}, "2025": {"rank": 8, "med": 8.46}}}, {"cod": "3561101448", "nume": "ȘCOALA GIMNAZIALĂ NR.13", "ani": {"2020": {"rank": 9, "med": 8.5}, "2021": {"rank": 8, "med": 8.01}, "2022": {"rank": 12, "med": 7.97}, "2023": {"rank": 19, "med": 7.67}, "2024": {"rank": 17, "med": 7.4}, "2025": {"rank": 13, "med": 8.17}}}, {"cod": "3561101032", "nume": "ȘCOALA GIMNAZIALĂ NR.24", "ani": {"2020": {"rank": 10, "med": 8.47}, "2021": {"rank": 11, "med": 7.72}, "2022": {"rank": 9, "med": 8.41}, "2023": {"rank": 9, "med": 8.5}, "2024": {"rank": 10, "med": 7.985}, "2025": {"rank": 7, "med": 8.5}}}, {"cod": "3561101005", "nume": "LICEUL WALDORF", "ani": {"2020": {"rank": 11, "med": 8.385}, "2021": {"rank": 15, "med": 7.17}, "2022": {"rank": 10, "med": 8.185}, "2023": {"rank": 8, "med": 8.55}, "2024": {"rank": 12, "med": 7.8}, "2025": {"rank": 11, "med": 8.35}}}, {"cod": "3561102033", "nume": "ȘCOALA GIMNAZIALĂ NR.2", "ani": {"2020": {"rank": 12, "med": 8.05}, "2021": {"rank": 17, "med": 7.1}, "2022": {"rank": 17, "med": 7.535}, "2023": {"rank": 15, "med": 8.05}, "2024": {"rank": 21, "med": 6.95}, "2025": {"rank": 21, "med": 7.7}}}, {"cod": "3561106462", "nume": "LICEUL TEORETIC \"W. SHAKESPEARE\"", "ani": {"2020": {"rank": 13, "med": 8.02}, "2021": {"rank": 12, "med": 7.62}, "2022": {"rank": 15, "med": 7.8}, "2023": {"rank": 11, "med": 8.25}, "2024": {"rank": 24, "med": 6.87}, "2025": {"rank": 18, "med": 7.9}}}, {"cod": "3561100013", "nume": "LICEUL TEOLOGIC BAPTIST", "ani": {"2020": {"rank": 14, "med": 8.0}, "2021": {"rank": 16, "med": 7.095}, "2022": {"rank": 20, "med": 7.1}, "2023": {"rank": 13, "med": 8.225}, "2024": {"rank": 11, "med": 8.02}, "2025": {"rank": 10, "med": 8.37}}}, {"cod": "3561101371", "nume": "ȘC. GIMN. NR.7 \"SFÂNTA MARIA\"", "ani": {"2020": {"rank": 15, "med": 7.895}, "2021": {"rank": 20, "med": 6.72}, "2022": {"rank": 21, "med": 7.035}, "2023": {"rank": 21, "med": 7.62}, "2024": {"rank": 19, "med": 7.17}, "2025": {"rank": 20, "med": 7.75}}}, {"cod": "3561100899", "nume": "ȘCOALA GIMNAZIALĂ NR.18", "ani": {"2020": {"rank": 16, "med": 7.87}, "2021": {"rank": 13, "med": 7.52}, "2022": {"rank": 14, "med": 7.935}, "2023": {"rank": 12, "med": 8.25}, "2024": {"rank": 13, "med": 7.7}, "2025": {"rank": 14, "med": 8.075}}}, {"cod": "3561100881", "nume": "ȘCOALA GIMNAZIALĂ NR.25", "ani": {"2020": {"rank": 17, "med": 7.82}, "2021": {"rank": 25, "med": 6.2}, "2022": {"rank": 25, "med": 6.5}, "2023": {"rank": 23, "med": 7.32}, "2024": {"rank": 23, "med": 6.9}, "2025": {"rank": 25, "med": 7.3}}}, {"cod": "3561101507", "nume": "LICEUL DE ARTĂ \"ION VIDU\"", "ani": {"2020": {"rank": 18, "med": 7.72}, "2021": {"rank": 21, "med": 6.67}, "2022": {"rank": 19, "med": 7.235}, "2023": {"rank": 16, "med": 7.885}, "2024": {"rank": 20, "med": 7.045}, "2025": {"rank": 27, "med": 7.02}}}, {"cod": "3561106367", "nume": "ȘCOALA GIMNAZIALĂ NR.27", "ani": {"2020": {"rank": 19, "med": 7.45}, "2021": {"rank": 18, "med": 6.77}, "2022": {"rank": 23, "med": 6.85}, "2023": {"rank": 17, "med": 7.86}, "2024": {"rank": 16, "med": 7.41}, "2025": {"rank": 19, "med": 7.86}}}, {"cod": "3561100153", "nume": "LICEUL TEORETIC \"BARTÓK BÉLA\"", "ani": {"2020": {"rank": 20, "med": 7.155}, "2021": {"rank": 22, "med": 6.495}, "2022": {"rank": 16, "med": 7.685}, "2023": {"rank": 22, "med": 7.53}, "2024": {"rank": 14, "med": 7.64}, "2025": {"rank": 22, "med": 7.655}}}, {"cod": "3561100601", "nume": "LICEUL TEORETIC \"J.L. CALDERON\"", "ani": {"2020": {"rank": 21, "med": 7.22}, "2021": {"rank": 19, "med": 6.635}, "2022": {"rank": 29, "med": 5.61}, "2023": {"rank": 18, "med": 7.675}, "2024": {"rank": 25, "med": 6.735}, "2025": {"rank": 15, "med": 8.035}}}, {"cod": "3561101466", "nume": "LIC. TEOLOGIC PENTICOSTAL \"LOGOS\"", "ani": {"2020": {"rank": 22, "med": 7.07}, "2021": {"rank": 9, "med": 7.92}, "2022": {"rank": 13, "med": 7.96}, "2024": {"rank": 15, "med": 7.635}, "2025": {"rank": 16, "med": 8.0}}}, {"cod": "3561101801", "nume": "LICEUL DE ARTE PLASTICE", "ani": {"2020": {"rank": 23, "med": 7.05}, "2022": {"rank": 22, "med": 6.72}, "2023": {"rank": 25, "med": 6.395}, "2024": {"rank": 27, "med": 6.0}, "2025": {"rank": 30, "med": 6.185}}}, {"cod": "3561101891", "nume": "ȘC. GIMN. NR.21 \"VICENȚIU BABEȘ\"", "ani": {"2020": {"rank": 24, "med": 6.95}, "2021": {"rank": 23, "med": 6.445}, "2022": {"rank": 27, "med": 6.11}, "2023": {"rank": 27, "med": 5.45}, "2024": {"rank": 22, "med": 6.9}, "2025": {"rank": 26, "med": 7.12}}}, {"cod": "3561102173", "nume": "LIC. TEOLOGIC ROMANO-CATOLIC \"GERHARDINUM\"", "ani": {"2020": {"rank": 25, "med": 6.85}, "2021": {"rank": 14, "med": 7.22}, "2022": {"rank": 18, "med": 7.51}, "2023": {"rank": 20, "med": 7.45}, "2024": {"rank": 26, "med": 6.585}, "2025": {"rank": 29, "med": 6.62}}}, {"cod": "3561101493", "nume": "ȘCOALA GIMNAZIALĂ NR.6", "ani": {"2020": {"rank": 26, "med": 6.65}, "2021": {"rank": 26, "med": 5.76}, "2022": {"rank": 24, "med": 6.7}, "2023": {"rank": 24, "med": 7.195}, "2024": {"rank": 18, "med": 7.235}, "2025": {"rank": 17, "med": 7.92}}}, {"cod": "3561101014", "nume": "LICEUL TEORETIC \"VLAD ȚEPEȘ\"", "ani": {"2020": {"rank": 27, "med": 6.595}, "2021": {"rank": 24, "med": 6.435}, "2022": {"rank": 26, "med": 6.02}, "2024": {"rank": 28, "med": 5.66}, "2025": {"rank": 24, "med": 7.25}}}, {"cod": "3561100836", "nume": "LICEUL CU PROGRAM SPORTIV \"BANATUL\"", "ani": {"2020": {"rank": 28, "med": 6.16}, "2021": {"rank": 27, "med": 5.245}, "2022": {"rank": 28, "med": 6.15}, "2023": {"rank": 28, "med": 5.3}, "2024": {"rank": 29, "med": 5.41}, "2025": {"rank": 28, "med": 6.92}}}, {"cod": "3561206763", "nume": "LICEUL TEORETIC \"BABEL\"", "ani": {"2025": {"rank": 12, "med": 8.31}}}, {"cod": "3561101597", "nume": "LIC. TEOLOGIC ORTODOX \"ANTIM IVIREANU\"", "ani": {"2022": {"rank": 7, "med": 8.82}, "2023": {"rank": 7, "med": 8.57}, "2024": {"rank": 8, "med": 8.145}, "2025": {"rank": 23, "med": 7.65}}}, {"cod": "3562103866", "nume": "ȘCOALA GIMNAZIALĂ NR.20", "ani": {"2023": {"rank": 26, "med": 5.285}}}, {"cod": "3561100022", "nume": "LICEUL TEHNOLOGIC TRANSPORTURI AUTO", "ani": {"2024": {"rank": 30, "med": 5.3}}}];
 
@@ -738,7 +843,7 @@ stripYearSlider.addEventListener('input', () => {
   renderStrip(+stripYearSlider.value);
 });
 
-const TAB_IDS = ['temporal', 'note', 'bootstrap', 'mediane', 'clasament'];
+const TAB_IDS = ['temporal', 'note', 'bootstrap', 'mediane', 'clasament', 'decalaj'];
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
@@ -747,6 +852,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     if (btn.dataset.tab === 'temporal') { if (!friedmanChart) renderFriedmanChart(); else friedmanChart.resize(); }
     if (btn.dataset.tab === 'mediane') chart.resize();
     if (btn.dataset.tab === 'note') renderStrip(+stripYearSlider.value);
+    if (btn.dataset.tab === 'decalaj') deseneazaDecalaj();
   });
 });
 
@@ -783,4 +889,45 @@ function renderFriedmanChart() {
   });
 }
 renderFriedmanChart();
+
+const DECALAJ = {"limite": [4.7, 10.0], "orase": [{"id": "tm", "nume": "Timișoara", "culoare": "#eda100", "culoare_dark": "#c98500", "puncte": [[9.14, 8.5, "LICEUL TEORETIC \"NIKOLAUS LENAU\" TIMIȘOARA"], [9.6, 8.72, "COLEGIUL NAȚIONAL BĂNĂȚEAN TIMIȘOARA"], [9.84, 9.63, "COLEGIUL NAȚIONAL \"CONSTANTIN DIACONOVICI LOGA\" TIMIȘOARA"], [9.54, 8.7, "COLEGIUL NAȚIONAL PEDAGOGIC \"CARMEN SYLVA\" TIMIȘOARA"], [9.23, 7.7, "ȘCOALA GIMNAZIALĂ NR.2 TIMIȘOARA"], [8.75, 7.25, "LICEUL TEORETIC \"VLAD ȚEPEȘ\" TIMIȘOARA"], [9.3, 7.92, "ȘCOALA GIMNAZIALĂ NR.27 TIMIȘOARA"], [9.63, 7.92, "ȘCOALA GIMNAZIALĂ NR.6 TIMIȘOARA"], [9.23, 7.66, "LICEUL TEORETIC \"BARTÓK BÉLA\" TIMIȘOARA"], [9.19, 7.9, "LICEUL TEORETIC \"WILLIAM SHAKESPEARE\" TIMIȘOARA"], [9.62, 9.2, "LICEUL TEORETIC \"GRIGORE MOISIL\" TIMIȘOARA"], [9.47, 8.35, "LICEUL WALDORF TIMIȘOARA"], [9.35, 8.17, "ȘCOALA GIMNAZIALĂ NR.13 TIMIȘOARA"], [9.11, 6.92, "LICEUL CU PROGRAM SPORTIV \"BANATUL\" TIMIȘOARA"], [9.42, 7.02, "LICEUL DE ARTĂ \"ION VIDU\" TIMIȘOARA"], [9.54, 8.73, "ȘCOALA GIMNAZIALĂ NR.16 \"TAKE IONESCU\" TIMIȘOARA"], [9.34, 8.5, "ȘCOALA GIMNAZIALĂ NR.24 TIMIȘOARA"], [9.19, 6.19, "LICEUL DE ARTE PLASTICE TIMIȘOARA"], [9.59, 8.37, "LICEUL TEOLOGIC BAPTIST TIMIȘOARA"], [9.16, 7.68, "LICEUL TEOLOGIC ORTODOX \"SFÂNTUL ANTIM IVIREANU\" TIMIȘOARA"], [9.09, 8.04, "LICEUL TEORETIC \"JEAN LOUIS CALDERON\" TIMIȘOARA"], [9.38, 8.0, "LICEUL TEOLOGIC PENTICOSTAL \"LOGOS\" TIMIȘOARA"], [8.93, 6.64, "LICEUL TEOLOGIC ROMANO-CATOLIC \"GERHARDINUM\" TIMIȘOARA"], [9.67, 8.31, "LICEUL TEORETIC \"BABEL\" TIMIȘOARA"], [9.07, 8.07, "ȘCOALA GIMNAZIALĂ NR.18 TIMIȘOARA"], [9.48, 8.57, "ȘCOALA GIMNAZIALĂ NR.19 \"AVRAM IANCU\" TIMIȘOARA"], [8.98, 7.12, "ȘCOALA GIMNAZIALĂ NR.21 \"VICENȚIU BABEȘ\" TIMIȘOARA"], [9.2, 7.3, "ȘCOALA GIMNAZIALĂ NR.25 TIMIȘOARA"], [9.27, 8.47, "ȘCOALA GIMNAZIALĂ NR.30 TIMIȘOARA"], [9.17, 7.75, "ȘCOALA GIMNAZIALĂ NR.7 \"SFÂNTA MARIA\" TIMIȘOARA"]]}, {"id": "cj", "nume": "Cluj", "culoare": "#1baf7a", "culoare_dark": "#199e70", "puncte": [[9.33, 7.55, "COLEGIUL DE MUZICĂ \"SIGISMUND TODUȚĂ\" CLUJ-NAPOCA"], [9.29, 8.47, "TRANSYLVANIA COLLEGE THE CAMBRIDGE INTERNATIONAL SCHOOL IN CLUJ"], [8.6, 7.0, "LICEUL TEORETIC \"BRASSAI SAMUEL\" CLUJ-NAPOCA"], [9.61, 8.75, "LICEUL TEORETIC \"LUCIAN BLAGA\" CLUJ-NAPOCA"], [9.59, 8.89, "COLEGIUL NAȚIONAL UNITARIAN \"JANOS ZSIGMOND\" CLUJ-NAPOCA"], [9.67, 9.29, "COLEGIUL NAȚIONAL \"EMIL RACOVIȚĂ\" CLUJ-NAPOCA"], [9.31, 8.06, "COLEGIUL NAȚIONAL \"GEORGE BARIȚIU\" CLUJ-NAPOCA"], [9.49, 8.78, "COLEGIUL NAȚIONAL \"GEORGE COȘBUC\" CLUJ-NAPOCA"], [9.35, 7.87, "LICEUL WALDORF CLUJ-NAPOCA"], [9.59, 8.85, "COLEGIUL NAȚIONAL \"GHEORGHE ȘINCAI\" CLUJ-NAPOCA"], [9.72, 9.32, "LICEUL TEORETIC \"ELF\" CLUJ-NAPOCA"], [9.34, 8.41, "LICEUL TEORETIC CREȘTIN \"PRO DEO\" CLUJ-NAPOCA"], [9.4, 8.84, "LICEUL INTERNAȚIONAL DE INFORMATICĂ \"SPECTRUM\" CLUJ-NAPOCA"], [9.16, 8.21, "COLEGIUL NAȚIONAL PEDAGOGIC \"GHEORGHE LAZĂR\" CLUJ-NAPOCA"], [9.63, 8.62, "COLEGIUL ORTODOX MITROPOLITUL \"NICOLAE COLAN\" CLUJ-NAPOCA"], [9.47, 8.55, "LICEUL TEORETIC \"ONISIFOR GHIBU\" CLUJ-NAPOCA"], [9.21, 7.72, "LICEUL TEORETIC \"MIHAI EMINESCU\" CLUJ-NAPOCA"], [8.99, 7.8, "LICEUL TEORETIC \"EUGEN PORA\" CLUJ-NAPOCA"], [9.33, 8.55, "LICEUL TEORETIC \"APACZAI CSERE JANOS\" CLUJ-NAPOCA"], [9.0, 8.32, "LICEUL TEOLOGIC REFORMAT CLUJ-NAPOCA"], [9.25, 8.34, "ȘCOALA GIMNAZIALĂ \"LIVIU REBREANU\" CLUJ-NAPOCA"], [8.98, 7.31, "ȘCOALA GIMNAZIALĂ \"ALEXANDRU VAIDA VOEVOD\" CLUJ-NAPOCA"], [9.4, 8.2, "ȘCOALA GIMNAZIALĂ \"IULIU HAȚIEGANU\" CLUJ-NAPOCA"], [9.16, 8.27, "ȘCOALA GIMNAZIALĂ \"ION AGÂRBICEANU\" CLUJ-NAPOCA"], [9.53, 8.62, "LICEUL TEORETIC \"BATHORY ISTVAN\" CLUJ-NAPOCA"], [9.46, 7.98, "ȘCOALA GIMNAZIALĂ \"ION CREANGĂ\" CLUJ-NAPOCA"], [9.52, 8.59, "ȘCOALA GIMNAZIALĂ \"NICOLAE TITULESCU\" CLUJ-NAPOCA"], [9.52, 8.34, "LICEUL DE INFORMATICĂ \"TIBERIU POPOVICIU\" CLUJ-NAPOCA"], [9.49, 8.42, "LICEUL TEOLOGIC BAPTIST \"EMANUEL\" CLUJ-NAPOCA"], [8.96, 8.1, "ȘCOALA GIMNAZIALĂ \"EMIL ISAC\" CLUJ-NAPOCA"], [8.88, 7.3, "LICEUL GRECO-CATOLIC \"INOCHENTIE MICU\" CLUJ-NAPOCA"], [8.23, 5.72, "LICEUL CU PROGRAM SPORTIV CLUJ-NAPOCA"], [9.27, 7.7, "LICEUL DE COREGRAFIE ȘI ARTĂ DRAMATICĂ \"OCTAVIAN STROIA\" CLUJ-NAPOCA"], [9.72, 9.12, "ȘCOALA GIMNAZIALĂ \"IOAN BOB\" CLUJ-NAPOCA"], [9.68, 9.27, "LICEUL TEORETIC \"AVRAM IANCU\" CLUJ-NAPOCA"], [9.23, 8.37, "ȘCOALA GIMNAZIALĂ \"CONSTANTIN BRÂNCUȘI\" CLUJ-NAPOCA"], [9.6, 9.0, "LICEUL TEORETIC \"NICOLAE BĂLCESCU\" CLUJ-NAPOCA"], [9.06, 7.61, "ȘCOALA GIMNAZIALĂ \"OCTAVIAN GOGA\" CLUJ-NAPOCA"], [9.24, 7.55, "ȘCOALA GIMNAZIALĂ \"HOREA\" CLUJ-NAPOCA"], [9.03, 7.02, "LICEUL DE ARTE VIZUALE \"ROMULUS LADEA\" CLUJ-NAPOCA"]]}, {"id": "is", "nume": "Iași", "culoare": "#2a78d6", "culoare_dark": "#3987e5", "puncte": [[9.0, 7.38, "ȘCOALA GIMNAZIALĂ \"ELENA CUZA\", IAȘI"], [9.22, 8.32, "ȘCOALA GIMNAZIALĂ \"DIMITRIE A. STURDZA\", IAȘI"], [9.59, 8.84, "COLEGIUL \"RICHARD WURMBRAND\", IAȘI"], [9.65, 9.17, "LICEUL TEORETIC \"VARLAAM MITROPOLITUL\", IAȘI"], [9.1, 7.96, "ȘCOALA GIMNAZIALĂ \"ION GHICA\", IAȘI"], [8.01, 4.98, "ȘCOALA GIMNAZIALĂ \"VERONICA MICLE\", IAȘI"], [9.53, 9.2, "COLEGIUL NAȚIONAL \"MIHAI EMINESCU\", IAȘI"], [9.34, 7.45, "COLEGIUL NAȚIONAL DE ARTĂ \"OCTAV BĂNCILĂ\", IAȘI"], [9.33, 8.18, "ȘCOALA GIMNAZIALĂ \"ION SIMIONESCU\", IAȘI"], [9.62, 8.5, "LICEUL TEORETIC WALDORF, IAȘI"], [9.43, 8.59, "ȘCOALA GIMNAZIALĂ \"ALEXANDRU CEL BUN\", IAȘI"], [8.89, 7.63, "ȘCOALA GIMNAZIALĂ \"GHEORGHE I. BRĂTIANU\", IAȘI"], [9.61, 9.09, "LICEUL TEORETIC INTERNAȚIONAL \"SPECTRUM\", IAȘI"], [9.51, 9.07, "COLEGIUL NAȚIONAL \"VASILE ALECSANDRI\", IAȘI"], [9.84, 9.6, "COLEGIUL NAȚIONAL \"EMIL RACOVIȚĂ\", IAȘI"], [9.46, 8.5, "LICEUL TEORETIC \"ALEXANDRU IOAN CUZA\", IAȘI"], [9.26, 8.37, "ȘCOALA GIMNAZIALĂ \"OTILIA CAZIMIR\", IAȘI"], [9.81, 9.42, "COLEGIUL NAȚIONAL \"COSTACHE NEGRUZZI\", IAȘI"], [9.59, 8.9, "ȘCOALA GIMNAZIALĂ \"ȘTEFAN BÂRSĂNESCU\", IAȘI"], [9.22, 8.32, "ȘCOALA GIMNAZIALĂ \"BOGDAN PETRICEICU HAȘDEU\", IAȘI"], [8.81, 6.95, "ȘCOALA GIMNAZIALĂ \"GEORGE CĂLINESCU\", IAȘI"], [9.12, 8.18, "LICEUL TEORETIC \"MIRON COSTIN\", IAȘI"], [8.73, 5.81, "LICEUL CU PROGRAM SPORTIV, IAȘI"], [9.18, 8.62, "COLEGIUL NAȚIONAL \"GARABET IBRĂILEANU\", IAȘI"], [9.36, 8.38, "ȘCOALA GIMNAZIALĂ \"ION CREANGĂ\", IAȘI"], [9.07, 7.95, "ȘCOALA GIMNAZIALĂ \"VASILE CONTA\", IAȘI"], [9.45, 8.79, "LICEUL UNIVERSITĂȚII \"ALEXANDRU IOAN CUZA\" DIN IAȘI, IAȘI"], [9.29, 8.35, "COLEGIUL NAȚIONAL PEDAGOGIC \"VASILE LUPU\", IAȘI"], [9.37, 8.62, "ȘCOALA GIMNAZIALĂ \"TITU MAIORESCU\", IAȘI"], [8.59, 6.62, "ȘCOALA GIMNAZIALĂ \"IONEL TEODOREANU\", IAȘI"], [8.86, 7.4, "ȘCOALA GIMNAZIALĂ \"GEORGE COȘBUC\", IAȘI"], [8.71, 7.8, "ȘCOALA GIMNAZIALĂ \"NICOLAE IORGA\", IAȘI"], [9.53, 8.95, "LICEUL TEORETIC \"DIMITRIE CANTEMIR\", IAȘI"], [9.73, 9.34, "LICEUL TEORETIC DE INFORMATICĂ \"GRIGORE MOISIL\", IAȘI"], [9.19, 7.62, "ȘCOALA GIMNAZIALĂ \"ALECU RUSSO\", IAȘI"], [8.71, 6.2, "ȘCOALA GIMNAZIALĂ \"ALEXANDRU VLAHUȚĂ\", IAȘI"], [9.84, 9.55, "COLEGIUL NAȚIONAL, IAȘI"]]}]};
+let decalajDesenat = false;
+function deseneazaDecalaj() {
+  if (decalajDesenat) { Object.values(DECALAJ.charts || {}).forEach(c => c.resize()); return; }
+  decalajDesenat = true;
+  DECALAJ.charts = {};
+  const dark = isDark();
+  const grid = dark ? 'rgba(240,237,230,0.10)' : 'rgba(32,29,26,0.08)';
+  const ink = dark ? '#b4ada0' : '#5c564c';
+  DECALAJ.orase.forEach(o => {
+    const el = document.getElementById('scatter-' + o.id);
+    if (!el) return;
+    const lim = DECALAJ.limite;
+    DECALAJ.charts[o.id] = new Chart(el, {
+      type: 'scatter',
+      data: { datasets: [
+        { label: 'școli', data: o.puncte.map(p => ({x: p[0], y: p[1], n: p[2]})),
+          backgroundColor: dark ? o.culoare_dark : o.culoare, borderColor: '#ffffff',
+          borderWidth: 1.2, pointRadius: 5, pointHoverRadius: 8, order: 2 },
+        { label: 'notă egală', type: 'line', data: [{x: lim[0], y: lim[0]}, {x: lim[1], y: lim[1]}],
+          borderColor: ink, borderWidth: 1, borderDash: [5, 4], pointRadius: 0, order: 1 },
+      ]},
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          x: { min: lim[0], max: lim[1], title: {display: true, text: 'mediana notelor V–VIII', color: ink},
+               grid: {color: grid}, ticks: {color: ink} },
+          y: { min: lim[0], max: lim[1], title: {display: true, text: 'mediana la examen', color: ink},
+               grid: {color: grid}, ticks: {color: ink} },
+        },
+        plugins: {
+          legend: {display: false},
+          tooltip: { callbacks: { label: c => c.raw.n
+            ? [c.raw.n, `V–VIII ${c.raw.x.toFixed(2)} · examen ${c.raw.y.toFixed(2)}`]
+            : 'notă egală la școală și la examen' } },
+        },
+      },
+    });
+  });
+}
 </script>

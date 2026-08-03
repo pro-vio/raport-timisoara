@@ -156,6 +156,12 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
   z-index: 10; display: none; white-space: nowrap;
 }
 #stripCanvas { touch-action: none; }
+.duo { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 1.6rem; align-items: start; }
+.duo .plot { position: relative; width: 100%; aspect-ratio: 1 / 1; }
+.duo .say p { margin: 0 0 0.8rem; font-size: 14px; color: var(--ink); }
+.duo .say p:last-child { margin-bottom: 0; }
+.duo .say .num { font-variant-numeric: tabular-nums; font-weight: 600; }
+@media (max-width: 780px) { .duo { grid-template-columns: 1fr; } }
 
 </style>
 
@@ -172,6 +178,7 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
     <button class="tab-btn" data-tab="bootstrap" role="tab" aria-selected="false">Mediane cu bootstrap</button>
     <button class="tab-btn" data-tab="mediane" role="tab" aria-selected="false">Dinamica medianelor</button>
     <button class="tab-btn" data-tab="clasament" role="tab" aria-selected="false">Clasament</button>
+    <button class="tab-btn" data-tab="decalaj" role="tab" aria-selected="false">Notele la clasă și examenul</button>
   </div>
 
   <div id="tab-temporal" class="tabpanel">
@@ -382,10 +389,71 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
 
   </div>
 
+  <div id="tab-decalaj" class="tabpanel hidden">
+    <div class="card">
+      <h2>Diferența dintre notele de la clasă și notele de la Evaluarea Națională</h2>
+      <p class="note">Fiecare elev are două note pe aceeași scală: media pe care i-a dat-o școala în clasele V&ndash;VIII și media pe care a luat-o la examen. Diferența dintre ele se poate calcula pentru fiecare elev în parte, apoi se strânge la nivelul școlii.</p>
+    </div>
+
+{{CARDURI_DECALAJ}}
+
+    <div class="card">
+      <h2>Ce se vede la Timișoara</h2>
+      <div class="findings">
+        <p>Elevii pe care o școală îi notează mai sus ies mai sus și la examen: corelația dintre cele două note, calculată pe cei {{DEC_TM_ELEVI}} de elevi ai Timișoarei, e {{DEC_TM_SPEARMAN}}. Ce diferă e cât de sus notează fiecare școală.</p>
+        <p>Corelația dintre notele de la clasă și cele de la examen, calculată între școli, e {{DEC_COR_TM}} la Timișoara, față de {{DEC_COR_CJ}} la Cluj și {{DEC_COR_IS}} la Iași. La Timișoara, ce notează o școală spune mai puțin despre ce vor lua elevii ei la examen decât în celelalte două orașe.</p>
+        <p>Școlile din oraș diferă între ele prin decalaj mai mult decât diferă orașele între ele prin rezultate: la un test cu elevii ca unități și școlile ca grupuri, mărimea efectului e ε²={{DEC_TM_EPS}}, față de {{KW_EPS_MIN}}&ndash;{{KW_EPS_MAX}} cât e între orașe. Decalajul median al unei școli merge de la {{DEC_TM_MIN}} la {{DEC_TM_MAX}} puncte.</p>
+        <p>Decalajul se mișcă de la un an la altul în același fel la toate școlile ({{DEC_TM_SCOLI_FR}} de școli prezente în toți anii, W={{DEC_TM_W}}), iar tiparul lui e oglinda celui de la examen: corelația dintre ordinea anilor la examen și ordinea lor la decalaj e {{DEC_TM_OGLINDA}}. Când examenul coboară, notele școlii stau pe loc și decalajul crește.</p>
+        <p>Asta spune ceva despre ce se poate afla din datele astea și ce nu: notele date de școală nu urmăresc dificultatea examenului de la un an la altul. Cât din mișcarea anuală vine de la subiecte și cât de la generație rămâne însă nedespărțit, fiindcă o școală care notează raportându-se la propriii elevi n-ar coborî nici pentru o generație mai slabă.</p>
+      </div>
+    </div>
+  </div>
+
   <footer>Sursă: rezultate individuale Evaluare Națională, date deschise data.gov.ro (2020&ndash;2025) · mediana per școală; graficele arată mediane brute, iar mediana ajustată apare în tabul „Mediane cu bootstrap".</footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js">
+const DECALAJ = {{JS_DECALAJ}};
+let decalajDesenat = false;
+function deseneazaDecalaj() {
+  if (decalajDesenat) { Object.values(DECALAJ.charts || {}).forEach(c => c.resize()); return; }
+  decalajDesenat = true;
+  DECALAJ.charts = {};
+  const dark = isDark();
+  const grid = dark ? 'rgba(240,237,230,0.10)' : 'rgba(32,29,26,0.08)';
+  const ink = dark ? '#b4ada0' : '#5c564c';
+  DECALAJ.orase.forEach(o => {
+    const el = document.getElementById('scatter-' + o.id);
+    if (!el) return;
+    const lim = DECALAJ.limite;
+    DECALAJ.charts[o.id] = new Chart(el, {
+      type: 'scatter',
+      data: { datasets: [
+        { label: 'școli', data: o.puncte.map(p => ({x: p[0], y: p[1], n: p[2]})),
+          backgroundColor: dark ? o.culoare_dark : o.culoare, borderColor: '#ffffff',
+          borderWidth: 1.2, pointRadius: 5, pointHoverRadius: 8, order: 2 },
+        { label: 'notă egală', type: 'line', data: [{x: lim[0], y: lim[0]}, {x: lim[1], y: lim[1]}],
+          borderColor: ink, borderWidth: 1, borderDash: [5, 4], pointRadius: 0, order: 1 },
+      ]},
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          x: { min: lim[0], max: lim[1], title: {display: true, text: 'mediana notelor V–VIII', color: ink},
+               grid: {color: grid}, ticks: {color: ink} },
+          y: { min: lim[0], max: lim[1], title: {display: true, text: 'mediana la examen', color: ink},
+               grid: {color: grid}, ticks: {color: ink} },
+        },
+        plugins: {
+          legend: {display: false},
+          tooltip: { callbacks: { label: c => c.raw.n
+            ? [c.raw.n, `V–VIII ${c.raw.x.toFixed(2)} · examen ${c.raw.y.toFixed(2)}`]
+            : 'notă egală la școală și la examen' } },
+        },
+      },
+    });
+  });
+}
+</script>
 <script>
 const SCHOOLS = {{JS_SCHOOLS}};
 
@@ -733,7 +801,7 @@ stripYearSlider.addEventListener('input', () => {
   renderStrip(+stripYearSlider.value);
 });
 
-const TAB_IDS = ['temporal', 'note', 'bootstrap', 'mediane', 'clasament'];
+const TAB_IDS = ['temporal', 'note', 'bootstrap', 'mediane', 'clasament', 'decalaj'];
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
@@ -742,6 +810,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     if (btn.dataset.tab === 'temporal') { if (!friedmanChart) renderFriedmanChart(); else friedmanChart.resize(); }
     if (btn.dataset.tab === 'mediane') chart.resize();
     if (btn.dataset.tab === 'note') renderStrip(+stripYearSlider.value);
+    if (btn.dataset.tab === 'decalaj') deseneazaDecalaj();
   });
 });
 
@@ -778,4 +847,45 @@ function renderFriedmanChart() {
   });
 }
 renderFriedmanChart();
+
+const DECALAJ = {{JS_DECALAJ}};
+let decalajDesenat = false;
+function deseneazaDecalaj() {
+  if (decalajDesenat) { Object.values(DECALAJ.charts || {}).forEach(c => c.resize()); return; }
+  decalajDesenat = true;
+  DECALAJ.charts = {};
+  const dark = isDark();
+  const grid = dark ? 'rgba(240,237,230,0.10)' : 'rgba(32,29,26,0.08)';
+  const ink = dark ? '#b4ada0' : '#5c564c';
+  DECALAJ.orase.forEach(o => {
+    const el = document.getElementById('scatter-' + o.id);
+    if (!el) return;
+    const lim = DECALAJ.limite;
+    DECALAJ.charts[o.id] = new Chart(el, {
+      type: 'scatter',
+      data: { datasets: [
+        { label: 'școli', data: o.puncte.map(p => ({x: p[0], y: p[1], n: p[2]})),
+          backgroundColor: dark ? o.culoare_dark : o.culoare, borderColor: '#ffffff',
+          borderWidth: 1.2, pointRadius: 5, pointHoverRadius: 8, order: 2 },
+        { label: 'notă egală', type: 'line', data: [{x: lim[0], y: lim[0]}, {x: lim[1], y: lim[1]}],
+          borderColor: ink, borderWidth: 1, borderDash: [5, 4], pointRadius: 0, order: 1 },
+      ]},
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          x: { min: lim[0], max: lim[1], title: {display: true, text: 'mediana notelor V–VIII', color: ink},
+               grid: {color: grid}, ticks: {color: ink} },
+          y: { min: lim[0], max: lim[1], title: {display: true, text: 'mediana la examen', color: ink},
+               grid: {color: grid}, ticks: {color: ink} },
+        },
+        plugins: {
+          legend: {display: false},
+          tooltip: { callbacks: { label: c => c.raw.n
+            ? [c.raw.n, `V–VIII ${c.raw.x.toFixed(2)} · examen ${c.raw.y.toFixed(2)}`]
+            : 'notă egală la școală și la examen' } },
+        },
+      },
+    });
+  });
+}
 </script>
