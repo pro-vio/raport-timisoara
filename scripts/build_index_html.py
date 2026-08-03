@@ -22,6 +22,8 @@ kw = J('kw_pe_ani.json')
 shr = J('shrinkage_mediana.json')
 raw = J('candidati_raw_timisoara.json')
 mv = J('medie_vs_mediana_percentil.json')
+npz = J('neprezentati.json')
+rng_ = J('ranguri_bootstrap.json')
 
 
 def d(x, n=2):
@@ -32,6 +34,11 @@ def d(x, n=2):
 def enumera(xs, si='și'):
     xs = list(xs)
     return xs[0] if len(xs) == 1 else f"{', '.join(xs[:-1])} {si} {xs[-1]}"
+
+
+def semn(x, n=2):
+    """Cifră cu semn tipografic corect: minusul e &minus;, nu cratimă."""
+    return ('&minus;' if x < 0 else '') + d(abs(x), n)
 
 
 def zecimale(x, minim=2):
@@ -115,6 +122,38 @@ dif_min, EX_A, EX_B = min(perechi)
 n_sc_fr = [fr[c]['n_scoli'] for c in ORASE]
 n_sc_shr = [shr[an]['n_scoli'] for an in YEARS]
 
+# intervalele de rang și săgețile pe care le-au înlocuit
+_lat_an = {an: sorted(v['latime'] for v in sc.values()) for an, sc in rng_['ani'].items()}
+_lat_tip = [l[len(l) // 2] for l in _lat_an.values()]
+_sag_tot = sum(v['sageti_afisate'] for v in rng_['sageti'].values())
+_sag_sus = sum(v['sustinute'] for v in rng_['sageti'].values())
+assert _sag_sus * 10 < _sag_tot, \
+    f'săgețile au devenit susținute ({_sag_sus}/{_sag_tot}) — fraza din text nu mai ține'
+_NUME_SAG = {0: 'niciuna nu se susține', 1: 'una singură se susține'}
+FRAZA_SAG = _NUME_SAG.get(_sag_sus, f'{_sag_sus} se susțin')
+
+# cât de determinat e clasamentul: primul loc, și câte școli se despart de cea din mijloc
+_dist, _k = [], []
+for an, sc in rng_['ani'].items():
+    v = sorted(sc.values(), key=lambda x: x['rang_publicat'])
+    mij = v[len(v) // 2]
+    _dist.append(sum(1 for x in v
+                     if x['rang_hi'] < mij['rang_lo'] or x['rang_lo'] > mij['rang_hi']))
+    _k.append(len(v))
+    assert round(v[0]['rang_lo']) == round(v[0]['rang_hi']) == 1, \
+        f'{an}: primul loc nu mai e neambiguu ({v[0]["rang_lo"]}-{v[0]["rang_hi"]})'
+    assert v[-1]['rang_lo'] > mij['rang_hi'], f'{an}: ultima școală nu se mai desparte de mijloc'
+
+# neprezentații
+_pond = [v for o in npz['pondere_neprezentati_pct'].values() for v in o.values()]
+_cor = npz['corelatie_nivel_vs_pondere']['TOATE']
+# afirmația din text: niciun oraș nu stă constant deasupra celorlalte
+_top_pond = {max(npz['pondere_neprezentati_pct'], key=lambda o: npz['pondere_neprezentati_pct'][o][a])
+             for a in YEARS}
+assert len(_top_pond) > 1, f'un singur oraș are mereu cea mai mare pondere: {_top_pond}'
+assert _cor['mediana_en'] < 0 and _cor['media_en'] < 0 and _cor['mediana_viii'] < 0, \
+    f'corelațiile nu mai sunt toate negative: {_cor}'
+
 # Kruskal-Wallis
 eps = {a: kw['ani'][a]['epsilon2'] for a in YEARS}
 AN_EPS_MIN = min(eps, key=eps.get)
@@ -124,11 +163,24 @@ assert len(perechi_sig) == 1, f'nu mai e un singur contrast semnificativ: {perec
 PERECHE = '&ndash;'.join(ORASE[x.strip()] for x in list(perechi_sig)[0].split(' vs '))
 ANI_SIG = [a for a in YEARS if sig[a]]
 ANI_NESIG = [a for a in YEARS if not sig[a]]
-# anul de graniță: omnibus peste prag, dar o pereche sub prag
+# Anii de graniță: omnibusul nu respinge, dar o pereche iese sub prag. Fraza apare doar
+# dacă fenomenul există — a existat pe 3 august, a dispărut după includerea neprezentaților.
 granita = [a for a in YEARS if kw['ani'][a]['p'] >= 0.05 and sig[a]]
-assert len(granita) == 1, f'cazuri de graniță: {granita}'
-AN_GR = granita[0]
-P_DUNN_GR = [x['p_holm'] for x in kw['ani'][AN_GR]['dunn_holm'] if x['p_holm'] < 0.05][0]
+FRAZA_GRANITA = ''
+for a in granita:
+    pd_ = [x['p_holm'] for x in kw['ani'][a]['dunn_holm'] if x['p_holm'] < 0.05][0]
+    FRAZA_GRANITA += (f" În {a} testul pe ansamblu dă p={d(kw['ani'][a]['p'], 3)}, iar "
+                      f"post-hoc-ul pentru {{PERECHE}} p={d(pd_, 3)}: perechea iese sub un "
+                      f"test de ansamblu care nu respinge.")
+
+# ε² poate ieși negativ când grupurile nu se separă deloc: H scade sub k−1. Se raportează
+# ca atare, cu citirea lui (decizia userului, 3 august 2026: „ambele").
+ani_neg = [a for a in YEARS if eps[a] < 0]
+FRAZA_EPS_NEG = ''
+if ani_neg:
+    val = ', '.join(f'{d(eps[a], 3)} în {a}' for a in ani_neg)
+    FRAZA_EPS_NEG = (f' Valoarea iese negativă ({val}) &mdash; formula coboară sub zero când '
+                     f'orașele nu se separă deloc, deci acolo efectul e nul.')
 
 prim = {a: max(kw['ani'][a]['rang_mediu'], key=kw['ani'][a]['rang_mediu'].get) for a in YEARS}
 ani_cj = [a for a in YEARS if prim[a] == 'CLUJ-NAPOCA']
@@ -170,11 +222,26 @@ JETOANE = {
 
     'KW_CJ_PRIM': f'{ani_cj[0]} și {ani_cj[-1]}' if len(ani_cj) > 2 else enumera(ani_cj),
     'KW_IS_PRIM': enumera(ani_is),
-    'KW_EPS_MIN': d(min(eps.values()), 2), 'KW_EPS_MAX': d(max(eps.values()), 2),
-    'KW_AN_EPS_MIN': AN_EPS_MIN, 'KW_EPS_MIN_EXACT': d(eps[AN_EPS_MIN], 3),
+    'KW_EPS_MIN': d(min(eps.values()), 3), 'KW_EPS_MAX': d(max(eps.values()), 3),
     'KW_PERECHE': PERECHE, 'KW_ANI_SIG': enumera(ANI_SIG), 'KW_ANI_NESIG': enumera(ANI_NESIG),
-    'KW_AN_GRANITA': AN_GR, 'KW_P_GRANITA': d(kw['ani'][AN_GR]['p'], 3),
-    'KW_PDUNN_GRANITA': d(P_DUNN_GR, 3),
+    'KW_FRAZA_GRANITA': FRAZA_GRANITA.replace('{PERECHE}', PERECHE),
+    'KW_FRAZA_EPS_NEG': FRAZA_EPS_NEG,
+
+    'JS_RANGURI': json.dumps(rng_['ani'], ensure_ascii=False),
+    'TH_ANI': '\n            '.join(f'<th>{a}</th>' for a in YEARS),
+    'AN_ULTIM': YEARS[-1],
+    'RANG_LAT_MIN': str(int(min(_lat_tip))), 'RANG_LAT_MAX': str(int(max(_lat_tip))),
+    'RANG_LAT_MAXIM': str(int(max(l[-1] for l in _lat_an.values()))),
+    'SAGETI_TOTAL': str(_sag_tot), 'SAGETI_SUSTINUTE': FRAZA_SAG,
+    'RANG_DIST_MIN': str(min(_dist)), 'RANG_DIST_MAX': str(max(_dist)),
+    'RANG_K': str(round(sum(_k) / len(_k))),
+
+    'NEPZ_MIN': d(min(_pond), 1) + '%', 'NEPZ_MAX': d(max(_pond), 1) + '%',
+    'NEPZ_MISCARE': zecimale(max(abs(v) for o in npz['miscarea_medianei_orasului'].values()
+                                 for v in o.values())),
+    'NEPZ_COR_MEDIANA': semn(_cor['mediana_en']),
+    'NEPZ_COR_MEDIE': semn(_cor['media_en']),
+    'NEPZ_COR_VIII': semn(_cor['mediana_viii']),
 
     'R_DIF': '&minus;' + d(abs(mv['corelatie_medie_vs_gap'])),
     'N_BOOT': str(N_BOOT), 'MIN_N': str(MIN_N),
@@ -190,12 +257,15 @@ assert not nefolosite, f'valori calculate degeaba: {nefolosite}'
 for k, v in JETOANE.items():
     s = s.replace('{{' + k + '}}', v)
 
-io.open(OUT, 'w', encoding='utf-8', newline='\n').write(s)
-print(f'scris {os.path.normpath(OUT)}  ({len(s):,} caractere)'.replace(',', ' '))
-
-# Afirmațiile, nu doar cifrele. Dacă una pică, build-ul cade și pagina rămâne de refăcut.
-print()
-r = subprocess.run([sys.executable, os.path.join(HERE, 'verifica_text.py')])
+# Pagina se scrie într-un fișier alături, se verifică acolo, și abia apoi ia locul celei
+# vechi. Altfel un build căzut ar lăsa pe disc exact pagina pe care verificarea a respins-o.
+TMP = OUT + '.nou'
+io.open(TMP, 'w', encoding='utf-8', newline='\n').write(s)
+r = subprocess.run([sys.executable, os.path.join(HERE, 'verifica_text.py'), TMP])
 if r.returncode:
-    print('\nBUILD CĂZUT: o afirmație din text nu mai e susținută de date.')
-sys.exit(r.returncode)
+    os.remove(TMP)
+    print('\nBUILD CĂZUT: o afirmație din text nu mai e susținută de date. '
+          'index.html a rămas neatins.')
+    sys.exit(r.returncode)
+os.replace(TMP, OUT)
+print(f'\nscris {os.path.normpath(OUT)}  ({len(s):,} caractere)'.replace(',', ' '))

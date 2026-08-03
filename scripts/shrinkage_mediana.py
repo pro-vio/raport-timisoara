@@ -7,6 +7,8 @@ import openpyxl
 import json
 import random
 from collections import defaultdict
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from statistici import cu_neprezentati, mediana_cu_neprezentati
 
 random.seed(20260707)
 
@@ -55,40 +57,26 @@ def bootstrap_se_median(values, B):
     var_b = sum((m - mean_b) ** 2 for m in meds) / (B - 1)
     return var_b ** 0.5
 
+# Neprezentații intră în mediană, așezați jos, fără notă (decizia userului, 3 august 2026 —
+# aceeași care fusese luată la BAC pe 17 iulie). Mediana e o poziție, deci nu le trebuie
+# valoare; santinela există doar ca lista să poată fi sortată și reeșantionată la bootstrap.
+# Pragul rămâne pe candidații CU NOTĂ, ca setul de școli să nu se schimbe odată cu statistica.
+NOTE = json.load(open(os.path.join(_DATE, 'note_en.json'), encoding='utf-8'))
 results_per_year = {}
 
 for year in YEARS:
-    path = f"{BASE}\\{year}_evnat_date-deschise.xlsx"
-    ro = year != 2020
-    wbx = openpyxl.load_workbook(path, read_only=ro)
-    wsx = wbx[wbx.sheetnames[0]]
-    rows_iter = wsx.iter_rows(min_row=1, values_only=True)
-    header_row = list(next(rows_iter))
-    hidx = {h.strip(): i for i, h in enumerate(header_row) if isinstance(h, str)}
-    siiir_col = hidx['COD SIIIR']
-    media_col = hidx['MEDIA']
-    acc = defaultdict(list)
-    for row in rows_iter:
-        code = row[siiir_col]
-        if code is None:
-            continue
-        code = str(code).strip()
-        if code.endswith('.0'):
-            code = code[:-2]
-        if code not in registry:
-            continue
-        media = row[media_col]
-        if isinstance(media, (int, float)):
-            acc[code].append(float(media))
-    wbx.close()
+    an = NOTE['ani'][str(year)]['scoli']
 
     schools = []
-    for code, vals in acc.items():
-        if len(vals) < MIN_N:
+    for code, rec in an.items():
+        if code not in registry or len(rec['note']) < MIN_N:
             continue
-        m = median_of(vals)
-        se = bootstrap_se_median(vals, B)
-        schools.append({'cod': code, 'denumire': names[code], 'n': len(vals), 'mediana': m, 'se': se})
+        toate = cu_neprezentati(rec['note'], rec['neprezentati'])
+        m = mediana_cu_neprezentati(rec['note'], rec['neprezentati'])
+        assert m is not None, f'{year} {names[code]}: mediana cade în blocul neprezentaților'
+        se = bootstrap_se_median(toate, B)
+        schools.append({'cod': code, 'denumire': names[code], 'n': len(rec['note']),
+                        'neprezentati': rec['neprezentati'], 'mediana': m, 'se': se})
 
     k = len(schools)
     ms = [s['mediana'] for s in schools]

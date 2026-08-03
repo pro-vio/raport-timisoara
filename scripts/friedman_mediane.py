@@ -1,3 +1,5 @@
+import os
+_DATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'date')
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 import xlrd
@@ -5,6 +7,8 @@ import openpyxl
 import json
 import math
 import gc
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from statistici import mediana_cu_neprezentati
 from collections import defaultdict, Counter
 
 def norm(s):
@@ -15,7 +19,7 @@ def norm(s):
     s = s.replace('Ţ', 'Ț').replace('ţ', 'ț')
     return s
 
-BASE = r"C:\Users\Viorel Proteasa\Documents\raport-timisoara\date"
+BASE = _DATE
 REG = BASE + r"\Unitati de invatamant acreditate  i autorizate.xls"
 wb = xlrd.open_workbook(REG)
 ws = wb.sheet_by_index(0)
@@ -42,36 +46,16 @@ def median_of(values):
     n = len(v)
     return v[n // 2] if n % 2 else (v[n // 2 - 1] + v[n // 2]) / 2
 
+# Neprezentații intră în mediană, așezați jos (decizia userului, 3 august 2026). Pragul
+# rămâne pe candidații CU NOTĂ, ca setul de școli să nu se schimbe odată cu statistica.
+NOTE = json.load(open(os.path.join(_DATE, 'note_en.json'), encoding='utf-8'))
 matrix = defaultdict(dict)  # code -> {year: median}
 for year in YEARS:
-    path = f"{BASE}\\{year}_evnat_date-deschise.xlsx"
-    ro = year != 2020
-    wbx = openpyxl.load_workbook(path, read_only=ro)
-    wsx = wbx[wbx.sheetnames[0]]
-    rows_iter = wsx.iter_rows(min_row=1, values_only=True)
-    header_row = list(next(rows_iter))
-    hidx = {h.strip(): i for i, h in enumerate(header_row) if isinstance(h, str)}
-    siiir_col = hidx['COD SIIIR']
-    media_col = hidx['MEDIA']
-    acc = defaultdict(list)
-    for row in rows_iter:
-        code = row[siiir_col]
-        if code is None:
-            continue
-        code = str(code).strip()
-        if code.endswith('.0'):
-            code = code[:-2]
-        if code not in registry:
-            continue
-        media = row[media_col]
-        if isinstance(media, (int, float)):
-            acc[code].append(float(media))
-    wbx.close()
-    for code, vals in acc.items():
-        if len(vals) >= MIN_N:
-            matrix[code][year] = round(median_of(vals), 4)
-    del wbx, wsx, rows_iter, acc
-    gc.collect()
+    for code, rec in NOTE['ani'][str(year)]['scoli'].items():
+        if code in registry and len(rec['note']) >= MIN_N:
+            m = mediana_cu_neprezentati(rec['note'], rec['neprezentati'])
+            if m is not None:
+                matrix[code][year] = round(m, 4)
     print(f'{year}: done')
 
 def rank_row(vals):

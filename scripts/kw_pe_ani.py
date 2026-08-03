@@ -7,7 +7,8 @@ import openpyxl
 import json
 import math
 from collections import defaultdict, Counter
-from statistici import median_of
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from statistici import median_of, mediana_cu_neprezentati
 
 def norm(s):
     if not isinstance(s, str):
@@ -37,34 +38,11 @@ YEARS = [2020, 2021, 2022, 2023, 2024, 2025]
 BASE = _DATE
 MIN_N = 8
 
-# per year: code -> list of medii
-per_year = {}
-for year in YEARS:
-    path = f"{BASE}\\{year}_evnat_date-deschise.xlsx"
-    ro = year != 2020
-    wbx = openpyxl.load_workbook(path, read_only=ro)
-    wsx = wbx[wbx.sheetnames[0]]
-    rows_iter = wsx.iter_rows(min_row=1, values_only=True)
-    header_row = list(next(rows_iter))
-    hidx = {h.strip(): i for i, h in enumerate(header_row) if isinstance(h, str)}
-    siiir_col = hidx['COD SIIIR']
-    media_col = hidx['MEDIA']
-    acc = defaultdict(list)
-    for row in rows_iter:
-        code = row[siiir_col]
-        if code is None:
-            continue
-        code = str(code).strip()
-        if code.endswith('.0'):
-            code = code[:-2]
-        city = registry.get(code)
-        if city is None:
-            continue
-        media = row[media_col]
-        if isinstance(media, (int, float)):
-            acc[code].append(float(media))
-    wbx.close()
-    per_year[year] = acc
+# Notele și neprezentații vin din extracția comună; înainte fiecare script recitea singur
+# cele șase xlsx-uri și arunca tăcut candidații fără medie.
+NOTE = json.load(open(os.path.join(_DATE, 'note_en.json'), encoding='utf-8'))
+per_year = {year: {c: r for c, r in NOTE['ani'][str(year)]['scoli'].items() if c in registry}
+            for year in YEARS}
 
 def rank_all(values):
     order = sorted(range(len(values)), key=lambda i: values[i])
@@ -111,9 +89,12 @@ out = {'min_candidati_per_scoala_an': MIN_N,
 for year in YEARS:
     acc = per_year[year]
     groups = defaultdict(list)
-    for code, vals in acc.items():
-        if len(vals) >= MIN_N:
-            groups[registry[code]].append(median_of(vals))
+    for code, rec in acc.items():
+        # pragul e pe candidații CU NOTĂ; neprezentații intră în mediană, așezați jos
+        if len(rec['note']) >= MIN_N:
+            m = mediana_cu_neprezentati(rec['note'], rec['neprezentati'])
+            if m is not None:
+                groups[registry[code]].append(m)
     glist = [groups[c] for c in CITIES]
     sizes = [len(g) for g in glist]
     H, N, rank_sums = kruskal(glist)

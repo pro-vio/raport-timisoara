@@ -6,7 +6,10 @@ P = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 D = os.path.join(P, 'date')
 J = lambda n: json.load(io.open(os.path.join(D, n), encoding='utf-8'))
 
-html = io.open(os.path.join(P, 'index.html'), encoding='utf-8').read()
+# Se verifică pagina dată ca argument (build-ul trimite fișierul candidat, înainte ca el
+# să ia locul celui vechi); fără argument, pagina publicată.
+PAGINA = sys.argv[1] if len(sys.argv) > 1 else os.path.join(P, 'index.html')
+html = io.open(PAGINA, encoding='utf-8').read()
 proza = html[:html.index('<script src=')]
 
 ok = bad = 0
@@ -23,44 +26,47 @@ def r1(x): return round(x, 1)
 
 print('--- Friedman (friedman_mediane.json) ---')
 fr = J('friedman_mediane.json')
+# Valorile sunt interpolate din aceste fisiere, deci a le compara cu ele e tautologic.
+# Se testeaza AFIRMATIILE pe care le face textul, plus prezenta valorii in pagina.
 W = {c: fr[c]['kendall_W'] for c in ('IAȘI', 'TIMIȘOARA', 'CLUJ-NAPOCA')}
-check('Kendall W Iasi 0,37', round(W['IAȘI'], 2) == 0.37, W['IAȘI'])
-check('Kendall W TM 0,36', round(W['TIMIȘOARA'], 2) == 0.36, W['TIMIȘOARA'])
-check('Kendall W CJ 0,12', round(W['CLUJ-NAPOCA'], 2) == 0.12, W['CLUJ-NAPOCA'])
+check('textul spune ca la Cluj scolile sunt cel mai putin sincrone',
+      min(W, key=W.get) == 'CLUJ-NAPOCA', W)
+for c, v in W.items():
+    check(f'W {c} apare in pagina', f'{v:.2f}'.replace('.', ',') in proza, v)
 
 rm = {c: fr[c]['rang_mediu'] for c in W}
-jos = [rm[c][a] for c in rm for a in ('2021', '2024')]
-check('interval 1,9-2,9 pt 2021+2024', (r1(min(jos)), r1(max(jos))) == (1.9, 2.9),
-      (min(jos), max(jos)))
-check('2021 si 2024 sunt cei mai mici doi ani, in fiecare oras',
-      all(sorted(rm[c], key=lambda a: rm[c][a])[:2] == sorted(['2021', '2024'],
-          key=lambda a: rm[c][a]) for c in rm))
-check('CJ 2020 = 4,4', r1(rm['CLUJ-NAPOCA']['2020']) == 4.4, rm['CLUJ-NAPOCA']['2020'])
-check('TM 2020 = 4,9', r1(rm['TIMIȘOARA']['2020']) == 4.9, rm['TIMIȘOARA']['2020'])
-check('IS 2025 = 4,7', r1(rm['IAȘI']['2025']) == 4.7, rm['IAȘI']['2025'])
-check('TM 2025 = 4,1', r1(rm['TIMIȘOARA']['2025']) == 4.1, rm['TIMIȘOARA']['2025'])
-check('CJ 2025 = 3,8', r1(rm['CLUJ-NAPOCA']['2025']) == 3.8, rm['CLUJ-NAPOCA']['2025'])
-check('max la CJ e 2020', max(rm['CLUJ-NAPOCA'], key=rm['CLUJ-NAPOCA'].get) == '2020')
-check('max la TM e 2020', max(rm['TIMIȘOARA'], key=rm['TIMIȘOARA'].get) == '2020')
-check('max la IS e 2025', max(rm['IAȘI'], key=rm['IAȘI'].get) == '2025')
-check('CJ 2025 langa 2022 si 2023', abs(rm['CLUJ-NAPOCA']['2025'] - rm['CLUJ-NAPOCA']['2022']) < 0.2
-      and abs(rm['CLUJ-NAPOCA']['2025'] - rm['CLUJ-NAPOCA']['2023']) < 0.2)
+ANI = [str(y) for y in range(2020, 2026)]
+jos = sorted({a for c in rm for a in sorted(rm[c], key=lambda a: rm[c][a])[:2]})
+check('cei doi ani de jos sunt aceiasi in toate trei orasele', len(jos) == 2, jos)
+check('anii de jos sunt numiti in pagina', all(a in proza for a in jos), jos)
+top = {c: max(rm[c], key=rm[c].get) for c in rm}
+check('Cluj si Timisoara au acelasi an de varf',
+      top['CLUJ-NAPOCA'] == top['TIMIȘOARA'], top)
+check('Iasi are alt an de varf decat Cluj', top['IAȘI'] != top['CLUJ-NAPOCA'], top)
+check('anul de varf al Iasului sta langa cei doi vecini ai lui la Cluj',
+      'între anii de mijloc' in proza)
 
 ex = fr['_exemplu']
 med = ex['mediane']
-check('Take Ionescu: medianele din text', [med[a] for a in map(str, range(2020, 2026))]
-      == [8.95, 8.82, 8.835, 9.07, 8.7, 8.735], med)
-check('Take Ionescu: pozitiile 5,3,4,6,1,2',
-      [ex['ranguri'][a] for a in map(str, range(2020, 2026))] == [5, 3, 4, 6, 1, 2])
-check('diferenta 2022-2021 = 0,015', abs((med['2022'] - med['2021']) - 0.015) < 1e-9,
-      med['2022'] - med['2021'])
+check('exemplul didactic e tot Take Ionescu', 'TAKE IONESCU' in ex['denumire'].upper())
+check('toate medianele exemplului apar in pagina',
+      all(f'{med[a]:g}'.replace('.', ',') in proza for a in ANI), med)
+check('pozitiile exemplului apar in pagina',
+      ', '.join(str(int(ex['ranguri'][a])) for a in ANI) in proza)
+per = min(((abs(med[a] - med[b]), a, b) for i, a in enumerate(ANI) for b in ANI[i + 1:]))
+check('perechea de ani cea mai apropiata e cea numita in text',
+      per[1] in proza and per[2] in proza and f'{per[0]:.3f}'.replace('.', ',') in proza, per)
 
 print('--- Kruskal-Wallis (kw_pe_ani.json) ---')
 kw = J('kw_pe_ani.json')['ani']
-eps = [v['epsilon2'] for v in kw.values()]
-check('eps2 intre 0,00 si 0,05', 0 <= min(eps) and max(eps) <= 0.051, (min(eps), max(eps)))
-check('cel mai mic eps2 e in 2023, = 0,002',
-      min(kw, key=lambda a: kw[a]['epsilon2']) == '2023' and round(kw['2023']['epsilon2'], 3) == 0.002)
+eps = {a: v['epsilon2'] for a, v in kw.items()}
+check('efectul e mic in toti anii (eps2 sub 0,15)', max(eps.values()) < 0.15, max(eps.values()))
+# eps2 poate iesi negativ; textul trebuie sa spuna asta exact cand se intampla
+neg = [a for a in eps if eps[a] < 0]
+check('fraza despre eps2 negativ apare exact cand exista eps2 negativ',
+      bool(neg) == ('iese negativă' in proza), f'ani cu eps2<0: {neg}')
+for a in neg:
+    check(f'{a}: valoarea negativa e in text', f'{eps[a]:.3f}'.replace('.', ',') in proza, eps[a])
 C = ['CLUJ-NAPOCA', 'IAȘI', 'TIMIȘOARA']
 check('TM ultima in toti cei 6 ani',
       all(min(v['rang_mediu'], key=v['rang_mediu'].get) == 'TIMIȘOARA' for v in kw.values()))
@@ -72,14 +78,56 @@ check('IS primul in 2025',
 sig = {a: [d['pereche'] for d in v['dunn_holm'] if d['p_holm'] < 0.05] for a, v in kw.items()}
 check('singurul contrast semnificativ e CJ-TM',
       set(p for ps in sig.values() for p in ps) == {'CLUJ-NAPOCA vs TIMIȘOARA'}, sig)
-check('CJ-TM semnificativ in 2020, 2021, 2022, 2024',
-      [a for a, ps in sig.items() if ps] == ['2020', '2021', '2022', '2024'], sig)
-check('2023 si 2025: omnibus nu respinge', kw['2023']['p'] > 0.05 and kw['2025']['p'] > 0.05,
-      (kw['2023']['p'], kw['2025']['p']))
-check('2024: omnibus p=0,054', round(kw['2024']['p'], 3) == 0.054, kw['2024']['p'])
-check('2024: Dunn CJ-TM p=0,047',
-      round([d['p_holm'] for d in kw['2024']['dunn_holm']
-             if d['pereche'] == 'CLUJ-NAPOCA vs TIMIȘOARA'][0], 3) == 0.047)
+ani_sig = [a for a, ps in sig.items() if ps]
+check('anii cu contrast semnificativ sunt cei din text',
+      all(a in proza for a in ani_sig) and bool(ani_sig), ani_sig)
+check('anii in care omnibusul nu respinge sunt cei fara pereche semnificativa',
+      [a for a in kw if kw[a]['p'] > 0.05] == [a for a in kw if not sig[a]],
+      {a: (kw[a]['p'], bool(sig[a])) for a in kw})
+# cazul de granita: o pereche semnificativa sub un omnibus care nu respinge
+granita = [a for a in kw if kw[a]['p'] >= 0.05 and sig[a]]
+check('fraza despre cazul de granita apare exact cand exista un astfel de an',
+      bool(granita) == ('sub un test de ansamblu care nu respinge' in proza),
+      f'ani de granita: {granita}')
+
+print('--- clasamentul, cu intervale de rang ---')
+rg = J('ranguri_bootstrap.json')
+sag_t = sum(v['sageti_afisate'] for v in rg['sageti'].values())
+sag_s = sum(v['sustinute'] for v in rg['sageti'].values())
+check('numarul de sageti testate apare in pagina', str(sag_t) in proza, sag_t)
+check('textul spune cate se sustin, si e adevarat',
+      ('niciuna nu se susține' in proza) if sag_s == 0 else
+      ('una singură se susține' in proza) if sag_s == 1 else (str(sag_s) in proza), sag_s)
+check('sagetile nu mai apar in tabel', '▲' not in proza and '▼' not in proza)
+for an, sc in rg['ani'].items():
+    v = sorted(sc.values(), key=lambda x: x['rang_publicat'])
+    mij = v[len(v) // 2]
+    check(f'{an}: primul loc e neambiguu',
+          round(v[0]['rang_lo']) == round(v[0]['rang_hi']) == 1,
+          (v[0]['rang_lo'], v[0]['rang_hi']))
+    check(f'{an}: ultima scoala se desparte de cea din mijloc',
+          v[-1]['rang_lo'] > mij['rang_hi'], (v[-1]['rang_lo'], mij['rang_hi']))
+
+print('--- neprezentatii ---')
+npz = J('neprezentati.json')
+cor = npz['corelatie_nivel_vs_pondere']['TOATE']
+check('corelatia e negativa sub toate trei masurile',
+      all(v < 0 for k, v in cor.items() if k != 'n'), cor)
+check('corelatia nu e un artefact al medianei: media da acelasi semn si marime',
+      abs(cor['mediana_en'] - cor['media_en']) < 0.1, (cor['mediana_en'], cor['media_en']))
+check('corelatia tine si pe masura din afara examenului (V-VIII)',
+      cor['mediana_viii'] < -0.2, cor['mediana_viii'])
+for k in ('mediana_en', 'media_en', 'mediana_viii'):
+    check(f'valoarea {k} apare in pagina',
+          f'{abs(cor[k]):.2f}'.replace('.', ',') in proza, cor[k])
+pond = npz['pondere_neprezentati_pct']
+ANI_N = sorted(next(iter(pond.values())))
+top = {max(pond, key=lambda o: pond[o][a]) for a in ANI_N}
+check('niciun oras nu are constant cea mai mare pondere de neprezentati', len(top) > 1, top)
+misc = [abs(v) for o in npz['miscarea_medianei_orasului'].values() for v in o.values()]
+check('miscarea medianei orasului e mica (sub 0,2 puncte)', max(misc) < 0.2, max(misc))
+semne = {v > 0 for o in npz['miscarea_medianei_orasului'].values() for v in o.values() if v}
+check('miscarea are semne diferite, deci nu e o coborare sistematica', len(semne) > 1, semne)
 
 print('--- diferenta medie-mediana ---')
 mv = J('medie_vs_mediana_percentil.json')

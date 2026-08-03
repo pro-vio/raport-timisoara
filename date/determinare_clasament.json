@@ -1,0 +1,89 @@
+{
+ "oras": "TIMIȘOARA",
+ "ani": {
+  "2020": {
+   "k": 29,
+   "perechi_total": 406,
+   "perechi_despartite_brut": 250,
+   "perechi_despartite_holm": 136,
+   "perechi_intervale_separate": 204,
+   "pozitie_unica_brut": 2,
+   "pozitie_unica_holm": 0,
+   "pozitie_unica_suprapunere": 2,
+   "zona_tipica_brut": 12,
+   "zona_tipica_holm": 22,
+   "zona_tipica_suprapunere": 18,
+   "zona_maxima_holm": 28
+  },
+  "2021": {
+   "k": 30,
+   "perechi_total": 435,
+   "perechi_despartite_brut": 248,
+   "perechi_despartite_holm": 128,
+   "perechi_intervale_separate": 196,
+   "pozitie_unica_brut": 1,
+   "pozitie_unica_holm": 0,
+   "pozitie_unica_suprapunere": 1,
+   "zona_tipica_brut": 15,
+   "zona_tipica_holm": 23,
+   "zona_tipica_suprapunere": 19,
+   "zona_maxima_holm": 30
+  },
+  "2022": {
+   "k": 31,
+   "perechi_total": 465,
+   "perechi_despartite_brut": 292,
+   "perechi_despartite_holm": 161,
+   "perechi_intervale_separate": 242,
+   "pozitie_unica_brut": 1,
+   "pozitie_unica_holm": 0,
+   "pozitie_unica_suprapunere": 0,
+   "zona_tipica_brut": 13,
+   "zona_tipica_holm": 22,
+   "zona_tipica_suprapunere": 17,
+   "zona_maxima_holm": 30
+  },
+  "2023": {
+   "k": 31,
+   "perechi_total": 465,
+   "perechi_despartite_brut": 264,
+   "perechi_despartite_holm": 150,
+   "perechi_intervale_separate": 223,
+   "pozitie_unica_brut": 2,
+   "pozitie_unica_holm": 0,
+   "pozitie_unica_suprapunere": 0,
+   "zona_tipica_brut": 16,
+   "zona_tipica_holm": 24,
+   "zona_tipica_suprapunere": 19,
+   "zona_maxima_holm": 31
+  },
+  "2024": {
+   "k": 32,
+   "perechi_total": 496,
+   "perechi_despartite_brut": 300,
+   "perechi_despartite_holm": 151,
+   "perechi_intervale_separate": 233,
+   "pozitie_unica_brut": 1,
+   "pozitie_unica_holm": 0,
+   "pozitie_unica_suprapunere": 1,
+   "zona_tipica_brut": 15,
+   "zona_tipica_holm": 24,
+   "zona_tipica_suprapunere": 18,
+   "zona_maxima_holm": 31
+  },
+  "2025": {
+   "k": 30,
+   "perechi_total": 435,
+   "perechi_despartite_brut": 239,
+   "perechi_despartite_holm": 124,
+   "perechi_intervale_separate": 179,
+   "pozitie_unica_brut": 2,
+   "pozitie_unica_holm": 1,
+   "pozitie_unica_suprapunere": 2,
+   "zona_tipica_brut": 16,
+   "zona_tipica_holm": 23,
+   "zona_tipica_suprapunere": 20,
+   "zona_maxima_holm": 29
+  }
+ }
+}

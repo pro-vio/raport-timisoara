@@ -171,7 +171,7 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
     <button class="tab-btn" data-tab="note" role="tab" aria-selected="false">Distribuții note pe școală</button>
     <button class="tab-btn" data-tab="bootstrap" role="tab" aria-selected="false">Mediane cu bootstrap</button>
     <button class="tab-btn" data-tab="mediane" role="tab" aria-selected="false">Evoluția medianelor</button>
-    <button class="tab-btn" data-tab="clasament" role="tab" aria-selected="false">Clasament (evoluție)</button>
+    <button class="tab-btn" data-tab="clasament" role="tab" aria-selected="false">Clasament</button>
   </div>
 
   <div id="tab-temporal" class="tabpanel">
@@ -199,9 +199,19 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
       <div class="findings">
         <p>Ipoteza că cei șase ani sunt echivalenți e respinsă în toate trei orașele. Kendall W — concordanța dintre școli în privința ordinii anilor — e {{W_IS}} la Iași și {{W_TM}} la Timișoara: acolo școlile se mișcă sincron de la an la an. La Cluj ({{W_CJ}}), ordinea anilor are o dispersie mai mare între școli.</p>
         <p>Jos, tiparul e același în toate trei orașele: în {{FR_ANI_JOS}} rangul mediu e cel mai mic peste tot ({{FR_JOS_MIN}}&ndash;{{FR_JOS_MAX}}). Sus, ordinea diferă: la Cluj și Timișoara rangul cel mai mare e în {{FR_AN_TOP_CJTM}} ({{FR_TOP_CJ}} și {{FR_TOP_TM}}), la Iași în {{FR_AN_TOP_IS}} ({{FR_TOP_IS}}). La Timișoara, {{FR_AN_TOP_IS}} are {{FR_TM_LA_TOPIS}}; la Cluj, {{FR_CJ_LA_TOPIS}} &mdash; acolo stă lângă {{FR_CJ_VECINI}}, între anii de mijloc. Dacă eterogenitatea dintre ani s-ar fi produs la nivelul orașului, traiectoriile ar fi fost divergente; ele coboară și urcă împreună. Forma e aceeași în toate trei orașele; ce o produce nu se poate stabili din datele astea.</p>
-        <p>Timișoara stă pe ultimul loc în toți cei șase ani, deci ordinea orașelor nu depinde de an. Deasupra ei, Cluj și Iași își schimbă locurile: Cluj e primul între {{KW_CJ_PRIM}}, Iași în {{KW_IS_PRIM}}. Efectul e mic peste tot, cu ε² între {{KW_EPS_MIN}} și {{KW_EPS_MAX}}, și cel mai mic în {{KW_AN_EPS_MIN}}, unde ajunge la {{KW_EPS_MIN_EXACT}}.</p>
-        <p>Semnificativ iese un singur contrast: {{KW_PERECHE}}, în {{KW_ANI_SIG}}. În {{KW_ANI_NESIG}}, testul pe ansamblu nu respinge egalitatea celor trei orașe. În {{KW_AN_GRANITA}} testul pe ansamblu dă p={{KW_P_GRANITA}}, iar post-hoc-ul pentru {{KW_PERECHE}} p={{KW_PDUNN_GRANITA}}: perechea iese sub un test de ansamblu care nu respinge.</p>
+        <p>Timișoara stă pe ultimul loc în toți cei șase ani, deci ordinea orașelor nu depinde de an. Deasupra ei, Cluj și Iași își schimbă locurile: Cluj e primul între {{KW_CJ_PRIM}}, Iași în {{KW_IS_PRIM}}. Efectul e mic peste tot, cu ε² între {{KW_EPS_MIN}} și {{KW_EPS_MAX}}.{{KW_FRAZA_EPS_NEG}}</p>
+        <p>Semnificativ iese un singur contrast: {{KW_PERECHE}}, în {{KW_ANI_SIG}}. În {{KW_ANI_NESIG}}, testul pe ansamblu nu respinge egalitatea celor trei orașe.{{KW_FRAZA_GRANITA}}</p>
         <p>Variația între ani e comună celor trei orașe și intră în orice comparație făcută pe valorile medianelor brute de la un an la altul. O analiză longitudinală pe aceste date &mdash; inclusiv skew/kurtosis calculate pe anii cumulați &mdash; cere mediane standardizate în interiorul anului.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Elevii care nu se prezintă</h2>
+      <p class="note">Elevii înscriși care nu se prezintă la examen intră în calculul medianei școlii, așezați sub toți cei care au dat examenul, fără notă. Se poate, fiindcă mediana e o poziție: ca să afli cine e la mijloc îți trebuie doar câți sunt sub el, nu cât au luat. Ei sunt între {{NEPZ_MIN}} și {{NEPZ_MAX}} dintre înscriși, după oraș și an.</p>
+      <div class="findings">
+        <p>Am verificat dacă poziția Timișoarei e determinată de ponderea elevilor care nu se prezintă la examen și nu am găsit dovezi în acest sens. Ponderea lor se încrucișează de la un an la altul, fără ca vreun oraș să stea constant deasupra. Când neprezentații intră în calcul, mediana medianelor fiecărui oraș se mișcă cu cel mult {{NEPZ_MISCARE}} puncte, în sus la unele orașe și în jos la altele.</p>
+        <p>Ce se vede în toate trei orașele e altceva: la școlile ai căror elevi iau note mai mici se prezintă mai puțini. Corelația dintre nivelul școlii și ponderea neprezentaților la ea e {{NEPZ_COR_MEDIANA}} pe cele trei orașe la un loc. Ea nu vine din felul în care e construită mediana: iese la fel dacă nivelul școlii se citește pe medie ({{NEPZ_COR_MEDIE}}) și dacă se citește pe media claselor V&ndash;VIII ({{NEPZ_COR_VIII}}), care nu are nicio legătură cu examenul.</p>
+        <p>Poziția Timișoarei în raport cu Cluj și Iași e determinată de notele pe care le iau elevii: la Timișoara mai mici decât în celelalte orașe.</p>
       </div>
     </div>
   </div>
@@ -240,7 +250,8 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
       </table>
       </div>
       <div class="findings" style="margin-top:1rem;">
-        <p>Media cade sub percentila 50 în toți cei șase ani, deci de obicei mai mult de jumătate dintre elevi iau peste medie, mai ales la școlile bune. Corelația dintre nivelul școlii și mărimea diferenței e r = {{R_DIF}}. De aceea clasamentul și shrinkage-ul folosesc mediana: media coboară mai ales la școlile de elită, unde câțiva candidați slabi o trag sub nota pe care o ia majoritatea.</p>
+        <p>Statistica oficială raportează media, calculată pe cei care s-au prezentat la examen. Raportul de față folosește mediana. Graficul arată cât de departe cad una de alta: media stă sub percentila 50 în toți cei șase ani, deci de obicei mai mult de jumătate dintre elevi iau peste ea. Distanța crește cu nivelul școlii &mdash; corelația e r = {{R_DIF}} &mdash; deci media coboară cel mai mult exact acolo unde câțiva candidați slabi o trag sub nota pe care o ia majoritatea.</p>
+        <p>Mediana e nota pe care o ia un elev din mijlocul distribuției. Asta e și ce înțelege un cititor prin „cât ia de obicei un elev de la școala asta".</p>
       </div>
     </div>
 
@@ -248,7 +259,7 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
 
   <div id="tab-bootstrap" class="tabpanel hidden">
     <div class="card">
-      <h2>Mediana ajustată (shrinkage empirical-Bayes, bootstrap)</h2>
+      <h2>Mediana ajustată, cu intervalul de incertitudine</h2>
       <p class="note">Mediana fiecărei școli, cu eroarea standard estimată prin bootstrap ({{N_BOOT}} reeșantionări), trasă spre ancora orașului proporțional cu incertitudinea — școlile cu puțini candidați se apropie mai mult de ancoră, cele mari rămân aproape neschimbate.</p>
       <div class="slider-row">
         <label for="yearSlider">An</label>
@@ -256,7 +267,7 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
         <span class="year-out" id="yearOut">2025</span>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:10px;font-size:12px;color:var(--ink-soft);">
-        <span style="display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block;"></span>mediană ajustată (shrink) + interval 95%</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block;"></span>mediană ajustată + interval 95%</span>
         <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:11px;background:var(--ink-muted);display:inline-block;"></span>mediană brută</span>
         <span style="display:flex;align-items:center;gap:5px;"><span style="width:14px;border-top:1px dashed var(--border-strong);display:inline-block;"></span>ancora orașului</span>
       </div>
@@ -303,7 +314,7 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
     <div class="card">
       <h2>Notă metodologică</h2>
       <div class="findings">
-        <p>Pentru fiecare școală se calculează mediana notelor candidaților ei, robustă la asimetrie, cu eroarea standard prin bootstrap ({{N_BOOT}} reeșantionări cu înlocuire din candidații școlii). Ancora orașului e media medianelor tuturor școlilor din anul respectiv. Alegerea vine din formula de shrinkage, care descompune dispersia totală (τ² plus zgomotul de eșantionare) față de medie. La nivelul candidaților, unde asimetria contează, statistica rămâne mediana; la agregarea peste cele {{N_SCOLI_ANCORA}} de școli, unde valorile sunt mai omogene, se folosește media, fiindcă formula o cere.</p>
+        <p>Pentru fiecare școală se calculează mediana notelor candidaților ei, robustă la asimetrie, cu eroarea standard prin bootstrap ({{N_BOOT}} reeșantionări cu înlocuire din candidații școlii). Ancora orașului e media medianelor tuturor școlilor din anul respectiv. Alegerea vine din formula care trage mediana spre ancoră (empirical-Bayes shrinkage), fiindcă ea descompune dispersia totală (τ² plus zgomotul de eșantionare) față de medie. La nivelul candidaților, unde asimetria contează, statistica rămâne mediana; la agregarea peste cele {{N_SCOLI_ANCORA}} de școli, unde valorile sunt mai omogene, se folosește media, fiindcă formula o cere.</p>
       </div>
     </div>
   </div>
@@ -331,30 +342,29 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
   <div id="tab-clasament" class="tabpanel hidden">
 
   <div class="card">
-    <h2>Clasament (evoluție)</h2>
-    <p class="note">Săgeata arată direcția și numărul de locuri câștigate sau pierdute față de anul anterior; punctul „·” înseamnă că unul dintre cei doi ani nu are suficienți candidați pentru comparație.</p>
+    <h2>Clasament, cu intervalul de rang</h2>
+    <p class="note">Fiecare celulă e intervalul de locuri în care poate sta școala în anul respectiv, obținut refăcând clasamentul întreg de {{N_BOOT}} de ori prin bootstrap. Punctul „·” înseamnă că școala n-a avut destui candidați în acel an. Rândurile sunt ordonate după poziția din {{AN_ULTIM}}.</p>
     <div class="table-scroll">
       <table id="rankTable">
         <thead>
           <tr>
             <th>Școală</th>
-            <th>2020</th>
-            <th>→2021</th>
-            <th>→2022</th>
-            <th>→2023</th>
-            <th>→2024</th>
-            <th>→2025</th>
-            <th>2025</th>
+            {{TH_ANI}}
           </tr>
         </thead>
         <tbody id="rankBody"></tbody>
       </table>
     </div>
+    <p class="hint">Intervalul unei școli acoperă tipic {{RANG_LAT_MIN}}&ndash;{{RANG_LAT_MAX}} locuri, iar la unele școli mai mult de {{RANG_LAT_MAXIM}}.</p>
+    <div class="findings" style="margin-top:1rem;">
+      <p>Tabelul arăta până acum poziția fiecărei școli și săgeți cu locurile câștigate sau pierdute de la un an la altul. Am testat cele {{SAGETI_TOTAL}} de mișcări afișate atunci, comparând intervalele de rang ale celor doi ani: {{SAGETI_SUSTINUTE}}. De aceea au fost scoase.</p>
+      <p>Un clasament al școlilor dintr-un oraș, făcut pe rezultatele unui singur examen, nu are rezoluția pe care o sugerează un tabel cu locuri. Ce se poate spune se vede în interval. Primul loc e neambiguu în toți cei șase ani. La celălalt capăt, ultimele școli se despart la fel de clar. Între ele însă, de școala din mijlocul clasamentului se pot despărți doar {{RANG_DIST_MIN}}&ndash;{{RANG_DIST_MAX}} școli din cele aproximativ {{RANG_K}} ale unui an; restul formează un pluton în interiorul căruia ordinea se schimbă de la un an la altul fără ca ceva să se fi schimbat la școli.</p>
+    </div>
   </div>
 
   </div>
 
-  <footer>Sursă: rezultate individuale Evaluare Națională, date deschise data.gov.ro (2020&ndash;2025) · mediana per școală; graficele arată mediane brute, iar shrinkage-ul empirical-Bayes apare în tabul „Mediane cu bootstrap".</footer>
+  <footer>Sursă: rezultate individuale Evaluare Națională, date deschise data.gov.ro (2020&ndash;2025) · mediana per școală; graficele arată mediane brute, iar mediana ajustată apare în tabul „Mediane cu bootstrap".</footer>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
@@ -475,39 +485,30 @@ ctx.addEventListener('mouseleave', () => {
   hoverLabel.style.display = 'none';
 });
 
-function arrowCell(prevYear, nextYear, ani) {
-  const p = ani[prevYear], n = ani[nextYear];
-  if (!p || !n) return '<span class="arrow-na">·</span>';
-  const delta = p.rank - n.rank;
-  if (delta > 0) return `<span class="arrow-up">▲ ${delta}</span>`;
-  if (delta < 0) return `<span class="arrow-down">▼ ${Math.abs(delta)}</span>`;
-  return '<span class="arrow-flat">=</span>';
+const RANGURI = {{JS_RANGURI}};
+
+// Celula arată intervalul în care poate sta școala, nu o poziție. Săgețile de urcare și
+// coborâre au fost scoase: din 124 de mișcări afișate înainte, datele susțineau una.
+function celulaRang(cod, an) {
+  const r = RANGURI[an] && RANGURI[an][cod];
+  if (!r) return '<span class="arrow-na">·</span>';
+  const lo = Math.round(r.rang_lo), hi = Math.round(r.rang_hi);
+  return lo === hi ? `${lo}` : `${lo}&ndash;${hi}`;
 }
 
-const withFinal = SCHOOLS.map(s => ({ ...s, finalRank: s.ani['2025'] ? s.ani['2025'].rank : null }));
-withFinal.sort((a, b) => {
-  if (a.finalRank !== null && b.finalRank !== null) return a.finalRank - b.finalRank;
-  if (a.finalRank !== null) return -1;
-  if (b.finalRank !== null) return 1;
-  const lastA = YEARS.slice().reverse().map(y => a.ani[y] && a.ani[y].rank).find(v => v != null) ?? 999;
-  const lastB = YEARS.slice().reverse().map(y => b.ani[y] && b.ani[y].rank).find(v => v != null) ?? 999;
-  return lastA - lastB;
+const ordinea = SCHOOLS.slice().sort((a, b) => {
+  const ra = RANGURI['2025'] && RANGURI['2025'][a.cod];
+  const rb = RANGURI['2025'] && RANGURI['2025'][b.cod];
+  if (ra && rb) return ra.rang_publicat - rb.rang_publicat;
+  if (ra) return -1;
+  if (rb) return 1;
+  return 0;
 });
 
-const tbody = document.getElementById('rankBody');
-tbody.innerHTML = withFinal.map(s => {
-  const r2020 = s.ani['2020'] ? s.ani['2020'].rank : null;
-  return `<tr>
+document.getElementById('rankBody').innerHTML = ordinea.map(s => `<tr>
     <td class="school">${s.nume}</td>
-    <td class="rank-base">${r2020 ?? '·'}</td>
-    <td>${arrowCell('2020','2021', s.ani)}</td>
-    <td>${arrowCell('2021','2022', s.ani)}</td>
-    <td>${arrowCell('2022','2023', s.ani)}</td>
-    <td>${arrowCell('2023','2024', s.ani)}</td>
-    <td>${arrowCell('2024','2025', s.ani)}</td>
-    <td class="rank-final">${s.finalRank ?? '·'}</td>
-  </tr>`;
-}).join('');
+    ${YEARS.map(y => `<td>${celulaRang(s.cod, y)}</td>`).join('')}
+  </tr>`).join('');
 
 const SHRINK_DATA = {{JS_SHRINK_DATA}};
 const SHRINK_YEARS = {{JS_SHRINK_YEARS}};
