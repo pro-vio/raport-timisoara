@@ -188,6 +188,7 @@ thead th.col-activa { color: var(--accent); }
     <button class="tab-btn" data-tab="mediane" role="tab" aria-selected="false">Dinamica medianelor</button>
     <button class="tab-btn" data-tab="clasament" role="tab" aria-selected="false">Clasament</button>
     <button class="tab-btn" data-tab="decalaj" role="tab" aria-selected="false">Diferențe note V&ndash;VIII &minus; note Evaluare Națională (Cluj, Iași, Timișoara)</button>
+    <button class="tab-btn" data-tab="decalajtm" role="tab" aria-selected="false">Diferența note la clasă &minus; note Evaluarea Națională (Timișoara)</button>
   </div>
 
   <div id="tab-temporal" class="tabpanel">
@@ -408,6 +409,17 @@ thead th.col-activa { color: var(--accent); }
 {{CARDURI_DECALAJ}}
 
 {{TABEL_DECALAJ}}
+
+  </div>
+
+  <div id="tab-decalajtm" class="tabpanel hidden">
+    <div class="card">
+      <h2>Cum se măsoară</h2>
+      <div class="findings">
+        <p>Fiecare elev are două note pe aceeași scală: media pe care i-a dat-o școala lui în clasele V&ndash;VIII și media pe care a luat-o la Evaluarea Națională. Diferența dintre ele e definită pentru fiecare elev în parte, iar de acolo pornește tot ce urmează.</p>
+        <p>Succesiunea testelor. Diferențele individuale se strâng la nivelul școlii, ca mediană. Apoi se compară școlile între ele, cu un test în care unitatea rămâne elevul și grupurile sunt școlile &mdash; întrebarea fiind dacă școlile diferă prin cât notează peste examen. La final se compară anii între ei, cu școlile ca blocuri, ca să se vadă dacă decalajul se mișcă la fel peste tot.</p>
+      </div>
+    </div>
 
     <div class="card">
       <h2>Ce se vede la Timișoara</h2>
@@ -860,7 +872,7 @@ stripYearSlider.addEventListener('input', () => {
   renderStrip(+stripYearSlider.value);
 });
 
-const TAB_IDS = ['temporal', 'note', 'bootstrap', 'mediane', 'clasament', 'decalaj'];
+const TAB_IDS = ['temporal', 'note', 'bootstrap', 'mediane', 'clasament', 'decalaj', 'decalajtm'];
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
