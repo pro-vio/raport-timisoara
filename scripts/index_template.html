@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Evaluare Națională — Timișoara, 2020-2025</title>
 <style>
 @font-face {
@@ -176,6 +178,30 @@ thead th.col-activa { color: var(--accent); }
 .duo .say .num { font-variant-numeric: tabular-nums; font-weight: 600; }
 @media (max-width: 780px) { .duo { grid-template-columns: 1fr; } }
 
+/* --- ecrane mici. Fără viewport-ul de mai sus, telefonul randa pagina la 980px și o
+   micșora; regulile de aici o fac citibilă, nu doar mică. --- */
+@media (max-width: 640px) {
+  .page { padding: 1.5rem 0.9rem 3rem; }
+  .card { padding: 1.1rem; border-radius: 8px; margin-top: 1.1rem; }
+  h1 { font-size: 1.5rem; }
+  .subtitle { font-size: 15px; }
+  .tabnav { gap: 0 14px; }
+  .tab-btn { font-size: 13px; margin-right: 0; padding: 8px 0; }
+  .findings p { font-size: 14px; }
+  .duo, .duo-larg { grid-template-columns: 1fr; gap: 1rem; }
+  .duo .plot { aspect-ratio: 4 / 3; }
+  #chartWrap { height: 300px; }
+  .cat-row { grid-template-columns: 20px minmax(0, 1fr) 34% 44px; font-size: 11.5px; gap: 4px; }
+  .cat-name { font-size: 11.5px; }
+  .modenav { gap: 6px; flex-wrap: wrap; }
+  .mode-btn { font-size: 12px; padding: 4px 10px; }
+  .scoli-lista { max-height: 190px; overflow-y: auto; }
+  table { font-size: 12.5px; min-width: 560px; }
+  thead th { font-size: 10.5px; padding: 8px 6px; }
+  tbody td { padding: 6px 6px; }
+  td.school { white-space: normal; min-width: 130px; }
+  .cat-tooltip { max-width: 70vw; white-space: normal; }
+}
 </style>
 
 <div class="page">
