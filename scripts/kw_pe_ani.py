@@ -8,6 +8,7 @@ import json
 import math
 from collections import defaultdict, Counter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from praguri import prag
 from statistici import median_of, mediana_cu_neprezentati
 
 def norm(s):
@@ -36,7 +37,7 @@ for r in range(1, ws.nrows):
 
 YEARS = [2020, 2021, 2022, 2023, 2024, 2025]
 BASE = _DATE
-MIN_N = 8
+MIN_N = prag('prag_teste')      # calculat, nu ales; vezi prag_incertitudine.py
 
 # Notele și neprezentații vin din extracția comună; înainte fiecare script recitea singur
 # cele șase xlsx-uri și arunca tăcut candidații fără medie.

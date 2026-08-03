@@ -1,0 +1,313 @@
+{
+ "prag_curent": 9,
+ "kw_cu_pragul": {
+  "2020": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 42,
+    "IAȘI": 37,
+    "TIMIȘOARA": 35
+   },
+   "p": 0.0752,
+   "epsilon2": 0.0286,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 65.1,
+    "IAȘI": 57.9,
+    "TIMIȘOARA": 47.9
+   },
+   "perechi_semnificative": []
+  },
+  "2021": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 40,
+    "IAȘI": 37,
+    "TIMIȘOARA": 34
+   },
+   "p": 0.01564,
+   "epsilon2": 0.0585,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 65.7,
+    "IAȘI": 56.4,
+    "TIMIȘOARA": 44.1
+   },
+   "perechi_semnificative": [
+    "CLUJ-NAPOCA vs TIMIȘOARA"
+   ]
+  },
+  "2022": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 44,
+    "IAȘI": 39,
+    "TIMIȘOARA": 35
+   },
+   "p": 0.05941,
+   "epsilon2": 0.0317,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 65.9,
+    "IAȘI": 62.4,
+    "TIMIȘOARA": 48.2
+   },
+   "perechi_semnificative": []
+  },
+  "2023": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 45,
+    "IAȘI": 39,
+    "TIMIȘOARA": 35
+   },
+   "p": 0.4523,
+   "epsilon2": -0.0036,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 63.3,
+    "IAȘI": 61.7,
+    "TIMIȘOARA": 53.9
+   },
+   "perechi_semnificative": []
+  },
+  "2024": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 42,
+    "IAȘI": 39,
+    "TIMIȘOARA": 33
+   },
+   "p": 0.08899,
+   "epsilon2": 0.0256,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 65.7,
+    "IAȘI": 55.9,
+    "TIMIȘOARA": 49.0
+   },
+   "perechi_semnificative": []
+  },
+  "2025": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 43,
+    "IAȘI": 40,
+    "TIMIȘOARA": 36
+   },
+   "p": 0.08126,
+   "epsilon2": 0.026,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 63.3,
+    "IAȘI": 66.0,
+    "TIMIȘOARA": 49.4
+   },
+   "perechi_semnificative": []
+  }
+ },
+ "kw_fara_pragul": {
+  "2020": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 42,
+    "IAȘI": 37,
+    "TIMIȘOARA": 37
+   },
+   "p": 0.04125,
+   "epsilon2": 0.0387,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 66.9,
+    "IAȘI": 59.6,
+    "TIMIȘOARA": 47.9
+   },
+   "perechi_semnificative": [
+    "CLUJ-NAPOCA vs TIMIȘOARA"
+   ]
+  },
+  "2021": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 40,
+    "IAȘI": 37,
+    "TIMIȘOARA": 34
+   },
+   "p": 0.01564,
+   "epsilon2": 0.0585,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 65.7,
+    "IAȘI": 56.4,
+    "TIMIȘOARA": 44.1
+   },
+   "perechi_semnificative": [
+    "CLUJ-NAPOCA vs TIMIȘOARA"
+   ]
+  },
+  "2022": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 44,
+    "IAȘI": 39,
+    "TIMIȘOARA": 38
+   },
+   "p": 0.01716,
+   "epsilon2": 0.052,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 68.7,
+    "IAȘI": 65.2,
+    "TIMIȘOARA": 47.7
+   },
+   "perechi_semnificative": [
+    "CLUJ-NAPOCA vs TIMIȘOARA"
+   ]
+  },
+  "2023": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 45,
+    "IAȘI": 39,
+    "TIMIȘOARA": 35
+   },
+   "p": 0.4523,
+   "epsilon2": -0.0036,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 63.3,
+    "IAȘI": 61.7,
+    "TIMIȘOARA": 53.9
+   },
+   "perechi_semnificative": []
+  },
+  "2024": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 42,
+    "IAȘI": 39,
+    "TIMIȘOARA": 36
+   },
+   "p": 0.03239,
+   "epsilon2": 0.0426,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 68.5,
+    "IAȘI": 58.6,
+    "TIMIȘOARA": 48.4
+   },
+   "perechi_semnificative": [
+    "CLUJ-NAPOCA vs TIMIȘOARA"
+   ]
+  },
+  "2025": {
+   "n_scoli": {
+    "CLUJ-NAPOCA": 43,
+    "IAȘI": 40,
+    "TIMIȘOARA": 36
+   },
+   "p": 0.08126,
+   "epsilon2": 0.026,
+   "rang_mediu": {
+    "CLUJ-NAPOCA": 63.3,
+    "IAȘI": 66.0,
+    "TIMIȘOARA": 49.4
+   },
+   "perechi_semnificative": []
+  }
+ },
+ "ani_semnificativi_cu_pragul": [
+  "2021"
+ ],
+ "ani_semnificativi_fara_pragul": [
+  "2020",
+  "2021",
+  "2022",
+  "2024"
+ ],
+ "celule_sub_prag": {
+  "CLUJ-NAPOCA": 0,
+  "IAȘI": 0,
+  "TIMIȘOARA": 9
+ },
+ "scoli_distincte_sub_prag": {
+  "CLUJ-NAPOCA": 0,
+  "IAȘI": 0,
+  "TIMIȘOARA": 5
+ },
+ "scoli_timisoara": [
+  {
+   "an": "2020",
+   "cod": "3561206234",
+   "denumire": "LICEUL TEORETIC \"SOCRATES\" TIMIȘOARA",
+   "n_note": 8,
+   "neprezentati": 0,
+   "mediana": 7.67,
+   "mediana_orasului": 7.82
+  },
+  {
+   "an": "2020",
+   "cod": "3561102042",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.1 TIMIȘOARA",
+   "n_note": 8,
+   "neprezentati": 5,
+   "mediana": 1.95,
+   "mediana_orasului": 7.82
+  },
+  {
+   "an": "2022",
+   "cod": "3561106557",
+   "denumire": "LICEUL TEORETIC \"DOSITEI OBRADOVICI\" TIMIȘOARA",
+   "n_note": 8,
+   "neprezentati": 0,
+   "mediana": 6.945,
+   "mediana_orasului": 7.685
+  },
+  {
+   "an": "2022",
+   "cod": "3561102042",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.1 TIMIȘOARA",
+   "n_note": 8,
+   "neprezentati": 1,
+   "mediana": 3.95,
+   "mediana_orasului": 7.685
+  },
+  {
+   "an": "2022",
+   "cod": "3561106521",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.15 TIMIȘOARA",
+   "n_note": 8,
+   "neprezentati": 5,
+   "mediana": 3.82,
+   "mediana_orasului": 7.685
+  },
+  {
+   "an": "2023",
+   "cod": "3561106521",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.15 TIMIȘOARA",
+   "n_note": 8,
+   "neprezentati": 9,
+   "mediana": null,
+   "mediana_orasului": 7.885
+  },
+  {
+   "an": "2024",
+   "cod": "3561106557",
+   "denumire": "LICEUL TEORETIC \"DOSITEI OBRADOVICI\" TIMIȘOARA",
+   "n_note": 8,
+   "neprezentati": 0,
+   "mediana": 6.78,
+   "mediana_orasului": 7.41
+  },
+  {
+   "an": "2024",
+   "cod": "3561206234",
+   "denumire": "LICEUL TEORETIC \"SOCRATES\" TIMIȘOARA",
+   "n_note": 8,
+   "neprezentati": 0,
+   "mediana": 4.91,
+   "mediana_orasului": 7.41
+  },
+  {
+   "an": "2024",
+   "cod": "3562105886",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.4 TIMIȘOARA",
+   "n_note": 8,
+   "neprezentati": 0,
+   "mediana": 4.72,
+   "mediana_orasului": 7.41
+  }
+ ],
+ "oras_mereu_ultimul": [
+  "TIMIȘOARA"
+ ],
+ "mediane_nedefinite": [
+  {
+   "an": "2023",
+   "cod": "3561106521",
+   "denumire": "ȘCOALA GIMNAZIALĂ NR.15 TIMIȘOARA",
+   "n_note": 8,
+   "neprezentati": 9,
+   "mediana": null,
+   "mediana_orasului": 7.885
+  }
+ ]
+}

@@ -8,6 +8,7 @@ import json
 import random
 from collections import defaultdict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from praguri import prag
 from statistici import cu_neprezentati, mediana_cu_neprezentati
 
 random.seed(20260707)
@@ -39,7 +40,7 @@ for r in range(1, ws.nrows):
 
 YEARS = [2020, 2021, 2022, 2023, 2024, 2025]
 BASE = _DATE
-MIN_N = 15
+MIN_N = prag('prag_grafice')      # calculat, nu ales; vezi prag_incertitudine.py
 B = 2000
 
 def median_of(values):

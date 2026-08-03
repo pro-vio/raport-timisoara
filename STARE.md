@@ -286,7 +286,15 @@ grafice) au intrat pe 14-15 iulie fără justificare și corespund cu ~2,65 și 
 ⚠️ Prima variantă a criteriului — „cât din câmpul orașului acoperă intervalul" — a fost
 ABANDONATĂ: e circulară, fiindcă ridicarea pragului îngustează câmpul, care ridică pragul
 (bază 15 → praguri 9/17; bază 17 → 10/18). Lățimea absolută n-are bucla asta.
-**RĂMÂNE DE ALES de user: cele două precizii.** Până atunci pragurile rămân 8 și 15.
+**ALES de user (3 august 2026): 2,5 puncte la teste, 1,5 la grafice.** De acolo ies pragurile
+**9 și 18**, calculate la fiecare rulare. `MIN_N` nu mai e literal în niciun script EN — se
+citește prin `praguri.py` din `prag_incertitudine.json`. Lanțul: `prag_incertitudine.py`
+rulează PRIMUL, nu depinde de niciun prag, deci n-are ciclu.
+
+⚠️ **Pragurile din lanțul BAC au rămas literale** (`teste_bac.py` 8, `filiera_bac.py` 8,
+`shrinkage_bac.py` 10), iar comentariul „ca la EN" din `teste_bac.py` **nu mai e adevărat**.
+Userul: „de bac nu ne ocupăm" — deci se lasă așa, dar cine reia BAC-ul să știe că referința e
+depășită; celulele acolo sunt liceu×filieră×an, deci preciziile s-ar recalcula pe datele lor.
 
 ## Rezultate cheie (TM+CJ+IS)
 1. **KW pe fiecare an** (recalculat 2026-08-03 pe MEDIANE școală-an; înainte intra media școlii): Timișoara ultima în toți cei 6 ani, deci ordinea nu depinde de an; deasupra, Cluj primul 2020-2024 și Iași în 2025. Efect mic, ε²=0,002-0,051, minimul în 2023. Singurul contrast Dunn semnificativ e Cluj-Timișoara (2020, 2021, 2022, 2024); în 2023 și 2025 omnibusul nu respinge. În 2024, omnibus p=0,054 dar Dunn CJ-TM p=0,047 — perechea iese sub un omnibus care nu respinge. Variația domină *între școli în același oraș*.

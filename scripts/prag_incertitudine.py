@@ -23,14 +23,19 @@ B = 2000
 N_MIN = 3
 OUT = os.path.join(DATE, 'prag_incertitudine.json')
 
-# Criteriile, declarate. Pragurile NU se citesc dintr-un cot al curbei — curba n-are cot,
-# scade neted. Ele traduc în număr de candidați o alegere despre cât nedeterminare acceptăm:
-#   * un test compară populații și suportă unități zgomotoase, care se mediază → jumătate
-#   * un grafic numește o școală anume, iar acolo nedeterminarea e o afirmație → o treime
-CRITERII = {'prag_teste': 0.50, 'prag_grafice': 1 / 3}
+# Criteriile, alese de user pe 3 august 2026. Pragurile NU se citesc dintr-un cot al curbei
+# — curba n-are cot, scade neted. Ele traduc în număr de candidați o precizie declarată:
+# cât de lat acceptăm să fie intervalul medianei, în puncte de notă.
+#   * un test compară populații și suportă unități zgomotoase, care se mediază → 2,5 puncte
+#   * un grafic numește o școală anume, iar acolo nedeterminarea e o afirmație → 1,5 puncte
+#
+# ⚠️ Prima variantă a criteriului măsura ce fracțiune din câmpul orașului acoperă intervalul.
+# A fost ABANDONATĂ fiindcă e circulară: ridicând pragul, școlile mici ies din câmp, câmpul
+# se îngustează, fiecare interval acoperă o fracțiune mai mare, deci pragul urcă din nou
+# (bază 15 → praguri 9/17; bază 17 → 10/18). Lățimea absolută ține doar de datele școlii.
+CRITERII = {'prag_teste': 2.5, 'prag_grafice': 1.5}
 FEREASTRA = 3          # fereastra glisantă ±3 candidați, ca să nu decidă zgomotul unui n
-# Baza pe care se măsoară „câmpul" orașului. E declarată fix, ca pragul să nu depindă de
-# prag; stabilitatea se verifică la final, recalculând cu pragul obținut.
+# „Câmpul" rămâne calculat, ca mărime descriptivă, dar NU mai decide pragul.
 BAZA_CAMP = 15
 
 rng = np.random.default_rng(20260803)
@@ -88,15 +93,16 @@ pe_banda = {f'{a}-{b if b < 1000 else "+"}': rezumat([c for c in celule
             for a, b in BENZI}
 
 # --- pragurile, derivate din criterii ---
-def acoperire_la(n):
-    sel = sorted(c['acoperire'] for c in celule
-                 if c['acoperire'] is not None and abs(c['n_note'] - n) <= FEREASTRA)
+def mediana_la(n, cheie):
+    sel = sorted(c[cheie] for c in celule
+                 if c[cheie] is not None and abs(c['n_note'] - n) <= FEREASTRA)
     if len(sel) < 12:
         return None
     return sel[len(sel) // 2] if len(sel) % 2 else (sel[len(sel) // 2 - 1] + sel[len(sel) // 2]) / 2
 
 
-curba = {n: acoperire_la(n) for n in range(N_MIN, 60)}
+curba = {n: mediana_la(n, 'latime') for n in range(N_MIN, 60)}
+curba_acop = {n: mediana_la(n, 'acoperire') for n in range(N_MIN, 60)}
 praguri = {}
 for nume, tinta in CRITERII.items():
     ales = None
@@ -108,15 +114,19 @@ for nume, tinta in CRITERII.items():
             ales = n
             break
     assert ales is not None, f'criteriul {nume} ({tinta}) nu e atins nicăieri pe curbă'
-    praguri[nume] = {'valoare': ales, 'criteriu': round(tinta, 4),
-                     'acoperire_la_prag': round(curba[ales], 4)}
-    print(f'{nume}: {ales} candidați (acoperire {100 * curba[ales]:.1f}%, '
-          f'criteriu sub {100 * tinta:.0f}%)')
+    praguri[nume] = {'valoare': ales, 'criteriu_puncte': tinta,
+                     'latime_la_prag': round(curba[ales], 3),
+                     'acoperire_la_prag': (round(curba_acop[ales], 4)
+                                           if curba_acop.get(ales) else None)}
+    print(f'{nume}: {ales} candidați (lățime {curba[ales]:.2f} puncte, '
+          f'criteriu sub {tinta} puncte)')
 
 json.dump({'B': B, 'n_minim_analizat': N_MIN, 'fereastra': FEREASTRA,
-           'baza_camp': BAZA_CAMP, 'criterii': CRITERII, 'praguri': praguri,
+           'baza_camp': BAZA_CAMP, 'criterii_puncte': CRITERII, 'praguri': praguri,
+           'curba_latime': {str(n): (round(a, 3) if a is not None else None)
+                            for n, a in curba.items()},
            'curba_acoperire': {str(n): (round(a, 4) if a is not None else None)
-                               for n, a in curba.items()},
+                               for n, a in curba_acop.items()},
            'celule': celule, 'pe_numar_de_candidati': pe_n, 'pe_banda': pe_banda},
           io.open(OUT, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False)
 

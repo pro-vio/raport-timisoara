@@ -66,8 +66,34 @@ for an in YEARS:
         'zona_maxima_holm': max(z_holm),
     }
 
-json.dump({'oras': 'TIMIȘOARA', 'ani': rez},
+# Schimbarea NIVELULUI unei școli de la un an la altul. Familia de comparații e mulțimea
+# școlilor comune celor doi ani. Atenție la citire: ce iese semnificativ aici include
+# mișcarea comună a anului — de aceea vârful e la trecerea în anul pe care Friedman îl
+# arată ca an slab în toate trei orașele, nu la școli anume.
+schimbari = {}
+for a, b_ in zip(YEARS, YEARS[1:]):
+    da = {s['cod']: s for s in shr[a]['scoli']}
+    db = {s['cod']: s for s in shr[b_]['scoli']}
+    per = []
+    for cod in set(da) & set(db):
+        x, y = da[cod], db[cod]
+        se = math.sqrt(x['se'] ** 2 + y['se'] ** 2)
+        z = abs(x['mediana'] - y['mediana']) / se if se else 0.0
+        per.append({'cod': cod, 'z': z, 'p_brut': 2 * norm_sf(z)})
+    holm(per)
+    schimbari[f'{a}->{b_}'] = {
+        'scoli': len(per),
+        'semnificative_brut': sum(1 for p in per if p['p_brut'] < 0.05),
+        'semnificative_holm': sum(1 for p in per if p['p_holm'] < 0.05)}
+
+json.dump({'oras': 'TIMIȘOARA', 'ani': rez, 'schimbari_an_la_an': schimbari},
           io.open(OUT, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
+
+print()
+print('Schimbarea nivelului unei școli de la un an la altul')
+print(f"{'trecere':>14}{'școli':>7}{'brut':>7}{'Holm':>7}")
+for k, v in schimbari.items():
+    print(f"{k:>14}{v['scoli']:>7}{v['semnificative_brut']:>7}{v['semnificative_holm']:>7}")
 
 print('Perechi despărțite, din toate perechile posibile ale anului')
 print(f"{'an':>5}{'școli':>7}{'perechi':>9}{'pe diferență':>14}{'+ Holm':>10}"

@@ -170,7 +170,7 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
     <button class="tab-btn active" data-tab="temporal" role="tab" aria-selected="true">Efecte structurale</button>
     <button class="tab-btn" data-tab="note" role="tab" aria-selected="false">Distribuții note pe școală</button>
     <button class="tab-btn" data-tab="bootstrap" role="tab" aria-selected="false">Mediane cu bootstrap</button>
-    <button class="tab-btn" data-tab="mediane" role="tab" aria-selected="false">Evoluția medianelor</button>
+    <button class="tab-btn" data-tab="mediane" role="tab" aria-selected="false">Dinamica medianelor</button>
     <button class="tab-btn" data-tab="clasament" role="tab" aria-selected="false">Clasament</button>
   </div>
 
@@ -195,6 +195,7 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
         <li>Kruskal-Wallis pe fiecare an în parte (2020&ndash;2025 separat), unitatea de analiză = școala, cu mediana notelor ei ca valoare, și Dunn post-hoc (corecție Holm) pe perechile de orașe.</li>
         <li>Friedman per oraș — blocuri = școlile prezente în toți cei 6 ani, tratament = anul, cu anii ordonați după mediana școlii (graficul de mai sus).</li>
       </ul>
+      <p class="note">Testele iau în calcul școlile cu cel puțin {{MIN_N_TESTE}} candidați în anul respectiv; graficele care numesc școli, pe cele cu cel puțin {{MIN_N}}. Cele două praguri sunt calculate, nu alese: mediana unei școli intră într-un test dacă intervalul ei de încredere e mai îngust de {{CRIT_TESTE}} puncte, și intră într-un grafic dacă e mai îngust de {{CRIT_GRAFICE}} puncte. Pragul e mai jos la teste fiindcă acolo fiecare școală e o observație dintre zeci, iar abaterile școlilor mici se compensează între ele; într-un grafic, mediana unei școli cu puțini candidați devine o afirmație despre acea școală.</p>
       <h2>Cele două teste împreună</h2>
       <div class="findings">
         <p>Ipoteza că cei șase ani sunt echivalenți e respinsă în toate trei orașele. Kendall W — concordanța dintre școli în privința ordinii anilor — e {{W_IS}} la Iași și {{W_TM}} la Timișoara: acolo școlile se mișcă sincron de la an la an. La Cluj ({{W_CJ}}), ordinea anilor are o dispersie mai mare între școli.</p>
@@ -202,6 +203,16 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
         <p>Timișoara stă pe ultimul loc în toți cei șase ani, deci ordinea orașelor nu depinde de an. Deasupra ei, Cluj și Iași își schimbă locurile: Cluj e primul între {{KW_CJ_PRIM}}, Iași în {{KW_IS_PRIM}}. Efectul e mic peste tot, cu ε² între {{KW_EPS_MIN}} și {{KW_EPS_MAX}}.{{KW_FRAZA_EPS_NEG}}</p>
         <p>Semnificativ iese un singur contrast: {{KW_PERECHE}}, în {{KW_ANI_SIG}}. În {{KW_ANI_NESIG}}, testul pe ansamblu nu respinge egalitatea celor trei orașe.{{KW_FRAZA_GRANITA}}</p>
         <p>Variația între ani e comună celor trei orașe și intră în orice comparație făcută pe valorile medianelor brute de la un an la altul. O analiză longitudinală pe aceste date &mdash; inclusiv skew/kurtosis calculate pe anii cumulați &mdash; cere mediane standardizate în interiorul anului.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>{{SM_SCOLI_CUVANT}} școli mici</h2>
+      <div class="findings">
+        <p>Testele iau în calcul școlile cu cel puțin {{MIN_N_TESTE}} candidați. Sub prag rămân, în cei șase ani, {{SM_SITUATII}} școală&times;an, toate la Timișoara. Cluj și Iași nu au niciuna.</p>
+        <p>Sunt {{SM_SCOLI}} școli, fiecare apărând într-unul sau doi ani, cu mediane mult sub cea a orașului lor. Diferența dintre Timișoara și celelalte două orașe se sprijină în bună parte pe ele. Fără ele, diferența rămâne în aceeași direcție &mdash; Timișoara are rangul mediu cel mai mic în toți cei șase ani, cu prag sau fără &mdash; dar iese semnificativă doar în {{SM_ANI_CU}}, față de {{SM_ANI_FARA}} atunci când școlile mici sunt incluse.</p>
+        <p>La una dintre ele, {{SM_NEDEF}}, mediana nu se poate calcula deloc: din elevii înscriși, mai mulți au lipsit decât s-au prezentat, deci mijlocul distribuției cade printre cei fără notă. Nu e o școală cu rezultate mici, e o școală despre care examenul nu spune nimic.</p>
+        <p><b>Cum s-a ajuns aici.</b> Rezultatul nu a fost căutat; a ieșit dintr-o verificare de metodă, în patru pași. Întâi, testul comparativ pe fiecare an a fost corectat: intra cu media fiecărei școli, deși raportul lucrează pe mediane. Apoi pragul a fost recalculat din precizia declarată și a urcat de la {{MIN_N_TESTE_VECHI}} la {{MIN_N_TESTE}} candidați. La re-rulare, anii cu diferență semnificativă au scăzut de la {{SM_N_FARA}} la {{SM_N_CU}} &mdash; o schimbare prea mare pentru un candidat în plus. Căutând de unde vine, s-a văzut că școlile scoase de noul prag erau toate din același oraș. Direcția a fost verificată separat și nu depinde de prag.</p>
       </div>
     </div>
 
@@ -322,7 +333,7 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
   <div id="tab-mediane" class="tabpanel hidden">
 
   <div class="card">
-    <h2>Evoluția medianelor</h2>
+    <h2>Dinamica medianelor</h2>
     <p class="note">Fiecare linie subțire e o școală (minimum {{MIN_N}} candidați în anul respectiv); linia groasă e mediana orașului. Treceți mausul peste o linie pentru a o identifica.</p>
     <div class="modenav">
       <button class="mode-btn active" data-mode="brut">Valori brute</button>
@@ -335,6 +346,9 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
       <div id="hoverLabel"></div>
     </div>
     <p class="hint">Liniile întrerupte marchează anii în care școala a avut sub {{MIN_N}} candidați, prea puțini pentru o mediană stabilă.</p>
+    <div class="findings" style="margin-top:1rem;">
+      <p>Liniile se mișcă mult mai puțin decât par. Am testat toate cele {{SCHIMB_TOTAL}} de treceri de la un an la altul, școală cu școală: {{SCHIMB_BRUT}} ies semnificative luate una câte una, iar {{SCHIMB_HOLM}} rămân după corecția care ține cont că sunt testate toate deodată. Cele mai multe se strâng la o singură trecere, {{SCHIMB_AN_VARF}} &mdash; adică anul în care coboară toate trei orașele, nu școlile din Timișoara.</p>
+    </div>
   </div>
 
   </div>
@@ -358,7 +372,8 @@ footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
     <p class="hint">Intervalul unei școli acoperă tipic {{RANG_LAT_MIN}}&ndash;{{RANG_LAT_MAX}} locuri, iar la unele școli mai mult de {{RANG_LAT_MAXIM}}.</p>
     <div class="findings" style="margin-top:1rem;">
       <p>Tabelul arăta până acum poziția fiecărei școli și săgeți cu locurile câștigate sau pierdute de la un an la altul. Am testat cele {{SAGETI_TOTAL}} de mișcări afișate atunci, comparând intervalele de rang ale celor doi ani: {{SAGETI_SUSTINUTE}}. De aceea au fost scoase.</p>
-      <p>Un clasament al școlilor dintr-un oraș, făcut pe rezultatele unui singur examen, nu are rezoluția pe care o sugerează un tabel cu locuri. Ce se poate spune se vede în interval. Primul loc e neambiguu în toți cei șase ani. La celălalt capăt, ultimele școli se despart la fel de clar. Între ele însă, de școala din mijlocul clasamentului se pot despărți doar {{RANG_DIST_MIN}}&ndash;{{RANG_DIST_MAX}} școli din cele aproximativ {{RANG_K}} ale unui an; restul formează un pluton în interiorul căruia ordinea se schimbă de la un an la altul fără ca ceva să se fi schimbat la școli.</p>
+      <p>Ce măsoară clasamentul e rezultatul cohortei care a dat examenul la fiecare școală. Cum ajung elevii la o școală anume rămâne în afara acestor date: admiterea la gimnaziu nu e în fișierele Evaluării Naționale. Deci distanțele dintre școli nu se pot citi ca distanțe între ce adaugă școlile.</p>
+      <p>Un clasament al școlilor dintr-un oraș, făcut pe rezultatele unui singur examen, nu are rezoluția pe care o sugerează un tabel cu locuri. Ce se poate spune se vede în interval. Primul loc e neambiguu în toți cei șase ani. La celălalt capăt, ultima școală rămâne în treimea de jos în fiecare an. Între ele însă, de școala aflată la mijlocul clasamentului se pot despărți doar {{RANG_DIST_MIN}}&ndash;{{RANG_DIST_MAX}} școli din cele aproximativ {{RANG_K}} ale unui an; restul formează un pluton în interiorul căruia ordinea se schimbă de la un an la altul fără ca ceva să se fi schimbat la școli.</p>
     </div>
   </div>
 

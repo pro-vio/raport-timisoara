@@ -1,5 +1,5 @@
 {
- "min_candidati_per_scoala_an": 8,
+ "min_candidati_per_scoala_an": 9,
  "pondere_neprezentati_pct": {
   "CLUJ-NAPOCA": {
    "2020": 1.32,
@@ -40,16 +40,16 @@
    "n": 233
   },
   "TIMIȘOARA": {
-   "mediana_en": -0.477,
-   "media_en": -0.466,
-   "mediana_viii": -0.557,
-   "n": 217
+   "mediana_en": -0.379,
+   "media_en": -0.349,
+   "mediana_viii": -0.438,
+   "n": 208
   },
   "TOATE": {
-   "mediana_en": -0.492,
-   "media_en": -0.498,
-   "mediana_viii": -0.551,
-   "n": 709
+   "mediana_en": -0.463,
+   "media_en": -0.468,
+   "mediana_viii": -0.524,
+   "n": 700
   }
  },
  "miscarea_medianei_orasului": {
@@ -73,8 +73,8 @@
    "2020": 0.0,
    "2021": -0.035,
    "2022": 0.0,
-   "2023": 0.008,
-   "2024": -0.058,
+   "2023": 0.0,
+   "2024": 0.0,
    "2025": -0.01
   }
  }

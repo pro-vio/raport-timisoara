@@ -18,11 +18,12 @@ from collections import defaultdict
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from statistici import median_of, mediana_cu_neprezentati
+from praguri import prag
 
 DATE = os.path.join(HERE, '..', 'date')
 ORASE = ['CLUJ-NAPOCA', 'IAȘI', 'TIMIȘOARA']
 YEARS = list(range(2020, 2026))
-MIN_N = 8
+MIN_N = prag('prag_teste')      # calculat, nu ales; vezi prag_incertitudine.py
 OUT = os.path.join(DATE, 'neprezentati.json')
 
 

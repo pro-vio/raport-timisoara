@@ -8,6 +8,7 @@ import json
 import math
 import gc
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from praguri import prag
 from statistici import mediana_cu_neprezentati
 from collections import defaultdict, Counter
 
@@ -39,7 +40,7 @@ for r in range(1, ws.nrows):
         names[code] = row[idx['Denumire']]
 
 YEARS = [2020, 2021, 2022, 2023, 2024, 2025]
-MIN_N = 8
+MIN_N = prag('prag_teste')      # calculat, nu ales; vezi prag_incertitudine.py
 
 def median_of(values):
     v = sorted(values)

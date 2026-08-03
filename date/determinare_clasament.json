@@ -2,88 +2,115 @@
  "oras": "TIMIȘOARA",
  "ani": {
   "2020": {
-   "k": 29,
-   "perechi_total": 406,
-   "perechi_despartite_brut": 250,
-   "perechi_despartite_holm": 136,
-   "perechi_intervale_separate": 204,
+   "k": 28,
+   "perechi_total": 378,
+   "perechi_despartite_brut": 242,
+   "perechi_despartite_holm": 135,
+   "perechi_intervale_separate": 195,
    "pozitie_unica_brut": 2,
-   "pozitie_unica_holm": 0,
-   "pozitie_unica_suprapunere": 2,
+   "pozitie_unica_holm": 1,
+   "pozitie_unica_suprapunere": 1,
    "zona_tipica_brut": 12,
-   "zona_tipica_holm": 22,
-   "zona_tipica_suprapunere": 18,
-   "zona_maxima_holm": 28
+   "zona_tipica_holm": 21,
+   "zona_tipica_suprapunere": 17,
+   "zona_maxima_holm": 26
   },
   "2021": {
-   "k": 30,
-   "perechi_total": 435,
-   "perechi_despartite_brut": 248,
-   "perechi_despartite_holm": 128,
-   "perechi_intervale_separate": 196,
+   "k": 27,
+   "perechi_total": 351,
+   "perechi_despartite_brut": 210,
+   "perechi_despartite_holm": 114,
+   "perechi_intervale_separate": 171,
    "pozitie_unica_brut": 1,
    "pozitie_unica_holm": 0,
    "pozitie_unica_suprapunere": 1,
-   "zona_tipica_brut": 15,
-   "zona_tipica_holm": 23,
-   "zona_tipica_suprapunere": 19,
-   "zona_maxima_holm": 30
+   "zona_tipica_brut": 12,
+   "zona_tipica_holm": 20,
+   "zona_tipica_suprapunere": 16,
+   "zona_maxima_holm": 27
   },
   "2022": {
-   "k": 31,
-   "perechi_total": 465,
-   "perechi_despartite_brut": 292,
-   "perechi_despartite_holm": 161,
-   "perechi_intervale_separate": 242,
+   "k": 29,
+   "perechi_total": 406,
+   "perechi_despartite_brut": 238,
+   "perechi_despartite_holm": 118,
+   "perechi_intervale_separate": 192,
    "pozitie_unica_brut": 1,
    "pozitie_unica_holm": 0,
    "pozitie_unica_suprapunere": 0,
    "zona_tipica_brut": 13,
-   "zona_tipica_holm": 22,
-   "zona_tipica_suprapunere": 17,
-   "zona_maxima_holm": 30
+   "zona_tipica_holm": 21,
+   "zona_tipica_suprapunere": 18,
+   "zona_maxima_holm": 28
   },
   "2023": {
-   "k": 31,
-   "perechi_total": 465,
-   "perechi_despartite_brut": 264,
-   "perechi_despartite_holm": 150,
-   "perechi_intervale_separate": 223,
+   "k": 28,
+   "perechi_total": 378,
+   "perechi_despartite_brut": 205,
+   "perechi_despartite_holm": 113,
+   "perechi_intervale_separate": 165,
    "pozitie_unica_brut": 2,
    "pozitie_unica_holm": 0,
    "pozitie_unica_suprapunere": 0,
-   "zona_tipica_brut": 16,
-   "zona_tipica_holm": 24,
+   "zona_tipica_brut": 15,
+   "zona_tipica_holm": 23,
    "zona_tipica_suprapunere": 19,
-   "zona_maxima_holm": 31
+   "zona_maxima_holm": 28
   },
   "2024": {
-   "k": 32,
-   "perechi_total": 496,
-   "perechi_despartite_brut": 300,
-   "perechi_despartite_holm": 151,
-   "perechi_intervale_separate": 233,
-   "pozitie_unica_brut": 1,
-   "pozitie_unica_holm": 0,
+   "k": 30,
+   "perechi_total": 435,
+   "perechi_despartite_brut": 266,
+   "perechi_despartite_holm": 141,
+   "perechi_intervale_separate": 208,
+   "pozitie_unica_brut": 2,
+   "pozitie_unica_holm": 1,
    "pozitie_unica_suprapunere": 1,
-   "zona_tipica_brut": 15,
-   "zona_tipica_holm": 24,
+   "zona_tipica_brut": 14,
+   "zona_tipica_holm": 22,
    "zona_tipica_suprapunere": 18,
-   "zona_maxima_holm": 31
+   "zona_maxima_holm": 29
   },
   "2025": {
    "k": 30,
    "perechi_total": 435,
-   "perechi_despartite_brut": 239,
-   "perechi_despartite_holm": 124,
+   "perechi_despartite_brut": 232,
+   "perechi_despartite_holm": 122,
    "perechi_intervale_separate": 179,
    "pozitie_unica_brut": 2,
    "pozitie_unica_holm": 1,
    "pozitie_unica_suprapunere": 2,
-   "zona_tipica_brut": 16,
+   "zona_tipica_brut": 15,
    "zona_tipica_holm": 23,
    "zona_tipica_suprapunere": 20,
    "zona_maxima_holm": 29
+  }
+ },
+ "schimbari_an_la_an": {
+  "2020->2021": {
+   "scoli": 27,
+   "semnificative_brut": 11,
+   "semnificative_holm": 4
+  },
+  "2021->2022": {
+   "scoli": 27,
+   "semnificative_brut": 3,
+   "semnificative_holm": 0
+  },
+  "2022->2023": {
+   "scoli": 27,
+   "semnificative_brut": 5,
+   "semnificative_holm": 2
+  },
+  "2023->2024": {
+   "scoli": 27,
+   "semnificative_brut": 8,
+   "semnificative_holm": 3
+  },
+  "2024->2025": {
+   "scoli": 29,
+   "semnificative_brut": 8,
+   "semnificative_holm": 1
   }
  }
 }

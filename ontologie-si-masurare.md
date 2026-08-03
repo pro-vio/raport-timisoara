@@ -64,10 +64,14 @@ a urcat" afirmă ceva despre o mulțime de elevi comparată cu alta.
 
 **Selecția la intrare e o limită, nu o a doua citire a cifrei** (decizia autorului, aceeași
 zi). Cum ajung elevii la o școală anume nu e în date — nu se măsoară nicăieri în fișierele
-Evaluării Naționale. Literatura de specialitate spune că ar conta. Deci rezultatul cohortei e
-confundat cu selecția, iar ce știm despre direcția confuziei vine din literatură, nu din
-datele de față. Sursa care poartă afirmația rămâne de ales de autor; până atunci limita se
-enunță ca atare, fără trimitere.
+Evaluării Naționale. Deci rezultatul cohortei e confundat cu selecția, fără ca datele să
+poată despărți cele două.
+
+Pe pagină limita se enunță **fără trimitere la literatură** (decizia autorului, 3 august
+2026). Prima formulare invoca literatura de specialitate pentru afirmația că selecția
+contează; era singurul loc din raport sprijinit pe o sursă, iar sursa n-ar fi fost numită.
+Formularea păstrată spune la fel de mult din date: cum ajung elevii la o școală nu se vede
+aici, deci distanțele dintre școli nu se citesc ca distanțe între ce adaugă școlile.
 
 **Contribuția școlii** — ce adaugă școala peste ce prezicea intrarea — e în afara datelor.
 `STARE.md` consemnează firul valoare adăugată ca blocat pe date până în 2027.
@@ -84,16 +88,27 @@ medie–mediană corelată r = −0,64 cu nivelul școlii); decizia e consemnat�
 
 ## 3. Operaționalizare
 
-### Praguri — trei, în același raport, declarat doar unul
+### Praguri — rezolvat pe 3 august 2026
 
-| Unde | Prag | Declarat pe pagină |
-|---|---|---|
-| grafice mediane, shrinkage, clasament | minimum 15 candidați în anul respectiv | da |
-| Kruskal-Wallis pe an (`kw_pe_ani.json`) | minimum 8 candidați | **nu** |
-| Friedman | școala prezentă în toți cei 6 ani | da, în altă formulare |
+Erau trei praguri diferite în același raport, declarat doar unul: 15 la graficele care numesc
+școli, 8 la Kruskal-Wallis și Friedman, plus condiția de prezență în toți cei șase ani la
+Friedman. Cele trei dădeau trei mulțimi de școli, prezentate una lângă alta ca despre același
+oraș, iar valorile intraseră în cod fără justificare.
 
-Cele trei praguri dau trei mulțimi de școli diferite. Pagina prezintă rezultatele lor unul
-lângă altul, ca despre același oraș.
+| Unde | Prag | Din ce criteriu | Declarat pe pagină |
+|---|---|---|---|
+| graficele care numesc o școală | 18 candidați | interval mai îngust de 1,5 puncte | da |
+| Kruskal-Wallis și Friedman | 9 candidați | interval mai îngust de 2,5 puncte | da |
+| Friedman, în plus | prezență în toți cei 6 ani | cere blocuri complete | da |
+
+Pragurile sunt acum **calculate din precizia declarată**, la fiecare rulare
+(`prag_incertitudine.py` → `praguri.py`), nu scrise în scripturi. Curba lățimii intervalului
+în funcție de numărul de candidați **nu are cot**, deci datele nu pot da un prag — pot doar
+traduce în număr de candidați o alegere de precizie, iar alegerea e a autorului.
+
+O variantă anterioară a criteriului măsura ce fracțiune din câmpul orașului acoperă
+intervalul. A fost abandonată fiindcă e circulară: ridicând pragul, școlile mici ies din câmp,
+câmpul se îngustează, fiecare interval acoperă o fracțiune mai mare, deci pragul urcă din nou.
 
 ### Cazuri de graniță fără regulă scrisă
 
@@ -174,7 +189,8 @@ convenție scrisă despre ce propun, ce scrie el și ce trece prin el înainte d
 2. Ce concept citește mediana unei școli: rezultatul cohortei, selecția la intrare, sau
    contribuția școlii?
 3. Se scrie pe pagină limita pe care `STARE.md` o consemnează deja?
-4. Cele trei praguri (15 / 8 / prezență în toți anii) — se declară toate, sau se unifică?
+4. ~~Cele trei praguri~~ — **rezolvat 3 august 2026**: calculate din precizia declarată
+   (1,5 puncte la grafice → 18, 2,5 la teste → 9) și scrise pe pagină.
 5. Regula pentru elevii neprezentați la EN — azi cad tăcut; la BAC decizia a fost explicită.
 6. Regula pentru școlile cu recrutare proprie.
 7. Codarea absenței la nivel de școală: se distinge „fără absolvenți" de „sub prag" de

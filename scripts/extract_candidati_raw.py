@@ -1,6 +1,9 @@
 import os
 _DATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'date')
 import sys
+import os as _os
+sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from praguri import prag
 sys.stdout.reconfigure(encoding='utf-8')
 import xlrd
 import openpyxl
@@ -34,7 +37,7 @@ for r in range(1, ws.nrows):
 
 YEARS = [2020, 2021, 2022, 2023, 2024, 2025]
 BASE = _DATE
-MIN_N = 15
+MIN_N = prag('prag_grafice')      # calculat, nu ales; vezi prag_incertitudine.py
 
 per_year = {}
 for year in YEARS:

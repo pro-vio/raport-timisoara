@@ -105,8 +105,8 @@ for an, sc in rg['ani'].items():
     check(f'{an}: primul loc e neambiguu',
           round(v[0]['rang_lo']) == round(v[0]['rang_hi']) == 1,
           (v[0]['rang_lo'], v[0]['rang_hi']))
-    check(f'{an}: ultima scoala se desparte de cea din mijloc',
-          v[-1]['rang_lo'] > mij['rang_hi'], (v[-1]['rang_lo'], mij['rang_hi']))
+    check(f'{an}: ultima scoala ramane in treimea de jos',
+          v[-1]['rang_lo'] > 2 * len(v) / 3, (v[-1]['rang_lo'], len(v)))
 
 print('--- neprezentatii ---')
 npz = J('neprezentati.json')

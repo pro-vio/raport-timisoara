@@ -8,6 +8,8 @@
 # testează afirmațiile, și NU scrie pagina dacă o aserțiune pică.
 import io, json, os, re, subprocess, sys
 sys.stdout.reconfigure(encoding='utf-8')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from praguri import criteriu, prag
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATE = os.path.join(HERE, '..', 'date')
@@ -24,6 +26,8 @@ raw = J('candidati_raw_timisoara.json')
 mv = J('medie_vs_mediana_percentil.json')
 npz = J('neprezentati.json')
 rng_ = J('ranguri_bootstrap.json')
+det = J('determinare_clasament.json')
+sm = J('scoli_mici.json')
 
 
 def d(x, n=2):
@@ -34,6 +38,20 @@ def d(x, n=2):
 def enumera(xs, si='și'):
     xs = list(xs)
     return xs[0] if len(xs) == 1 else f"{', '.join(xs[:-1])} {si} {xs[-1]}"
+
+
+_CUVINTE_F = {1: 'O', 2: 'Două', 3: 'Trei', 4: 'Patru', 5: 'Cinci', 6: 'Șase',
+              7: 'Șapte', 8: 'Opt', 9: 'Nouă', 10: 'Zece'}
+
+
+def cuvant_f(n):
+    """Numeralul în litere, feminin, pentru titluri. Peste zece rămâne cifra."""
+    return _CUVINTE_F.get(n, str(n))
+
+
+def numar(n, substantiv):
+    """Numeralul cu „de" acolo unde româna îl cere: 9 situații, dar 21 de situații."""
+    return f'{n} de {substantiv}' if n % 100 == 0 or n % 100 > 19 else f'{n} {substantiv}'
 
 
 def semn(x, n=2):
@@ -57,7 +75,8 @@ def constanta(fisier, nume):
     return int(m.group(1))
 
 
-MIN_N = constanta('extract_candidati_raw.py', 'MIN_N')
+MIN_N = prag('prag_grafice')
+MIN_N_TESTE = prag('prag_teste')
 N_BOOT = constanta('shrinkage_mediana.py', 'B')
 
 # --- numele scurte de școli: EDITORIAL, pentru lizibilitatea graficului. Singura parte a
@@ -132,6 +151,28 @@ assert _sag_sus * 10 < _sag_tot, \
 _NUME_SAG = {0: 'niciuna nu se susține', 1: 'una singură se susține'}
 FRAZA_SAG = _NUME_SAG.get(_sag_sus, f'{_sag_sus} se susțin')
 
+# școlile pe care pragul testelor le scoate — toate dintr-un singur oraș
+_sm_cel = sm['celule_sub_prag']
+assert all(v == 0 for c, v in _sm_cel.items() if c != 'TIMIȘOARA'), \
+    f'nu mai sunt toate la Timișoara: {_sm_cel}'
+assert sm['oras_mereu_ultimul'] == ['TIMIȘOARA'], \
+    f'direcția depinde acum de prag: {sm["oras_mereu_ultimul"]}'
+assert len(sm['mediane_nedefinite']) >= 1, 'nu mai există mediana nedefinită din text'
+_nd = sm['mediane_nedefinite'][0]
+# denumirea din registru e cu majuscule și lipită („ȘCOALA GIMNAZIALĂ NR.15 TIMIȘOARA")
+_SM_NEDEF = re.sub(r'\bNr\.\s*(\d)', r'nr. \1', _nd['denumire'].title()) + f" în {_nd['an']}"
+
+# schimbările de nivel de la un an la altul, și unde se strâng
+_sch = det['schimbari_an_la_an']
+_sch_t = sum(v['scoli'] for v in _sch.values())
+_sch_b = sum(v['semnificative_brut'] for v in _sch.values())
+_sch_h = sum(v['semnificative_holm'] for v in _sch.values())
+_varf = max(_sch, key=lambda k: _sch[k]['semnificative_brut'])
+_sch_varf = _varf.replace('->', '&rarr;')
+# afirmația din text: vârful cade pe anul pe care Friedman îl arată jos în toate orașele
+assert _varf.split('->')[1] in ANI_JOS, \
+    f'vârful schimbărilor ({_varf}) nu mai cade pe un an slab la Friedman ({ANI_JOS})'
+
 # cât de determinat e clasamentul: primul loc, și câte școli se despart de cea din mijloc
 _dist, _k = [], []
 for an, sc in rng_['ani'].items():
@@ -142,7 +183,11 @@ for an, sc in rng_['ani'].items():
     _k.append(len(v))
     assert round(v[0]['rang_lo']) == round(v[0]['rang_hi']) == 1, \
         f'{an}: primul loc nu mai e neambiguu ({v[0]["rang_lo"]}-{v[0]["rang_hi"]})'
-    assert v[-1]['rang_lo'] > mij['rang_hi'], f'{an}: ultima școală nu se mai desparte de mijloc'
+    # Afirmația despre coadă se raportează la treimea de jos, nu la școala din mijloc:
+    # aceea e o școală anume, iar în 2021 chiar ea are un interval de 10-26, aproape cât
+    # tot clasamentul, deci nimic nu se desparte de ea. Treimea nu depinde de o școală.
+    assert v[-1]['rang_lo'] > 2 * len(v) / 3, \
+        f'{an}: ultima școală nu mai stă în treimea de jos ({v[-1]["rang_lo"]} din {len(v)})'
 
 # neprezentații
 _pond = [v for o in npz['pondere_neprezentati_pct'].values() for v in o.values()]
@@ -235,6 +280,18 @@ JETOANE = {
     'SAGETI_TOTAL': str(_sag_tot), 'SAGETI_SUSTINUTE': FRAZA_SAG,
     'RANG_DIST_MIN': str(min(_dist)), 'RANG_DIST_MAX': str(max(_dist)),
     'RANG_K': str(round(sum(_k) / len(_k))),
+    'SM_SITUATII': numar(_sm_cel['TIMIȘOARA'], 'situații'),
+    'SM_SCOLI_CUVANT': cuvant_f(sm['scoli_distincte_sub_prag']['TIMIȘOARA']),
+    'SM_SCOLI': str(sm['scoli_distincte_sub_prag']['TIMIȘOARA']),
+    'SM_ANI_CU': enumera(sm['ani_semnificativi_cu_pragul']),
+    'SM_ANI_FARA': enumera(sm['ani_semnificativi_fara_pragul']),
+    'SM_NEDEF': _SM_NEDEF,
+    'SM_N_CU': str(len(sm['ani_semnificativi_cu_pragul'])),
+    'SM_N_FARA': str(len(sm['ani_semnificativi_fara_pragul'])),
+    'MIN_N_TESTE_VECHI': str(sm['prag_curent'] - 1),
+
+    'SCHIMB_TOTAL': str(_sch_t), 'SCHIMB_BRUT': str(_sch_b), 'SCHIMB_HOLM': str(_sch_h),
+    'SCHIMB_AN_VARF': _sch_varf,
 
     'NEPZ_MIN': d(min(_pond), 1) + '%', 'NEPZ_MAX': d(max(_pond), 1) + '%',
     'NEPZ_MISCARE': zecimale(max(abs(v) for o in npz['miscarea_medianei_orasului'].values()
@@ -244,7 +301,9 @@ JETOANE = {
     'NEPZ_COR_VIII': semn(_cor['mediana_viii']),
 
     'R_DIF': '&minus;' + d(abs(mv['corelatie_medie_vs_gap'])),
-    'N_BOOT': str(N_BOOT), 'MIN_N': str(MIN_N),
+    'N_BOOT': str(N_BOOT), 'MIN_N': str(MIN_N), 'MIN_N_TESTE': str(MIN_N_TESTE),
+    'CRIT_TESTE': d(criteriu('prag_teste'), 1),
+    'CRIT_GRAFICE': d(criteriu('prag_grafice'), 1),
     'N_SCOLI_GRAFIC': str(len(SCHOOLS)),
     'N_SCOLI_ANCORA': f'{min(n_sc_shr)}-{max(n_sc_shr)}',
 }
