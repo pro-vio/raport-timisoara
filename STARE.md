@@ -214,7 +214,18 @@ Analiză a rezultatelor Evaluării Naționale (clasa a VIII-a) pe școli, date d
 - Fostul repo `pro-vio/evaluare-nationala-timisoara` — **șters de user, verificat 2026-07-14**. Nu mai există; `raport-timisoara` e singurul repo al proiectului.
 - Autentificare `gh` cont `pro-vio` (HTTPS, keyring) — deja configurată pe această mașină. ⚠️ Tokenul NU are scope `delete_repo` (ștergerile de repo le face userul din browser).
 
-Raport pentru audiență politică, scop restrâns la **Timișoara** (din cele 3 orașe analizate: Timișoara, Cluj-Napoca, Iași), 5 tab-uri:
+Raport pentru audiență politică, scop restrâns la **Timișoara** (din cele 3 orașe analizate: Timișoara, Cluj-Napoca, Iași), **7 tab-uri** (5 inițiale + 2 adăugate pe 3 august 2026):
+
+6. **Diferențe note V-VIII − note Evaluare Națională (Cluj, Iași, Timișoara)** — nor de puncte
+   pe fiecare oraș (o școală = un punct), cu butoane de an și text care se schimbă odată cu ele;
+   tabelul corelațiilor pe ani × orașe; caseta de sinteză *Ce se vede la Timișoara*.
+7. **Diferența note la clasă − note Evaluarea Națională (Timișoara)** — *Cum se măsoară* (cu
+   succesiunea testelor), graficul *Cât de bine prezice nota de la școală nota de la evaluare*
+   (școlile ordonate crescător după decalaj, Loga sus, cu bară de interval intercuartilic),
+   *Cum se citește*, *Elevii unei școli* (norul de elevi al școlii alese, butoane de an și de
+   școală) și *Elevii care își depășesc notele de la clasă*.
+
+Cele 5 inițiale:
 1. **Efecte structurale** — grafic rang mediu Friedman (3 orașe) + teste efectuate + concluzia că Timișoara stă ultima în toți cei 6 ani, deci ordinea orașelor nu depinde de an.
 2. **Distribuții note pe școală** — strip-plot (fiecare candidat = un punct, jitter, canvas), linii mediană (alb)/media celor prezenți (roșu) mereu vizibile pe grafic, slider de an; + cardul „Diferența medie–mediană" (diferență în puncte procentuale + concluzia: mediana pt clasament).
 3. **Mediane cu bootstrap** — caterpillar plot shrinkage empirical-Bayes (bootstrap 2000 reeșantionări pt SE mediană), slider de an, schemă „Cum se citește", notă metodologică (mu_hat = **media** medianelor școlilor, nu mediana lor — impus de formula de shrinkage).
@@ -282,6 +293,13 @@ putea calcula decalajul, dar nu și ordonarea, fiindcă lista de note e sortată
 - **Friedman pe decalaj**: W=0,52, iar tiparul anilor e OGLINDA celui de la examen (r=−0,94).
 - **Doar 2,6% dintre elevii TM** iau la examen peste media de la școală, iar excepțiile se strâng
   la vârf (Loga 2020: 17 din 59). O singură celulă școală×an are q1 negativ.
+
+### Elevii care își depășesc notele de la clasă
+Diferența poate fi și negativă, dar e rar: TM 344/13.225 (2,6%), CJ 2,8%, **IS 4,4%**. Nicio
+celulă școală×an n-are mediana negativă; q1 coboară sub zero într-una singură (Loga 2020).
+Excepțiile se strâng la vârf: Loga 2020 17/59 (29%), Lenau 2020 15%, Loga 2023 13%. Explicația
+propusă și scrisă: acolo notele de la clasă sunt deja aproape de maximum, deci elevul bun n-are
+cum să fie notat mai sus — la examen poate ieși peste.
 
 ### Urmăresc notele de la clasă examenul? (testul cerut de user)
 Userul a respins presupunerea că o școală care notează raportându-se la propriii elevi n-ar
