@@ -7,6 +7,7 @@
 # cifra corectă și fi falsă. De aceea build-ul rulează la final verifica_text.py, care
 # testează afirmațiile, și NU scrie pagina dacă o aserțiune pică.
 import io, json, os, re, subprocess, sys
+NL = chr(10)
 sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from praguri import criteriu, prag
@@ -120,9 +121,10 @@ AN_DEC = YEARS[-1]
 _CUL = {'IAȘI': ('#2a78d6', '#3987e5'), 'CLUJ-NAPOCA': ('#1baf7a', '#199e70'),
         'TIMIȘOARA': ('#eda100', '#c98500')}
 _ID = {'IAȘI': 'is', 'CLUJ-NAPOCA': 'cj', 'TIMIȘOARA': 'tm'}
-_cel_dec = [c for c in pr['celule'] if c['an'] == AN_DEC]
-_val = [v for c in _cel_dec for v in (c['v8_mediana'], c['en_mediana'])]
+# Limitele se calculează peste TOȚI anii, ca norul să nu sară când se schimbă anul.
+_val = [v for c in pr['celule'] for v in (c['v8_mediana'], c['en_mediana'])]
 _LIM = [round(min(_val) - 0.3, 1), round(max(_val) + 0.2, 1)]
+
 
 def _oglinda(oras):
     """Cât de mult e tiparul anilor la decalaj oglinda celui de la examen."""
@@ -140,31 +142,64 @@ _ORD_DEC = ['TIMIȘOARA', 'CLUJ-NAPOCA', 'IAȘI']
 _orase_js, _carduri = [], []
 for oras in _ORD_DEC:
     ro = ORASE[oras]
-    pts = [c for c in _cel_dec if c['oras'] == oras]
-    st = pr['intre_scoli'][oras][AN_DEC]
-    assert st['toate_sub_diagonala'], f'{oras}: nu mai stau toate școlile sub linie'
+    ani = {}
+    for an in YEARS:
+        pts = [c for c in pr['celule'] if c['oras'] == oras and c['an'] == an]
+        st = pr['intre_scoli'][oras][an]
+        assert st['toate_sub_diagonala'], f'{oras} {an}: nu mai stau toate școlile sub linie'
+        ani[an] = {'puncte': [[c['v8_mediana'], c['en_mediana'], c['denumire']] for c in pts],
+                   'n_scoli': st['n_scoli'], 'pearson': st['pearson'],
+                   'decalaj_median': st['decalaj_median'],
+                   'decalaj_min': st['decalaj_min'], 'decalaj_max': st['decalaj_max']}
     _orase_js.append({'id': _ID[oras], 'nume': ro, 'culoare': _CUL[oras][0],
-                      'culoare_dark': _CUL[oras][1],
-                      'puncte': [[c['v8_mediana'], c['en_mediana'], c['denumire']] for c in pts]})
+                      'culoare_dark': _CUL[oras][1], 'ani': ani})
     _carduri.append(f"""    <div class="card">
       <h2>{ro}</h2>
-      <p class="note">Fiecare punct e o școală, în {AN_DEC}. Pe orizontală mediana notelor pe care le dă școala în clasele V&ndash;VIII, pe verticală mediana notelor pe care le iau aceiași elevi la examen.</p>
+      <p class="note">Fiecare punct e o școală. Pe orizontală mediana notelor pe care le dă școala în clasele V&ndash;VIII, pe verticală mediana notelor pe care le iau aceiași elevi la examen.</p>
+      <div class="modenav" id="ani-{_ID[oras]}" role="group" aria-label="Anul"></div>
       <div class="duo">
-        <div class="plot"><canvas id="scatter-{_ID[oras]}" role="img" aria-label="Nor de puncte, {ro}, {AN_DEC}: fiecare punct e o școală, notele date de școală față de notele de la examen. Toate punctele stau sub linia notei egale."></canvas></div>
-        <div class="say">
-          <p>Toate cele {numar(st['n_scoli'], 'școli')} stau sub linie: fiecare notează peste ce iese la examen.</p>
-          <p>Decalajul median al unei școli e <span class="num">{d(st['decalaj_median'])}</span> puncte, iar între școli merge de la <span class="num">{d(st['decalaj_min'])}</span> la <span class="num">{d(st['decalaj_max'])}</span>.</p>
-          <p>Corelația dintre cele două mediane, calculată între școli, e <span class="num">{d(st['pearson'])}</span>.</p>
-        </div>
+        <div class="plot"><canvas id="scatter-{_ID[oras]}" role="img" aria-label="Nor de puncte, {ro}: fiecare punct e o școală, notele date de școală față de notele de la examen. Toate punctele stau sub linia notei egale."></canvas></div>
+        <div class="say" id="say-{_ID[oras]}"></div>
       </div>
     </div>""")
 
+# tabelul cu coeficienții de corelație, ani × orașe
+_rand = []
+for an in YEARS:
+    celule_ = ''.join(
+        f"<td>{d(pr['intre_scoli'][o][an]['pearson'])}</td>" for o in _ORD_DEC)
+    _rand.append(f'          <tr><td class="school">{an}</td>{celule_}</tr>')
+_TABEL_DEC = NL.join([
+    '    <div class="card">',
+    '      <h2>Corelația dintre notele de la clasă și cele de la examen</h2>',
+    '      <p class="note">Calculată între școli, în fiecare an: cât de bine anticipează'
+    ' mediana notelor date de o școală mediana notelor pe care le iau elevii ei la examen.'
+    ' Valoarea 1 ar însemna că ordinea școlilor e aceeași după ambele.</p>',
+    '      <div class="table-scroll">',
+    '        <table>',
+    '          <thead><tr><th>An</th>'
+    + ''.join(f'<th>{ORASE[o]}</th>' for o in _ORD_DEC) + '</tr></thead>',
+    '          <tbody>',
+] + _rand + [
+    '          </tbody>',
+    '        </table>',
+    '      </div>',
+    '    </div>',
+])
 _tm = pr['intre_scoli']['TIMIȘOARA'][AN_DEC]
 _tmk = pr['kw_delta']['TIMIȘOARA']['la_gramada']
 _tmf = pr['friedman_delta']['TIMIȘOARA']
 _ogl = _oglinda('TIMIȘOARA')
 assert _ogl < -0.7, f'tiparul decalajului nu mai e oglinda celui de la examen ({_ogl:.2f})'
 assert _tmk['epsilon2'] > max(v['epsilon2'] for v in kw['ani'].values()),     'școlile nu mai diferă între ele mai mult decât orașele'
+# afirmația din text: Timișoara are corelația cea mai mică dintre cele trei orașe
+_cor_dec = {o: [pr['intre_scoli'][o][a]['pearson'] for a in YEARS] for o in _ORD_DEC}
+# afirmația din text: Timișoara are corelația cea mai mică în FIECARE an
+for _i, _a in enumerate(YEARS):
+    assert _cor_dec['TIMIȘOARA'][_i] < min(_cor_dec['CLUJ-NAPOCA'][_i], _cor_dec['IAȘI'][_i]),         f'{_a}: Timișoara nu mai are corelația cea mai mică'
+assert _cor_dec['TIMIȘOARA'][-1] < _cor_dec['TIMIȘOARA'][0], 'corelația la Timișoara nu mai scade'
+_cor_an = {o: pr['intre_scoli'][o][AN_DEC]['pearson'] for o in _ORD_DEC}
+assert min(_cor_an, key=_cor_an.get) == 'TIMIȘOARA', f'nu mai e Timișoara cea mai mică: {_cor_an}'
 
 # ------------------------------------------------------------------- cifrele din proză
 W = {c: fr[c]['kendall_W'] for c in ORASE}
@@ -345,10 +380,13 @@ JETOANE = {
 
     'JS_RANGURI': json.dumps(rng_['ani'], ensure_ascii=False),
     'JS_DECALAJ': json.dumps({'limite': _LIM, 'orase': _orase_js}, ensure_ascii=False),
-    'CARDURI_DECALAJ': ('\n\n').join(_carduri),
-    'DEC_COR_TM': d(pr['intre_scoli']['TIMIȘOARA'][AN_DEC]['pearson']),
-    'DEC_COR_CJ': d(pr['intre_scoli']['CLUJ-NAPOCA'][AN_DEC]['pearson']),
-    'DEC_COR_IS': d(pr['intre_scoli']['IAȘI'][AN_DEC]['pearson']),
+    'CARDURI_DECALAJ': (NL + NL).join(_carduri),
+    'TABEL_DECALAJ': _TABEL_DEC,
+    'DEC_COR_TM_MIN': d(min(_cor_dec['TIMIȘOARA'])), 'DEC_COR_TM_MAX': d(max(_cor_dec['TIMIȘOARA'])),
+    'DEC_COR_CJ_MIN': d(min(_cor_dec['CLUJ-NAPOCA'])), 'DEC_COR_CJ_MAX': d(max(_cor_dec['CLUJ-NAPOCA'])),
+    'DEC_COR_IS_MIN': d(min(_cor_dec['IAȘI'])), 'DEC_COR_IS_MAX': d(max(_cor_dec['IAȘI'])),
+    'DEC_COR_TM_PRIM': d(_cor_dec['TIMIȘOARA'][0]), 'DEC_COR_TM_ULT': d(_cor_dec['TIMIȘOARA'][-1]),
+    'AN_PRIM': YEARS[0],
     'DEC_TM_ELEVI': f"{_tmk['n_elevi']:,}".replace(',', '.'),
     'DEC_TM_SPEARMAN': d(pr['pe_oras']['TIMIȘOARA']['spearman'], 3),
     'DEC_TM_EPS': d(_tmk['epsilon2'], 2),

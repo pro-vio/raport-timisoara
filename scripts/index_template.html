@@ -118,7 +118,7 @@ td.rank-base { color: var(--ink-muted); }
 .arrow-flat { color: var(--ink-soft); font-weight: 600; }
 .arrow-na { color: var(--ink-muted); opacity: 0.5; }
 footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
-.tabnav { display: flex; gap: 4px; margin-top: 1.5rem; border-bottom: 1px solid var(--border); }
+.tabnav { display: flex; flex-wrap: wrap; gap: 4px 0; margin-top: 1.5rem; border-bottom: 1px solid var(--border); }
 .tab-btn {
   font: inherit; font-size: 14px; font-weight: 500; color: var(--ink-soft);
   background: none; border: none; padding: 10px 4px; margin-right: 22px; cursor: pointer;
@@ -187,7 +187,7 @@ thead th.col-activa { color: var(--accent); }
     <button class="tab-btn" data-tab="bootstrap" role="tab" aria-selected="false">Mediane cu bootstrap</button>
     <button class="tab-btn" data-tab="mediane" role="tab" aria-selected="false">Dinamica medianelor</button>
     <button class="tab-btn" data-tab="clasament" role="tab" aria-selected="false">Clasament</button>
-    <button class="tab-btn" data-tab="decalaj" role="tab" aria-selected="false">Notele la clasă și examenul</button>
+    <button class="tab-btn" data-tab="decalaj" role="tab" aria-selected="false">Diferența note la clasă &minus; note Evaluarea Națională (Timișoara)</button>
   </div>
 
   <div id="tab-temporal" class="tabpanel">
@@ -401,17 +401,19 @@ thead th.col-activa { color: var(--accent); }
 
   <div id="tab-decalaj" class="tabpanel hidden">
     <div class="card">
-      <h2>Diferența dintre notele de la clasă și notele de la Evaluarea Națională</h2>
+      <h2>Diferența note la clasă &minus; note Evaluarea Națională</h2>
       <p class="note">Fiecare elev are două note pe aceeași scală: media pe care i-a dat-o școala în clasele V&ndash;VIII și media pe care a luat-o la examen. Diferența dintre ele se poate calcula pentru fiecare elev în parte, apoi se strânge la nivelul școlii.</p>
     </div>
 
 {{CARDURI_DECALAJ}}
 
+{{TABEL_DECALAJ}}
+
     <div class="card">
       <h2>Ce se vede la Timișoara</h2>
       <div class="findings">
         <p>Elevii pe care o școală îi notează mai sus ies mai sus și la examen: corelația dintre cele două note, calculată pe cei {{DEC_TM_ELEVI}} de elevi ai Timișoarei, e {{DEC_TM_SPEARMAN}}. Ce diferă e cât de sus notează fiecare școală.</p>
-        <p>Corelația dintre notele de la clasă și cele de la examen, calculată între școli, e {{DEC_COR_TM}} la Timișoara, față de {{DEC_COR_CJ}} la Cluj și {{DEC_COR_IS}} la Iași. La Timișoara, ce notează o școală spune mai puțin despre ce vor lua elevii ei la examen decât în celelalte două orașe.</p>
+        <p>Corelația dintre notele de la clasă și cele de la examen, calculată între școli, e mai mică la Timișoara în fiecare dintre cei șase ani: între {{DEC_COR_TM_MIN}} și {{DEC_COR_TM_MAX}}, față de {{DEC_COR_CJ_MIN}}&ndash;{{DEC_COR_CJ_MAX}} la Cluj și {{DEC_COR_IS_MIN}}&ndash;{{DEC_COR_IS_MAX}} la Iași. Și scade: de la {{DEC_COR_TM_PRIM}} în {{AN_PRIM}} la {{DEC_COR_TM_ULT}} în {{AN_ULTIM}}. La Timișoara, ce notează o școală spune mai puțin despre ce vor lua elevii ei la examen decât în celelalte două orașe.</p>
         <p>Școlile din oraș diferă între ele prin decalaj mai mult decât diferă orașele între ele prin rezultate: la un test cu elevii ca unități și școlile ca grupuri, mărimea efectului e ε²={{DEC_TM_EPS}}, față de {{KW_EPS_MIN}}&ndash;{{KW_EPS_MAX}} cât e între orașe. Decalajul median al unei școli merge de la {{DEC_TM_MIN}} la {{DEC_TM_MAX}} puncte.</p>
         <p>Decalajul se mișcă de la un an la altul în același fel la toate școlile ({{DEC_TM_SCOLI_FR}} de școli prezente în toți anii, W={{DEC_TM_W}}), iar tiparul lui e oglinda celui de la examen: corelația dintre ordinea anilor la examen și ordinea lor la decalaj e {{DEC_TM_OGLINDA}}. Când examenul coboară, notele școlii stau pe loc și decalajul crește.</p>
         <p>Asta spune ceva despre ce se poate afla din datele astea și ce nu: notele date de școală nu urmăresc dificultatea examenului de la un an la altul. Cât din mișcarea anuală vine de la subiecte și cât de la generație rămâne însă nedespărțit, fiindcă o școală care notează raportându-se la propriii elevi n-ar coborî nici pentru o generație mai slabă.</p>
@@ -424,25 +426,38 @@ thead th.col-activa { color: var(--accent); }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js">
 const DECALAJ = {{JS_DECALAJ}};
-let decalajDesenat = false;
+const charturiDecalaj = {};
+let anDecalaj = YEARS[YEARS.length - 1];
+
+function textDecalaj(o) {
+  const a = o.ani[anDecalaj];
+  const nr = n => n.toFixed(2).replace('.', ',');
+  return `<p>În ${anDecalaj}, toate cele ${a.n_scoli} de școli stau sub linie: fiecare notează peste ce iese la examen.</p>
+    <p>Decalajul median al unei școli e <span class="num">${nr(a.decalaj_median)}</span> puncte, iar între școli merge de la <span class="num">${nr(a.decalaj_min)}</span> la <span class="num">${nr(a.decalaj_max)}</span>.</p>
+    <p>Corelația dintre cele două mediane, calculată între școli, e <span class="num">${nr(a.pearson)}</span>.</p>`;
+}
+
 function deseneazaDecalaj() {
-  if (decalajDesenat) { Object.values(DECALAJ.charts || {}).forEach(c => c.resize()); return; }
-  decalajDesenat = true;
-  DECALAJ.charts = {};
   const dark = isDark();
   const grid = dark ? 'rgba(240,237,230,0.10)' : 'rgba(32,29,26,0.08)';
   const ink = dark ? '#b4ada0' : '#5c564c';
+  const lim = DECALAJ.limite;
   DECALAJ.orase.forEach(o => {
     const el = document.getElementById('scatter-' + o.id);
     if (!el) return;
-    const lim = DECALAJ.limite;
-    DECALAJ.charts[o.id] = new Chart(el, {
+    document.getElementById('say-' + o.id).innerHTML = textDecalaj(o);
+    const pts = o.ani[anDecalaj].puncte.map(p => ({x: p[0], y: p[1], n: p[2]}));
+    if (charturiDecalaj[o.id]) {
+      charturiDecalaj[o.id].data.datasets[0].data = pts;
+      charturiDecalaj[o.id].update();
+      return;
+    }
+    charturiDecalaj[o.id] = new Chart(el, {
       type: 'scatter',
       data: { datasets: [
-        { label: 'școli', data: o.puncte.map(p => ({x: p[0], y: p[1], n: p[2]})),
-          backgroundColor: dark ? o.culoare_dark : o.culoare, borderColor: '#ffffff',
-          borderWidth: 1.2, pointRadius: 5, pointHoverRadius: 8, order: 2 },
-        { label: 'notă egală', type: 'line', data: [{x: lim[0], y: lim[0]}, {x: lim[1], y: lim[1]}],
+        { data: pts, backgroundColor: dark ? o.culoare_dark : o.culoare,
+          borderColor: '#ffffff', borderWidth: 1.2, pointRadius: 5, pointHoverRadius: 8, order: 2 },
+        { type: 'line', data: [{x: lim[0], y: lim[0]}, {x: lim[1], y: lim[1]}],
           borderColor: ink, borderWidth: 1, borderDash: [5, 4], pointRadius: 0, order: 1 },
       ]},
       options: {
@@ -462,7 +477,22 @@ function deseneazaDecalaj() {
       },
     });
   });
+  document.querySelectorAll('.an-decalaj').forEach(b => {
+    const activ = b.dataset.an === anDecalaj;
+    b.classList.toggle('active', activ);
+    b.setAttribute('aria-pressed', activ ? 'true' : 'false');
+  });
 }
+
+DECALAJ.orase.forEach(o => {
+  const nav = document.getElementById('ani-' + o.id);
+  if (!nav) return;
+  nav.innerHTML = '<span class="nav-eticheta">anul</span>' + YEARS.map(y =>
+    `<button class="mode-btn an-decalaj" data-an="${y}" aria-pressed="false">${y}</button>`).join('');
+  nav.querySelectorAll('.an-decalaj').forEach(b => {
+    b.addEventListener('click', () => { anDecalaj = b.dataset.an; deseneazaDecalaj(); });
+  });
+});
 </script>
 <script>
 const SCHOOLS = {{JS_SCHOOLS}};
@@ -878,25 +908,38 @@ function renderFriedmanChart() {
 renderFriedmanChart();
 
 const DECALAJ = {{JS_DECALAJ}};
-let decalajDesenat = false;
+const charturiDecalaj = {};
+let anDecalaj = YEARS[YEARS.length - 1];
+
+function textDecalaj(o) {
+  const a = o.ani[anDecalaj];
+  const nr = n => n.toFixed(2).replace('.', ',');
+  return `<p>În ${anDecalaj}, toate cele ${a.n_scoli} de școli stau sub linie: fiecare notează peste ce iese la examen.</p>
+    <p>Decalajul median al unei școli e <span class="num">${nr(a.decalaj_median)}</span> puncte, iar între școli merge de la <span class="num">${nr(a.decalaj_min)}</span> la <span class="num">${nr(a.decalaj_max)}</span>.</p>
+    <p>Corelația dintre cele două mediane, calculată între școli, e <span class="num">${nr(a.pearson)}</span>.</p>`;
+}
+
 function deseneazaDecalaj() {
-  if (decalajDesenat) { Object.values(DECALAJ.charts || {}).forEach(c => c.resize()); return; }
-  decalajDesenat = true;
-  DECALAJ.charts = {};
   const dark = isDark();
   const grid = dark ? 'rgba(240,237,230,0.10)' : 'rgba(32,29,26,0.08)';
   const ink = dark ? '#b4ada0' : '#5c564c';
+  const lim = DECALAJ.limite;
   DECALAJ.orase.forEach(o => {
     const el = document.getElementById('scatter-' + o.id);
     if (!el) return;
-    const lim = DECALAJ.limite;
-    DECALAJ.charts[o.id] = new Chart(el, {
+    document.getElementById('say-' + o.id).innerHTML = textDecalaj(o);
+    const pts = o.ani[anDecalaj].puncte.map(p => ({x: p[0], y: p[1], n: p[2]}));
+    if (charturiDecalaj[o.id]) {
+      charturiDecalaj[o.id].data.datasets[0].data = pts;
+      charturiDecalaj[o.id].update();
+      return;
+    }
+    charturiDecalaj[o.id] = new Chart(el, {
       type: 'scatter',
       data: { datasets: [
-        { label: 'școli', data: o.puncte.map(p => ({x: p[0], y: p[1], n: p[2]})),
-          backgroundColor: dark ? o.culoare_dark : o.culoare, borderColor: '#ffffff',
-          borderWidth: 1.2, pointRadius: 5, pointHoverRadius: 8, order: 2 },
-        { label: 'notă egală', type: 'line', data: [{x: lim[0], y: lim[0]}, {x: lim[1], y: lim[1]}],
+        { data: pts, backgroundColor: dark ? o.culoare_dark : o.culoare,
+          borderColor: '#ffffff', borderWidth: 1.2, pointRadius: 5, pointHoverRadius: 8, order: 2 },
+        { type: 'line', data: [{x: lim[0], y: lim[0]}, {x: lim[1], y: lim[1]}],
           borderColor: ink, borderWidth: 1, borderDash: [5, 4], pointRadius: 0, order: 1 },
       ]},
       options: {
@@ -916,5 +959,20 @@ function deseneazaDecalaj() {
       },
     });
   });
+  document.querySelectorAll('.an-decalaj').forEach(b => {
+    const activ = b.dataset.an === anDecalaj;
+    b.classList.toggle('active', activ);
+    b.setAttribute('aria-pressed', activ ? 'true' : 'false');
+  });
 }
+
+DECALAJ.orase.forEach(o => {
+  const nav = document.getElementById('ani-' + o.id);
+  if (!nav) return;
+  nav.innerHTML = '<span class="nav-eticheta">anul</span>' + YEARS.map(y =>
+    `<button class="mode-btn an-decalaj" data-an="${y}" aria-pressed="false">${y}</button>`).join('');
+  nav.querySelectorAll('.an-decalaj').forEach(b => {
+    b.addEventListener('click', () => { anDecalaj = b.dataset.an; deseneazaDecalaj(); });
+  });
+});
 </script>
