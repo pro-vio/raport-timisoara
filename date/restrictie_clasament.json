@@ -1,0 +1,62 @@
+{
+ "praguri_testate": [
+  18,
+  25,
+  30,
+  40,
+  50,
+  70
+ ],
+ "B": 2000,
+ "oras": "TIMIȘOARA",
+ "pe_prag": {
+  "18": {
+   "scoli_pe_an": 28.7,
+   "latime_tipica": 9.0,
+   "latime_pct_din_camp": 31.4,
+   "miscari": 105,
+   "miscari_sustinute": 3,
+   "miscari_sustinute_pct": 2.9
+  },
+  "25": {
+   "scoli_pe_an": 25.0,
+   "latime_tipica": 8.0,
+   "latime_pct_din_camp": 32.0,
+   "miscari": 92,
+   "miscari_sustinute": 2,
+   "miscari_sustinute_pct": 2.2
+  },
+  "30": {
+   "scoli_pe_an": 23.0,
+   "latime_tipica": 7.0,
+   "latime_pct_din_camp": 30.4,
+   "miscari": 75,
+   "miscari_sustinute": 3,
+   "miscari_sustinute_pct": 4.0
+  },
+  "40": {
+   "scoli_pe_an": 21.2,
+   "latime_tipica": 6.0,
+   "latime_pct_din_camp": 28.3,
+   "miscari": 69,
+   "miscari_sustinute": 5,
+   "miscari_sustinute_pct": 7.2
+  },
+  "50": {
+   "scoli_pe_an": 17.5,
+   "latime_tipica": 6.0,
+   "latime_pct_din_camp": 34.3,
+   "miscari": 47,
+   "miscari_sustinute": 3,
+   "miscari_sustinute_pct": 6.4
+  },
+  "70": {
+   "scoli_pe_an": 12.7,
+   "latime_tipica": 5.0,
+   "latime_pct_din_camp": 39.5,
+   "miscari": 32,
+   "miscari_sustinute": 2,
+   "miscari_sustinute_pct": 6.2
+  }
+ }
+}

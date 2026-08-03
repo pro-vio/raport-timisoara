@@ -33,6 +33,8 @@ def ranguri(mat):
     return r
 
 
+OUT = os.path.join(DATE, 'restrictie_clasament.json')
+rezultat = {}
 print(f"{'prag':>5}{'școli/an':>10}{'lățime tipică':>15}{'ca % din câmp':>15}"
       f"{'mișcări':>9}{'ies din interval':>18}")
 for prag in PRAGURI:
@@ -70,5 +72,17 @@ for prag in PRAGURI:
     lat = sorted(lat_toate)
     lt = lat[len(lat) // 2]
     kmed = sum(k_toate) / len(k_toate)
+    rezultat[str(prag)] = {
+        'scoli_pe_an': round(kmed, 1),
+        'latime_tipica': round(lt, 1),
+        'latime_pct_din_camp': round(100 * lt / kmed, 1),
+        'miscari': total,
+        'miscari_sustinute': ies,
+        'miscari_sustinute_pct': round(100 * ies / total, 1) if total else None}
     print(f'{prag:>5}{kmed:>10.0f}{lt:>13.0f} locuri{100 * lt / kmed:>14.0f}%'
           f'{total:>9}{ies:>13} ({100 * ies / total if total else 0:.0f}%)')
+
+json.dump({'praguri_testate': PRAGURI, 'B': B, 'oras': 'TIMIȘOARA', 'pe_prag': rezultat},
+          io.open(OUT, 'w', encoding='utf-8', newline=chr(10)), ensure_ascii=False, indent=1)
+print()
+print('salvat:', os.path.normpath(OUT))

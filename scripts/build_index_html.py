@@ -28,6 +28,7 @@ npz = J('neprezentati.json')
 rng_ = J('ranguri_bootstrap.json')
 det = J('determinare_clasament.json')
 sm = J('scoli_mici.json')
+rc = J('restrictie_clasament.json')
 
 
 def d(x, n=2):
@@ -150,6 +151,15 @@ assert _sag_sus * 10 < _sag_tot, \
     f'săgețile au devenit susținute ({_sag_sus}/{_sag_tot}) — fraza din text nu mai ține'
 _NUME_SAG = {0: 'niciuna nu se susține', 1: 'una singură se susține'}
 FRAZA_SAG = _NUME_SAG.get(_sag_sus, f'{_sag_sus} se susțin')
+
+# restrângerea clasamentului la școli tot mai mari nu-l face determinat
+_rc = rc['pe_prag']
+_rc_lat = [v['latime_tipica'] for v in _rc.values()]
+_rc_pct = [v['latime_pct_din_camp'] for v in _rc.values()]
+_rc_ies = [v['miscari_sustinute_pct'] for v in _rc.values() if v['miscari_sustinute_pct'] is not None]
+assert max(_rc_ies) < 15, f'restrângerea începe să determine clasamentul ({max(_rc_ies)}%)'
+assert max(_rc_pct) - min(_rc_pct) < 20, \
+    f'incertitudinea raportată la câmp nu mai e stabilă ({min(_rc_pct)}-{max(_rc_pct)}%)'
 
 # mărimea școlilor, înainte și după tăietură
 _ms_i = sm['marimea_scolilor']['inainte']
@@ -294,6 +304,12 @@ JETOANE = {
     'SM_ANI_CU': enumera(sm['ani_semnificativi_cu_pragul']),
     'SM_ANI_FARA': enumera(sm['ani_semnificativi_fara_pragul']),
     'SM_NEDEF': _SM_NEDEF,
+    'RC_PRAG_MAX': str(max(rc['praguri_testate'])),
+    'RC_LAT_MAX': numar(round(max(_rc_lat)), 'locuri'),
+    'RC_LAT_MIN': numar(round(min(_rc_lat)), 'locuri'),
+    'RC_PCT_MIN': str(round(min(_rc_pct))), 'RC_PCT_MAX': str(round(max(_rc_pct))),
+    'RC_IES_MIN': str(round(min(_rc_ies))), 'RC_IES_MAX': str(round(max(_rc_ies))),
+
     'MS_KS_INAINTE': d(_ms_i['ks']['CLUJ-NAPOCA vs TIMIȘOARA'], 3),
     'MS_KS_DUPA': d(_ms_d['ks']['CLUJ-NAPOCA vs TIMIȘOARA'], 3),
     'MS_IS': str(round(_ms_d['marime_mediana']['IAȘI'])),
