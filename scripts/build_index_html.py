@@ -186,6 +186,29 @@ _TABEL_DEC = NL.join([
     '      </div>',
     '    </div>',
 ])
+
+# --- decalajul pe școlile Timișoarei: mediana și împrăștierea, plus elevii fiecărei școli
+NOTE_TM = J('note_en.json')
+_DTM = {}
+for an in YEARS:
+    scoli = []
+    for cod, r in NOTE_TM['ani'][an]['scoli'].items():
+        if NOTE_TM['orase'].get(cod) != 'TIMIȘOARA':
+            continue
+        per = r.get('v8_en') or []
+        if len(per) < MIN_N:
+            continue
+        dif = sorted(a - b for a, b in per)
+        n = len(dif)
+        med = dif[n // 2] if n % 2 else (dif[n // 2 - 1] + dif[n // 2]) / 2
+        scoli.append({'cod': cod, 'nume': NUME_SCURT.get(cod, NOTE_TM['denumiri'][cod]),
+                      'n': n, 'med': round(med, 3),
+                      'q1': round(dif[n // 4], 3), 'q3': round(dif[(3 * n) // 4], 3),
+                      'elevi': [[a, b] for a, b in per]})
+    scoli.sort(key=lambda x: -x['med'])
+    _DTM[an] = scoli
+assert all(_DTM[a] for a in YEARS), 'nu mai există școli peste prag la Timișoara'
+
 _tm = pr['intre_scoli']['TIMIȘOARA'][AN_DEC]
 _tmk = pr['kw_delta']['TIMIȘOARA']['la_gramada']
 _tmf = pr['friedman_delta']['TIMIȘOARA']
@@ -379,6 +402,7 @@ JETOANE = {
     'KW_FRAZA_EPS_NEG': FRAZA_EPS_NEG,
 
     'JS_RANGURI': json.dumps(rng_['ani'], ensure_ascii=False),
+    'JS_DECALAJ_TM': json.dumps(_DTM, ensure_ascii=False),
     'JS_DECALAJ': json.dumps({'limite': _LIM, 'orase': _orase_js}, ensure_ascii=False),
     'CARDURI_DECALAJ': (NL + NL).join(_carduri),
     'TABEL_DECALAJ': _TABEL_DEC,

@@ -422,13 +422,30 @@ thead th.col-activa { color: var(--accent); }
     </div>
 
     <div class="card">
+      <h2>Cât notează peste examen fiecare școală</h2>
+      <p class="note">Punctul e decalajul median al școlii, în puncte de notă; bara e intervalul în care se află jumătatea din mijloc a elevilor ei. O bară scurtă înseamnă că decalajul e cam același pentru toți elevii școlii; una lungă, că unii sunt notați mult peste examen și alții aproape deloc.</p>
+      <div class="modenav" id="ani-dtm" role="group" aria-label="Anul"></div>
+      <div id="dtmRoot" style="position:relative;"></div>
+      <p class="hint">Treceți mausul peste un rând pentru cifre. Apăsați pe o școală ca să-i vedeți elevii în graficul de mai jos.</p>
+    </div>
+
+    <div class="card">
+      <h2>Elevii unei școli</h2>
+      <p class="note">Fiecare punct e un elev: pe orizontală media pe care i-a dat-o școala în clasele V&ndash;VIII, pe verticală media pe care a luat-o la examen. Linia întreruptă e locul unde cele două ar fi egale; distanța de la punct la linie e decalajul lui.</p>
+      <div class="modenav" id="scoli-dtm" role="group" aria-label="Școala"></div>
+      <div class="duo">
+        <div class="plot"><canvas id="scatter-elevi" role="img" aria-label="Nor de puncte: elevii unei școli, nota dată de școală față de nota de la examen."></canvas></div>
+        <div class="say" id="say-elevi"></div>
+      </div>
+    </div>
+
+    <div class="card">
       <h2>Ce se vede la Timișoara</h2>
       <div class="findings">
         <p>Elevii pe care o școală îi notează mai sus ies mai sus și la examen: corelația dintre cele două note, calculată pe cei {{DEC_TM_ELEVI}} de elevi ai Timișoarei, e {{DEC_TM_SPEARMAN}}. Ce diferă e cât de sus notează fiecare școală.</p>
         <p>Corelația dintre notele de la clasă și cele de la examen, calculată între școli, e mai mică la Timișoara în fiecare dintre cei șase ani: între {{DEC_COR_TM_MIN}} și {{DEC_COR_TM_MAX}}, față de {{DEC_COR_CJ_MIN}}&ndash;{{DEC_COR_CJ_MAX}} la Cluj și {{DEC_COR_IS_MIN}}&ndash;{{DEC_COR_IS_MAX}} la Iași. Și scade: de la {{DEC_COR_TM_PRIM}} în {{AN_PRIM}} la {{DEC_COR_TM_ULT}} în {{AN_ULTIM}}. La Timișoara, ce notează o școală spune mai puțin despre ce vor lua elevii ei la examen decât în celelalte două orașe.</p>
         <p>Școlile din oraș diferă între ele prin decalaj mai mult decât diferă orașele între ele prin rezultate: la un test cu elevii ca unități și școlile ca grupuri, mărimea efectului e ε²={{DEC_TM_EPS}}, față de {{KW_EPS_MIN}}&ndash;{{KW_EPS_MAX}} cât e între orașe. Decalajul median al unei școli merge de la {{DEC_TM_MIN}} la {{DEC_TM_MAX}} puncte.</p>
         <p>Decalajul se mișcă de la un an la altul în același fel la toate școlile ({{DEC_TM_SCOLI_FR}} de școli prezente în toți anii, W={{DEC_TM_W}}), iar tiparul lui e oglinda celui de la examen: corelația dintre ordinea anilor la examen și ordinea lor la decalaj e {{DEC_TM_OGLINDA}}. Când examenul coboară, notele școlii stau pe loc și decalajul crește.</p>
-        <p>Asta spune ceva despre ce se poate afla din datele astea și ce nu: notele date de școală nu urmăresc dificultatea examenului de la un an la altul. Cât din mișcarea anuală vine de la subiecte și cât de la generație rămâne însă nedespărțit, fiindcă o școală care notează raportându-se la propriii elevi n-ar coborî nici pentru o generație mai slabă.</p>
       </div>
     </div>
   </div>
@@ -505,6 +522,148 @@ DECALAJ.orase.forEach(o => {
     b.addEventListener('click', () => { anDecalaj = b.dataset.an; deseneazaDecalaj(); });
   });
 });
+
+const DTM = {{JS_DECALAJ_TM}};
+let anDTM = YEARS[YEARS.length - 1];
+let scoalaDTM = null;
+let chartElevi = null;
+let dtmDesenat = false;
+
+const nr2 = v => v.toFixed(2).replace('.', ',');
+
+function deseneazaDTM() {
+  const dark = isDark();
+  const cul = dark ? '#c98500' : '#eda100';
+  const scoli = DTM[anDTM];
+  const lo = Math.min(...scoli.map(s => s.q1)), hi = Math.max(...scoli.map(s => s.q3));
+  const dom = [Math.min(0, Math.floor(lo * 2) / 2), Math.ceil(hi * 2) / 2];
+  const pct = v => 100 * (v - dom[0]) / (dom[1] - dom[0]);
+  const root = document.getElementById('dtmRoot');
+  root.innerHTML = '';
+  const tip = document.createElement('div');
+  tip.className = 'cat-tooltip';
+  root.appendChild(tip);
+
+  scoli.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'cat-row';
+    row.style.cursor = 'pointer';
+    const rank = document.createElement('div');
+    rank.className = 'cat-rank';
+    const name = document.createElement('div');
+    name.className = 'cat-name';
+    name.textContent = s.nume;
+    const cell = document.createElement('div');
+    cell.style.cssText = 'position:relative;height:100%;';
+    const bar = document.createElement('div');
+    bar.style.cssText = 'position:absolute;top:50%;height:2px;transform:translateY(-50%);opacity:.45;'
+      + 'background:' + cul + ';left:' + pct(s.q1) + '%;width:'
+      + Math.max(pct(s.q3) - pct(s.q1), 0.4) + '%;';
+    const dot = document.createElement('div');
+    dot.style.cssText = 'position:absolute;top:50%;width:9px;height:9px;border-radius:50%;'
+      + 'transform:translate(-50%,-50%);background:' + cul + ';left:' + pct(s.med) + '%;';
+    cell.appendChild(bar); cell.appendChild(dot);
+    const val = document.createElement('div');
+    val.className = 'cat-val';
+    val.textContent = nr2(s.med);
+    row.appendChild(rank); row.appendChild(name); row.appendChild(cell); row.appendChild(val);
+    row.addEventListener('mousemove', e => {
+      tip.style.display = 'block';
+      tip.innerHTML = '<b>' + s.nume + '</b><br>decalaj median ' + nr2(s.med)
+        + '<br>jumătatea din mijloc: ' + nr2(s.q1) + ' – ' + nr2(s.q3)
+        + '<br>' + s.n + ' elevi';
+      const r = root.getBoundingClientRect();
+      tip.style.left = Math.min(e.clientX - r.left + 12, r.width - 210) + 'px';
+      tip.style.top = (e.clientY - r.top + 14) + 'px';
+    });
+    row.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+    row.addEventListener('click', () => { scoalaDTM = s.cod; deseneazaElevi(); });
+    root.appendChild(row);
+  });
+
+  document.querySelectorAll('.an-dtm').forEach(b => {
+    const activ = b.dataset.an === anDTM;
+    b.classList.toggle('active', activ);
+    b.setAttribute('aria-pressed', activ ? 'true' : 'false');
+  });
+
+  const nav = document.getElementById('scoli-dtm');
+  nav.innerHTML = '<span class="nav-eticheta">școala</span>';
+  scoli.forEach(s => {
+    const b = document.createElement('button');
+    b.className = 'mode-btn scoala-dtm';
+    b.dataset.cod = s.cod;
+    b.textContent = s.nume;
+    b.addEventListener('click', () => { scoalaDTM = s.cod; deseneazaElevi(); });
+    nav.appendChild(b);
+  });
+  if (!scoli.some(s => s.cod === scoalaDTM)) scoalaDTM = scoli[0].cod;
+  deseneazaElevi();
+}
+
+function deseneazaElevi() {
+  const s = DTM[anDTM].find(x => x.cod === scoalaDTM);
+  if (!s) return;
+  const dark = isDark();
+  const ink = dark ? '#b4ada0' : '#5c564c';
+  const grid = dark ? 'rgba(240,237,230,0.10)' : 'rgba(32,29,26,0.08)';
+  const cul = dark ? '#c98500' : '#eda100';
+  const lim = DECALAJ.limite;
+  const pts = s.elevi.map(p => ({x: p[0], y: p[1]}));
+
+  document.getElementById('say-elevi').innerHTML =
+    '<p><b>' + s.nume + '</b>, ' + anDTM + '</p>'
+    + '<p>' + s.n + ' de elevi. Decalajul median e <span class="num">' + nr2(s.med)
+    + '</span> puncte, iar jumătatea din mijloc a elevilor stă între <span class="num">'
+    + nr2(s.q1) + '</span> și <span class="num">' + nr2(s.q3) + '</span>.</p>'
+    + '<p>Cu cât un punct e mai departe sub linie, cu atât nota dată de școală e mai mare decât cea de la examen.</p>';
+
+  document.querySelectorAll('.scoala-dtm').forEach(b =>
+    b.classList.toggle('active', b.dataset.cod === scoalaDTM));
+
+  if (chartElevi) {
+    chartElevi.data.datasets[0].data = pts;
+    chartElevi.update();
+    return;
+  }
+  chartElevi = new Chart(document.getElementById('scatter-elevi'), {
+    type: 'scatter',
+    data: { datasets: [
+      { data: pts, backgroundColor: cul, borderColor: '#ffffff', borderWidth: 1,
+        pointRadius: 4, pointHoverRadius: 7, order: 2 },
+      { type: 'line', data: [{x: lim[0], y: lim[0]}, {x: lim[1], y: lim[1]}],
+        borderColor: ink, borderWidth: 1, borderDash: [5, 4], pointRadius: 0, order: 1 },
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { min: lim[0], max: lim[1], grid: {color: grid}, ticks: {color: ink},
+             title: {display: true, text: 'media V–VIII', color: ink} },
+        y: { min: lim[0], max: lim[1], grid: {color: grid}, ticks: {color: ink},
+             title: {display: true, text: 'media la examen', color: ink} },
+      },
+      plugins: {
+        legend: {display: false},
+        tooltip: { callbacks: { label: c => c.raw && c.raw.x !== undefined
+          ? 'V–VIII ' + c.raw.x.toFixed(2) + ' · examen ' + c.raw.y.toFixed(2) : '' } },
+      },
+    },
+  });
+}
+
+(function initDTM() {
+  const nav = document.getElementById('ani-dtm');
+  if (!nav) return;
+  nav.innerHTML = '<span class="nav-eticheta">anul</span>';
+  YEARS.forEach(y => {
+    const b = document.createElement('button');
+    b.className = 'mode-btn an-dtm';
+    b.dataset.an = y;
+    b.textContent = y;
+    b.addEventListener('click', () => { anDTM = y; deseneazaDTM(); });
+    nav.appendChild(b);
+  });
+})();
 </script>
 <script>
 const SCHOOLS = {{JS_SCHOOLS}};
@@ -882,6 +1041,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     if (btn.dataset.tab === 'mediane') chart.resize();
     if (btn.dataset.tab === 'note') renderStrip(+stripYearSlider.value);
     if (btn.dataset.tab === 'decalaj') deseneazaDecalaj();
+    if (btn.dataset.tab === 'decalajtm' && !dtmDesenat) { dtmDesenat = true; deseneazaDTM(); }
   });
 });
 
@@ -987,4 +1147,146 @@ DECALAJ.orase.forEach(o => {
     b.addEventListener('click', () => { anDecalaj = b.dataset.an; deseneazaDecalaj(); });
   });
 });
+
+const DTM = {{JS_DECALAJ_TM}};
+let anDTM = YEARS[YEARS.length - 1];
+let scoalaDTM = null;
+let chartElevi = null;
+let dtmDesenat = false;
+
+const nr2 = v => v.toFixed(2).replace('.', ',');
+
+function deseneazaDTM() {
+  const dark = isDark();
+  const cul = dark ? '#c98500' : '#eda100';
+  const scoli = DTM[anDTM];
+  const lo = Math.min(...scoli.map(s => s.q1)), hi = Math.max(...scoli.map(s => s.q3));
+  const dom = [Math.min(0, Math.floor(lo * 2) / 2), Math.ceil(hi * 2) / 2];
+  const pct = v => 100 * (v - dom[0]) / (dom[1] - dom[0]);
+  const root = document.getElementById('dtmRoot');
+  root.innerHTML = '';
+  const tip = document.createElement('div');
+  tip.className = 'cat-tooltip';
+  root.appendChild(tip);
+
+  scoli.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'cat-row';
+    row.style.cursor = 'pointer';
+    const rank = document.createElement('div');
+    rank.className = 'cat-rank';
+    const name = document.createElement('div');
+    name.className = 'cat-name';
+    name.textContent = s.nume;
+    const cell = document.createElement('div');
+    cell.style.cssText = 'position:relative;height:100%;';
+    const bar = document.createElement('div');
+    bar.style.cssText = 'position:absolute;top:50%;height:2px;transform:translateY(-50%);opacity:.45;'
+      + 'background:' + cul + ';left:' + pct(s.q1) + '%;width:'
+      + Math.max(pct(s.q3) - pct(s.q1), 0.4) + '%;';
+    const dot = document.createElement('div');
+    dot.style.cssText = 'position:absolute;top:50%;width:9px;height:9px;border-radius:50%;'
+      + 'transform:translate(-50%,-50%);background:' + cul + ';left:' + pct(s.med) + '%;';
+    cell.appendChild(bar); cell.appendChild(dot);
+    const val = document.createElement('div');
+    val.className = 'cat-val';
+    val.textContent = nr2(s.med);
+    row.appendChild(rank); row.appendChild(name); row.appendChild(cell); row.appendChild(val);
+    row.addEventListener('mousemove', e => {
+      tip.style.display = 'block';
+      tip.innerHTML = '<b>' + s.nume + '</b><br>decalaj median ' + nr2(s.med)
+        + '<br>jumătatea din mijloc: ' + nr2(s.q1) + ' – ' + nr2(s.q3)
+        + '<br>' + s.n + ' elevi';
+      const r = root.getBoundingClientRect();
+      tip.style.left = Math.min(e.clientX - r.left + 12, r.width - 210) + 'px';
+      tip.style.top = (e.clientY - r.top + 14) + 'px';
+    });
+    row.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+    row.addEventListener('click', () => { scoalaDTM = s.cod; deseneazaElevi(); });
+    root.appendChild(row);
+  });
+
+  document.querySelectorAll('.an-dtm').forEach(b => {
+    const activ = b.dataset.an === anDTM;
+    b.classList.toggle('active', activ);
+    b.setAttribute('aria-pressed', activ ? 'true' : 'false');
+  });
+
+  const nav = document.getElementById('scoli-dtm');
+  nav.innerHTML = '<span class="nav-eticheta">școala</span>';
+  scoli.forEach(s => {
+    const b = document.createElement('button');
+    b.className = 'mode-btn scoala-dtm';
+    b.dataset.cod = s.cod;
+    b.textContent = s.nume;
+    b.addEventListener('click', () => { scoalaDTM = s.cod; deseneazaElevi(); });
+    nav.appendChild(b);
+  });
+  if (!scoli.some(s => s.cod === scoalaDTM)) scoalaDTM = scoli[0].cod;
+  deseneazaElevi();
+}
+
+function deseneazaElevi() {
+  const s = DTM[anDTM].find(x => x.cod === scoalaDTM);
+  if (!s) return;
+  const dark = isDark();
+  const ink = dark ? '#b4ada0' : '#5c564c';
+  const grid = dark ? 'rgba(240,237,230,0.10)' : 'rgba(32,29,26,0.08)';
+  const cul = dark ? '#c98500' : '#eda100';
+  const lim = DECALAJ.limite;
+  const pts = s.elevi.map(p => ({x: p[0], y: p[1]}));
+
+  document.getElementById('say-elevi').innerHTML =
+    '<p><b>' + s.nume + '</b>, ' + anDTM + '</p>'
+    + '<p>' + s.n + ' de elevi. Decalajul median e <span class="num">' + nr2(s.med)
+    + '</span> puncte, iar jumătatea din mijloc a elevilor stă între <span class="num">'
+    + nr2(s.q1) + '</span> și <span class="num">' + nr2(s.q3) + '</span>.</p>'
+    + '<p>Cu cât un punct e mai departe sub linie, cu atât nota dată de școală e mai mare decât cea de la examen.</p>';
+
+  document.querySelectorAll('.scoala-dtm').forEach(b =>
+    b.classList.toggle('active', b.dataset.cod === scoalaDTM));
+
+  if (chartElevi) {
+    chartElevi.data.datasets[0].data = pts;
+    chartElevi.update();
+    return;
+  }
+  chartElevi = new Chart(document.getElementById('scatter-elevi'), {
+    type: 'scatter',
+    data: { datasets: [
+      { data: pts, backgroundColor: cul, borderColor: '#ffffff', borderWidth: 1,
+        pointRadius: 4, pointHoverRadius: 7, order: 2 },
+      { type: 'line', data: [{x: lim[0], y: lim[0]}, {x: lim[1], y: lim[1]}],
+        borderColor: ink, borderWidth: 1, borderDash: [5, 4], pointRadius: 0, order: 1 },
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { min: lim[0], max: lim[1], grid: {color: grid}, ticks: {color: ink},
+             title: {display: true, text: 'media V–VIII', color: ink} },
+        y: { min: lim[0], max: lim[1], grid: {color: grid}, ticks: {color: ink},
+             title: {display: true, text: 'media la examen', color: ink} },
+      },
+      plugins: {
+        legend: {display: false},
+        tooltip: { callbacks: { label: c => c.raw && c.raw.x !== undefined
+          ? 'V–VIII ' + c.raw.x.toFixed(2) + ' · examen ' + c.raw.y.toFixed(2) : '' } },
+      },
+    },
+  });
+}
+
+(function initDTM() {
+  const nav = document.getElementById('ani-dtm');
+  if (!nav) return;
+  nav.innerHTML = '<span class="nav-eticheta">anul</span>';
+  YEARS.forEach(y => {
+    const b = document.createElement('button');
+    b.className = 'mode-btn an-dtm';
+    b.dataset.an = y;
+    b.textContent = y;
+    b.addEventListener('click', () => { anDTM = y; deseneazaDTM(); });
+    nav.appendChild(b);
+  });
+})();
 </script>
