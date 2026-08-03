@@ -1,8 +1,10 @@
+import os
+_DATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'date')
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 import json
 
-P = r"C:\Users\Viorel Proteasa\Documents\evaluare-nationala\date\shrinkage_mediana.json"
+P = _DATE + r"\shrinkage_mediana.json"
 d = json.load(open(P, encoding='utf-8'))
 YEARS = [2020, 2021, 2022, 2023, 2024, 2025]
 
@@ -56,7 +58,7 @@ print('\n=== TOP 5 cea mai CONSISTENTĂ tendință (slope mare, indiferent de se
 for r in rows[:5]:
     print(f"  {r['denumire']:<45s} ranguri {r['ranguri']}  slope={r['slope_rank_pe_an']:+.2f}/an  delta_rank={r['delta_rank']:+d}")
 
-op = r"C:\Users\Viorel Proteasa\Documents\evaluare-nationala\date\dinamica_ranguri.json"
+op = _DATE + r"\dinamica_ranguri.json"
 with open(op, 'w', encoding='utf-8') as f:
     json.dump(sorted(rows, key=lambda r: -r['delta_rank']), f, ensure_ascii=False, indent=1)
 print('\nsaved', op)

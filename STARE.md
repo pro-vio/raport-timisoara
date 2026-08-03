@@ -45,7 +45,7 @@ metadata XLSX ruptă → `read_only=False`. 2022 are schemă proprie, 74 col.
    necondiționat (2016 făcea excepție, cu prag ≥0,5 — de aceea e scos). Verificat: reproduce media publicată
    în 100% din cazuri, toți anii. Acoperire 95,5-98,7% vs 83-90%.
 2. **Mediană, nu medie.** Decis pe datele BAC (nu prin analogie cu EN), pe celulele liceu×filieră×an:
-   969 de celule, 82% asimetrice la stânga, 44% semnificativ, gap −0,12, corelat −0,53 cu nivelul liceului.
+   969 de celule, 82% asimetrice la stânga, 44% semnificativ, diferență −0,12, corelată −0,53 cu nivelul liceului.
    Pe clasament: Spearman medie-vs-mediană per celulă are minimul 0,70 și tipicul 0,98 — în celulele mici
    alegerea chiar mută ranguri (vechiul „0,99" venea dintr-un clasament care amesteca filierele).
 3. **Doar promoția curentă** (89% din candidați).
@@ -58,7 +58,8 @@ metadata XLSX ruptă → `read_only=False`. 2022 are schemă proprie, 74 col.
    cele 9 entități a fost ÎNCERCAT ȘI ABANDONAT: ieșea p<1e-8, ε²=0,4-0,6, dar aia era prezumția apărând în
    rezultat, iar rangurile lui clasau teoretice față de tehnologice. Corecția a schimbat răspunsul: de la
    1 comparație semnificativă din 81, la 4.
-5. **Neprezentații intră în mediană, așezați jos, fără notă** (`statistici.mediana_cenzurata`). Mediana e o
+5. **Neprezentații intră în mediană, așezați jos, fără notă** (`statistici.mediana_cu_neprezentati`; redenumită
+   3 august 2026 din `mediana_cenzurata` — cenzurate sunt cazurile, nu statistica). Mediana e o
    poziție, nu o medie. Santinela `SUB=0.0` — valoarea ei e irelevantă prin construcție (4,5 și 1,0 dau
    identic); de aceea nu trebuie inventată. Asumpție asumată: neprezentatul stă sub oricine s-a prezentat.
    Miza e inegală: <1% la teoretic/vocațional, 4% la tehnologic.
@@ -100,6 +101,12 @@ cu assert că partiția profil→filieră ține (verificat: 9 profiluri, 1 filie
   de el într-un articol. Reisz NU are vocabular inter/intra-grup (zero apariții) — nu e autoritate acolo.
 - **„referent" e fals prieten** → „referință" (în română referentul e persoana care referă).
 - **„interschimbabili"**, nu „schimbabili între ei" (despre ani, la Friedman).
+- **„gap" → „diferență"** (3 august 2026, userul). Mărimea e percentila la care cade media
+  minus 50, deci o diferență cu semn — valorile sunt negative. „Distanță" e greșit tocmai
+  fiindcă o distanță nu poate fi negativă. Glosarul `statistica-ro` n-are intrare pentru ea,
+  nici Reisz; cuvântul comun e cel corect. În text: „diferența medie–mediană", „media
+  diferențelor (pp)". Cheile din JSON și variabilele din scripturi rămân `gap` (identificatori,
+  nu text).
 
 ## Lecție de proces (2026-07-17)
 
@@ -205,8 +212,8 @@ Analiză a rezultatelor Evaluării Naționale (clasa a VIII-a) pe școli, date d
 - Autentificare `gh` cont `pro-vio` (HTTPS, keyring) — deja configurată pe această mașină. ⚠️ Tokenul NU are scope `delete_repo` (ștergerile de repo le face userul din browser).
 
 Raport pentru audiență politică, scop restrâns la **Timișoara** (din cele 3 orașe analizate: Timișoara, Cluj-Napoca, Iași), 5 tab-uri:
-1. **Efecte structurale** — grafic rang mediu Friedman (3 orașe) + teste efectuate + concluzia „nu există interacțiune între efectul de oraș și efectul de an" (finalizată lingvistic).
-2. **Distribuții note pe școală** — strip-plot (fiecare candidat = un punct, jitter, canvas), linii mediană (alb)/medie (roșu) mereu vizibile pe grafic, slider de an; + cardul „Distanța medie-mediană" (gap procentual + concluzia: mediana, nu media, pt clasament).
+1. **Efecte structurale** — grafic rang mediu Friedman (3 orașe) + teste efectuate + concluzia că Timișoara stă ultima în toți cei 6 ani, deci ordinea orașelor nu depinde de an.
+2. **Distribuții note pe școală** — strip-plot (fiecare candidat = un punct, jitter, canvas), linii mediană (alb)/media celor prezenți (roșu) mereu vizibile pe grafic, slider de an; + cardul „Diferența medie–mediană" (diferență în puncte procentuale + concluzia: mediana pt clasament).
 3. **Mediane cu bootstrap** — caterpillar plot shrinkage empirical-Bayes (bootstrap 2000 reeșantionări pt SE mediană), slider de an, schemă „Cum se citește", notă metodologică (mu_hat = **media** medianelor școlilor, nu mediana lor — impus de formula de shrinkage).
 4. **Evoluția medianelor** — traiectorii pe școală, toggle Valori brute/Reziduu (text explicativ se schimbă cu butonul), linie groasă mereu vizibilă = mediana orașului.
 5. **Clasament (evoluție)** — tabel cu săgeți ▲▼= (font îngroșat) pt mișcarea în clasament an-cu-an.
@@ -221,16 +228,37 @@ Design: pagină editorială proprie (serif Georgia pt titluri, sans pt corp, pal
 
 ## Scripturi (`scripts/`)
 Pe lângă cele din sesiunea trecută: `shrinkage_mediana.py` (empirical-Bayes + bootstrap), `extract_candidati_raw.py`, `dinamica_ranguri.py`, `medie_vs_mediana_percentil.py`.
+
+### `index.html` are generator (3 august 2026, decizia userului: „nicio cifră hardcodată")
+`build_index_html.py` construiește pagina din `index_template.html` + JSON-urile din `date/`.
+**Nicio cifră nu mai e scrisă de mână** — nici în grafice, nici în proză. Cele 51 de jetoane
+`{{...}}` se calculează la fiecare rulare; build-ul cade dacă un jeton n-are valoare sau dacă
+o valoare se calculează degeaba.
+
+**De ce nu e de ajuns generatorul.** Interpolarea protejează cifra, nu afirmația: „2020 e cel
+mai mare peste tot" poate avea cifra corectă și fi falsă — s-a întâmplat de două ori pe 3
+august, prinse abia la citire. De aceea build-ul rulează la final `verifica_text.py`, care
+testează **afirmațiile** (Timișoara ultima în toți anii, un singur contrast Dunn semnificativ,
+anul de vârf pe fiecare oraș, echilibrul tagurilor, formulările scoase la audit) și **întoarce
+exit 1**, cu pagina nescrisă, dacă una pică. Verificat prin stricarea deliberată a unei valori.
+
+Singurul lucru din blocurile de date care NU vine din fișiere e `nume_scurte.json` —
+prescurtările denumirilor pentru lizibilitatea graficului. E editorial, de aceea stă separat
+și la vedere. Ordinea liniilor din „Evoluția medianelor" e acum o regulă declarată (rangul din
+primul an, apoi restul), nu una accidentală.
+
+Căile absolute către fostul folder `evaluare-nationala/date` au fost înlocuite peste tot cu
+căi relative la script (19 locuri, 9 scripturi) — până atunci niciun script EN nu mai rula.
 **pandas/scipy NU sunt instalate** — tot manual în Python pur (numpy/openpyxl/xlrd). `xlrd` instalat separat pt `.xls` vechi.
 
 ## Decizii metodologice (nu redeschide fără motiv)
 - **Unitatea de analiză = școala**, nu candidatul individual.
 - **Fără prezumție de omogenitate temporală** — Friedman izolează efectul anului de efectul grupului (KW pe fiecare an separat).
-- **Mediană, nu medie** — gap medie-mediană corelat cu nivelul școlii (r=−0,64: media penalizează sistematic școlile de elită). Mediană folosită peste tot pt statistica per școală; media apare doar ca ancoră de shrinkage (impusă matematic) și ca linie de comparație pe strip-plot.
+- **Mediană, nu medie** — diferența medie–mediană corelată cu nivelul școlii (r=−0,64: media penalizează sistematic școlile de elită). Mediană folosită peste tot pt statistica per școală; media apare doar ca ancoră de shrinkage (impusă matematic) și ca linie de comparație pe strip-plot. ⚠️ **Regula a fost încălcată tăcut până pe 3 august 2026**: KW pe an intra cu MEDIA școlii (`kw_pe_ani.py`), la fel cum fusese și Friedman înainte de 15 iulie. Reparat; efectul e mai mic pe mediane, vezi rezultatele.
 - **Shrinkage empirical-Bayes cu bootstrap**: mediana școlii + SE prin bootstrap (2000 reeșantionări) → shrink spre media medianelor orașului (`mu_hat`), pondere `w=τ²/(τ²+SE²)`. Vezi explicația completă în tab „Mediane cu bootstrap" → „Notă metodologică".
 
 ## Rezultate cheie (TM+CJ+IS)
-1. **KW pe fiecare an**: Cluj ≥ Iași > Timișoara stabil în toți anii; efect mic (ε²=0,02-0,06) — variația domină *între școli în același oraș*.
+1. **KW pe fiecare an** (recalculat 2026-08-03 pe MEDIANE școală-an; înainte intra media școlii): Timișoara ultima în toți cei 6 ani, deci ordinea nu depinde de an; deasupra, Cluj primul 2020-2024 și Iași în 2025. Efect mic, ε²=0,002-0,051, minimul în 2023. Singurul contrast Dunn semnificativ e Cluj-Timișoara (2020, 2021, 2022, 2024); în 2023 și 2025 omnibusul nu respinge. În 2024, omnibus p=0,054 dar Dunn CJ-TM p=0,047 — perechea iese sub un omnibus care nu respinge. Variația domină *între școli în același oraș*.
 2. **Friedman per oraș** (recalculat 2026-07-15 pe MEDIANE școală-an, `friedman_mediane.py` — inițial fusese pe medii, inconsistent cu restul raportului): omogenitate temporală respinsă decisiv (p≤1,1·10⁻⁴); același tipar în toate 3 orașele (2021+2024 slabi, 2020+2025 buni) → efect de examen la nivel național, nu dinamică specifică orașului. **Nu există interacțiune oraș×an.** Kendall W pe mediane: Iași 0,37 / Timișoara 0,36 / Cluj 0,12. Graficul din raport are acum și benzi min-max per oraș (extremele rangurilor între școli — aproape mereu 1-6; excepție notabilă: TM 2021/2024 max=5, nicio școală nu a avut atunci anul ei cel mai bun) + explicație pe înțeles comun, cu exemplul real Șc. Nr.16 „Take Ionescu" (cerută de user, dictată ca structură).
 3. **Skew/kurtosis pe medii cumulate**: urmăresc mecanic media școlii (efect de plafon la 10) — doar explorare, invalidat de Friedman pt comparații riguroase.
 4. **Shrinkage 2025**: clasament aproape identic cu cel brut pt școli mari (w≈0,95-0,995); diferă vizibil la școli mici (ex. Vlad Țepeș n=19, w=0,476, interval foarte larg).

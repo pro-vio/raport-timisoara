@@ -28,7 +28,7 @@
 import sys, os, json
 sys.stdout.reconfigure(encoding='utf-8')
 from collections import defaultdict, Counter
-from statistici import median_of, kruskal, chi2_sf, dunn_raw, holm, mediana_cenzurata
+from statistici import median_of, kruskal, chi2_sf, dunn_raw, holm, mediana_cu_neprezentati
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = os.path.join(HERE, '..', 'date', 'bac')
@@ -45,7 +45,7 @@ orase = data['orase']
 
 # Celula = TOȚI candidații promoției curente din liceul respectiv, în filiera respectivă.
 # Cei cu notă intră cu ea; cei fără rezultat (absenți, eliminați) intră fără notă, așezați
-# jos — vezi mediana_cenzurata() în statistici.py.
+# jos — vezi mediana_cu_neprezentati() în statistici.py.
 cell = defaultdict(list)     # (siiir, an, filiera) -> [medii]
 fara = Counter()             # (siiir, an, filiera) -> câți fără rezultat
 cand = Counter()             # (oras, an, filiera) -> nr. candidați
@@ -63,7 +63,7 @@ def n_total(k):
     return len(cell[k]) + fara[k]
 
 def mediana_celulei(k):
-    return mediana_cenzurata(cell[k], fara[k])
+    return mediana_cu_neprezentati(cell[k], fara[k])
 
 # ---------- 1. compoziția ----------
 print('1. COMPOZIȚIA — ponderea candidaților pe filieră (promoția curentă)')

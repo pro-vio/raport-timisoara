@@ -1,6 +1,6 @@
-# Funcții statistice fără scipy (nu e instalat), folosite de teste_bac.py și
-# filiera_bac.py. Extrase într-un modul comun ca să nu existe două copii ale
-# aceleiași matematici.
+# Funcții statistice fără scipy (nu e instalat), folosite de teste_bac.py,
+# filiera_bac.py și shrinkage_bac.py. Extrase într-un modul comun ca să nu existe
+# două copii ale aceleiași matematici.
 import math
 from collections import Counter
 
@@ -32,8 +32,9 @@ def cu_neprezentati(note, n_fara_rezultat):
     """Lista pe care se calculează mediana liceului: notele, plus neprezentații dedesubt."""
     return [SUB] * n_fara_rezultat + list(note)
 
-def mediana_cenzurata(note, n_fara_rezultat):
-    """Mediana liceului, cu neprezentații jos. None dacă mediana cade în blocul lor."""
+def mediana_cu_neprezentati(note, n_fara_rezultat):
+    """Mediana liceului, citită pe lista care îi include și pe neprezentați, așezați jos.
+    Cenzurate sunt cazurile, nu mediana. None dacă mediana cade în blocul lor."""
     if not note and not n_fara_rezultat:
         return None
     m = median_of(cu_neprezentati(note, n_fara_rezultat))

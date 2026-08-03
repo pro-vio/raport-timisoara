@@ -1,3 +1,5 @@
+import os
+_DATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'date')
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 import xlrd
@@ -14,7 +16,7 @@ def norm(s):
     s = s.replace('Ţ', 'Ț').replace('ţ', 'ț')
     return s
 
-REG = r"C:\Users\Viorel Proteasa\Documents\evaluare-nationala\date\Unitati de invatamant acreditate  i autorizate.xls"
+REG = _DATE + r"\Unitati de invatamant acreditate  i autorizate.xls"
 wb = xlrd.open_workbook(REG)
 ws = wb.sheet_by_index(0)
 header = ws.row_values(0)
@@ -32,7 +34,7 @@ for r in range(1, ws.nrows):
         registry[code] = norm(row[idx['Localitate']])
 
 YEARS = [2020, 2021, 2022, 2023, 2024, 2025]
-BASE = r"C:\Users\Viorel Proteasa\Documents\evaluare-nationala\date"
+BASE = _DATE
 
 by_city = defaultdict(list)
 for year in YEARS:

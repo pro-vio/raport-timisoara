@@ -13,12 +13,12 @@
 #     era redundant și greșit);
 #   - un Friedman care bloca pe liceu, cu mediana calculată între filiere.
 #
-# Statistica per celulă-an = mediana cenzurată (toți candidații promoției curente; cei
+# Statistica per celulă-an = mediana cu neprezentați (toți candidații promoției curente; cei
 # fără rezultat intră fără notă, așezați jos — vezi statistici.py).
 import sys, os, json
 sys.stdout.reconfigure(encoding='utf-8')
 from collections import defaultdict, Counter
-from statistici import rank_all, chi2_sf, mediana_cenzurata
+from statistici import rank_all, chi2_sf, mediana_cu_neprezentati
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = os.path.join(HERE, '..', 'date', 'bac')
@@ -42,16 +42,16 @@ for (an, siiir, forma, filiera, profil, promo, status,
     else:
         fara[(siiir, filiera, an)] += 1
 
-matrix = defaultdict(dict)          # (siiir, filiera) -> {an: mediana cenzurată}
+matrix = defaultdict(dict)          # (siiir, filiera) -> {an: mediana cu neprezentați}
 for k in set(acc) | set(fara):
     siiir, filiera, an = k
     if len(acc[k]) + fara[k] >= MIN_N:
-        m = mediana_cenzurata(acc[k], fara[k])
+        m = mediana_cu_neprezentati(acc[k], fara[k])
         if m is not None:
             matrix[(siiir, filiera)][an] = m
 
 out = {'min_candidati_per_celula_an': MIN_N,
-       'statistica': 'mediana cenzurată a medie_calc, promoția curentă',
+       'statistica': 'mediana medie_calc cu neprezentații așezați jos, promoția curentă',
        'friedman_pe_orase': {}}
 k = len(YEARS)
 print(f'FRIEDMAN pe fiecare entitate oraș×filieră — blocuri = celulele liceu×filieră '

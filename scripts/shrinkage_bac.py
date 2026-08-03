@@ -24,7 +24,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 from collections import defaultdict, Counter
 import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from statistici import cu_neprezentati, mediana_cenzurata, SUB
+from statistici import cu_neprezentati, mediana_cu_neprezentati, SUB
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = os.path.join(HERE, '..', 'date', 'bac')
@@ -44,7 +44,7 @@ with open(os.path.join(BASE, 'candidati_bac.json'), encoding='utf-8') as f:
 orase, den = data['orase'], data['denumiri']
 
 # Celula = TOȚI candidații promoției curente. Cei cu notă intră cu ea; cei fără rezultat
-# (absenți, eliminați) intră fără notă, așezați sub toți — vezi statistici.mediana_cenzurata.
+# (absenți, eliminați) intră fără notă, așezați sub toți — vezi statistici.mediana_cu_neprezentati.
 cell = defaultdict(list)
 fara = Counter()
 for (an, siiir, forma, filiera, profil, promo, status,
@@ -96,7 +96,7 @@ for city in CITIES:
                 c, f, a, siiir = k
                 if not (c == city and f == fil and a == an and n_tot(k) >= MIN_N):
                     continue
-                m = mediana_cenzurata(cell[k], fara[k])
+                m = mediana_cu_neprezentati(cell[k], fara[k])
                 if m is None:          # peste jumătate neprezentați — mediana nu e definită
                     stat_nedef.append((siiir, fil, an, n_tot(k), fara[k]))
                     continue

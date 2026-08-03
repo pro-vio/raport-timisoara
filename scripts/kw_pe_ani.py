@@ -1,3 +1,5 @@
+import os
+_DATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'date')
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 import xlrd
@@ -5,6 +7,7 @@ import openpyxl
 import json
 import math
 from collections import defaultdict, Counter
+from statistici import median_of
 
 def norm(s):
     if not isinstance(s, str):
@@ -14,7 +17,7 @@ def norm(s):
     s = s.replace('Ţ', 'Ț').replace('ţ', 'ț')
     return s
 
-REG = r"C:\Users\Viorel Proteasa\Documents\evaluare-nationala\date\Unitati de invatamant acreditate  i autorizate.xls"
+REG = _DATE + r"\Unitati de invatamant acreditate  i autorizate.xls"
 wb = xlrd.open_workbook(REG)
 ws = wb.sheet_by_index(0)
 header = ws.row_values(0)
@@ -31,7 +34,7 @@ for r in range(1, ws.nrows):
         registry[code] = loc
 
 YEARS = [2020, 2021, 2022, 2023, 2024, 2025]
-BASE = r"C:\Users\Viorel Proteasa\Documents\evaluare-nationala\date"
+BASE = _DATE
 MIN_N = 8
 
 # per year: code -> list of medii
@@ -101,14 +104,16 @@ def norm_sf(z):
     return 0.5 * math.erfc(z / math.sqrt(2))
 
 CITIES = ['CLUJ-NAPOCA', 'IAȘI', 'TIMIȘOARA']
-out = {'min_candidati_per_scoala_an': MIN_N, 'ani': {}}
+out = {'min_candidati_per_scoala_an': MIN_N,
+       'statistica': 'mediana notelor școlii (3 august 2026: era media, inconsistent cu restul raportului)',
+       'ani': {}}
 
 for year in YEARS:
     acc = per_year[year]
     groups = defaultdict(list)
     for code, vals in acc.items():
         if len(vals) >= MIN_N:
-            groups[registry[code]].append(sum(vals) / len(vals))
+            groups[registry[code]].append(median_of(vals))
     glist = [groups[c] for c in CITIES]
     sizes = [len(g) for g in glist]
     H, N, rank_sums = kruskal(glist)
@@ -117,11 +122,7 @@ for year in YEARS:
     eps2 = (H - k + 1) / (N - k)
     mean_ranks = [rs / n for rs, n in zip(rank_sums, sizes)]
 
-    meds = {}
-    for c in CITIES:
-        v = sorted(groups[c])
-        n = len(v)
-        meds[c] = round(v[n // 2] if n % 2 else (v[n // 2 - 1] + v[n // 2]) / 2, 3)
+    meds = {c: round(median_of(groups[c]), 3) for c in CITIES}
 
     all_v = [v for g in glist for v in g]
     cnt = Counter(all_v)
@@ -143,7 +144,7 @@ for year in YEARS:
 
     out['ani'][year] = {
         'n_scoli': dict(zip(CITIES, sizes)),
-        'mediana_medii_scoli': meds,
+        'mediana_medianelor_scoli': meds,
         'rang_mediu': {c: round(mr, 1) for c, mr in zip(CITIES, mean_ranks)},
         'H': round(H, 3), 'p': float(f'{p:.4g}'), 'epsilon2': round(eps2, 4),
         'dunn_holm': dunn,

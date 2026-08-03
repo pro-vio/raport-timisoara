@@ -1,3 +1,5 @@
+import os
+_DATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'date')
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 import xlrd
@@ -12,7 +14,7 @@ def norm(s):
     s = s.replace('Ţ', 'Ț').replace('ţ', 'ț')  # Ţ/ţ -> Ț/ț
     return s
 
-REG = r"C:\Users\Viorel Proteasa\Documents\evaluare-nationala\date\Unitati de invatamant acreditate  i autorizate.xls"
+REG = _DATE + r"\Unitati de invatamant acreditate  i autorizate.xls"
 wb = xlrd.open_workbook(REG)
 ws = wb.sheet_by_index(0)
 header = ws.row_values(0)
@@ -37,7 +39,7 @@ for r in range(1, ws.nrows):
 
 print('registry candidate codes in target cities:', len(registry))
 
-EN_FILE = r"C:\Users\Viorel Proteasa\Documents\evaluare-nationala\date\2025_evnat_date-deschise.xlsx"
+EN_FILE = _DATE + r"\2025_evnat_date-deschise.xlsx"
 wbx = openpyxl.load_workbook(EN_FILE, read_only=True)
 wsx = wbx[wbx.sheetnames[0]]
 header_row = [c.value for c in next(wsx.iter_rows(min_row=1, max_row=1))]
@@ -81,7 +83,7 @@ for code, info in registry.items():
 result.sort(key=lambda x: (x['localitate'], -x['nr_candidati_2025']))
 print('total scoli identificate (cu candidati EN 2025):', len(result))
 
-out_path = r"C:\Users\Viorel Proteasa\Documents\evaluare-nationala\date\siiir_timisoara_cluj_iasi.json"
+out_path = _DATE + r"\siiir_timisoara_cluj_iasi.json"
 with open(out_path, 'w', encoding='utf-8') as f:
     json.dump(result, f, ensure_ascii=False, indent=2)
 print('saved to', out_path)

@@ -1,5 +1,6 @@
 {
   "min_candidati_per_scoala_an": 8,
+  "statistica": "mediana notelor școlii (3 august 2026: era media, inconsistent cu restul raportului)",
   "ani": {
     "2020": {
       "n_scoli": {
@@ -7,34 +8,34 @@
         "IAȘI": 38,
         "TIMIȘOARA": 37
       },
-      "mediana_medii_scoli": {
-        "CLUJ-NAPOCA": 8.001,
-        "IAȘI": 7.733,
-        "TIMIȘOARA": 7.508
+      "mediana_medianelor_scoli": {
+        "CLUJ-NAPOCA": 8.302,
+        "IAȘI": 8.08,
+        "TIMIȘOARA": 7.72
       },
       "rang_mediu": {
         "CLUJ-NAPOCA": 67.7,
-        "IAȘI": 61.6,
-        "TIMIȘOARA": 46.4
+        "IAȘI": 60.0,
+        "TIMIȘOARA": 48.1
       },
-      "H": 8.076,
-      "p": 0.01763,
-      "epsilon2": 0.0533,
+      "H": 6.627,
+      "p": 0.03639,
+      "epsilon2": 0.0406,
       "dunn_holm": [
         {
           "pereche": "CLUJ-NAPOCA vs TIMIȘOARA",
-          "z": 2.783,
-          "p_holm": 0.01617
+          "z": 2.564,
+          "p_holm": 0.03102
         },
         {
           "pereche": "IAȘI vs TIMIȘOARA",
-          "z": 1.937,
-          "p_holm": 0.10554
+          "z": 1.525,
+          "p_holm": 0.25458
         },
         {
           "pereche": "CLUJ-NAPOCA vs IAȘI",
-          "z": 0.804,
-          "p_holm": 0.42114
+          "z": 1.009,
+          "p_holm": 0.31284
         }
       ]
     },
@@ -44,34 +45,34 @@
         "IAȘI": 38,
         "TIMIȘOARA": 34
       },
-      "mediana_medii_scoli": {
-        "CLUJ-NAPOCA": 7.806,
-        "IAȘI": 7.563,
-        "TIMIȘOARA": 6.942
+      "mediana_medianelor_scoli": {
+        "CLUJ-NAPOCA": 8.01,
+        "IAȘI": 7.575,
+        "TIMIȘOARA": 7.133
       },
       "rang_mediu": {
-        "CLUJ-NAPOCA": 65.7,
-        "IAȘI": 57.5,
-        "TIMIȘOARA": 45.9
+        "CLUJ-NAPOCA": 66.0,
+        "IAȘI": 56.7,
+        "TIMIȘOARA": 46.4
       },
-      "H": 6.8,
-      "p": 0.03338,
-      "epsilon2": 0.0436,
+      "H": 6.683,
+      "p": 0.03538,
+      "epsilon2": 0.0426,
       "dunn_holm": [
         {
           "pereche": "CLUJ-NAPOCA vs TIMIȘOARA",
-          "z": 2.605,
-          "p_holm": 0.02758
+          "z": 2.584,
+          "p_holm": 0.02926
         },
         {
           "pereche": "IAȘI vs TIMIȘOARA",
-          "z": 1.502,
-          "p_holm": 0.26638
+          "z": 1.337,
+          "p_holm": 0.36248
         },
         {
           "pereche": "CLUJ-NAPOCA vs IAȘI",
-          "z": 1.109,
-          "p_holm": 0.26749
+          "z": 1.261,
+          "p_holm": 0.36248
         }
       ]
     },
@@ -81,34 +82,34 @@
         "IAȘI": 39,
         "TIMIȘOARA": 38
       },
-      "mediana_medii_scoli": {
-        "CLUJ-NAPOCA": 7.992,
-        "IAȘI": 7.808,
-        "TIMIȘOARA": 7.29
+      "mediana_medianelor_scoli": {
+        "CLUJ-NAPOCA": 8.227,
+        "IAȘI": 8.12,
+        "TIMIȘOARA": 7.522
       },
       "rang_mediu": {
-        "CLUJ-NAPOCA": 68.9,
-        "IAȘI": 66.0,
-        "TIMIȘOARA": 46.7
+        "CLUJ-NAPOCA": 68.5,
+        "IAȘI": 65.4,
+        "TIMIȘOARA": 47.8
       },
-      "H": 9.306,
-      "p": 0.009533,
-      "epsilon2": 0.0619,
+      "H": 8.018,
+      "p": 0.01816,
+      "epsilon2": 0.051,
       "dunn_holm": [
         {
           "pereche": "CLUJ-NAPOCA vs TIMIȘOARA",
-          "z": 2.855,
-          "p_holm": 0.01293
+          "z": 2.665,
+          "p_holm": 0.0231
         },
         {
           "pereche": "IAȘI vs TIMIȘOARA",
-          "z": 2.406,
-          "p_holm": 0.03223
+          "z": 2.206,
+          "p_holm": 0.0548
         },
         {
           "pereche": "CLUJ-NAPOCA vs IAȘI",
-          "z": 0.38,
-          "p_holm": 0.70361
+          "z": 0.397,
+          "p_holm": 0.69105
         }
       ]
     },
@@ -118,34 +119,34 @@
         "IAȘI": 39,
         "TIMIȘOARA": 36
       },
-      "mediana_medii_scoli": {
-        "CLUJ-NAPOCA": 7.899,
-        "IAȘI": 7.735,
-        "TIMIȘOARA": 7.509
+      "mediana_medianelor_scoli": {
+        "CLUJ-NAPOCA": 8.12,
+        "IAȘI": 7.985,
+        "TIMIȘOARA": 7.877
       },
       "rang_mediu": {
-        "CLUJ-NAPOCA": 66.3,
-        "IAȘI": 63.4,
-        "TIMIȘOARA": 50.1
+        "CLUJ-NAPOCA": 64.0,
+        "IAȘI": 63.0,
+        "TIMIȘOARA": 53.4
       },
-      "H": 4.713,
-      "p": 0.09474,
-      "epsilon2": 0.0232,
+      "H": 2.183,
+      "p": 0.3358,
+      "epsilon2": 0.0016,
       "dunn_holm": [
         {
           "pereche": "CLUJ-NAPOCA vs TIMIȘOARA",
-          "z": 2.079,
-          "p_holm": 0.1128
+          "z": 1.369,
+          "p_holm": 0.51276
         },
         {
           "pereche": "IAȘI vs TIMIȘOARA",
-          "z": 1.644,
-          "p_holm": 0.20021
+          "z": 1.204,
+          "p_holm": 0.51276
         },
         {
           "pereche": "CLUJ-NAPOCA vs IAȘI",
-          "z": 0.388,
-          "p_holm": 0.69807
+          "z": 0.128,
+          "p_holm": 0.8983
         }
       ]
     },
@@ -155,34 +156,34 @@
         "IAȘI": 39,
         "TIMIȘOARA": 36
       },
-      "mediana_medii_scoli": {
-        "CLUJ-NAPOCA": 7.737,
-        "IAȘI": 7.478,
-        "TIMIȘOARA": 7.051
+      "mediana_medianelor_scoli": {
+        "CLUJ-NAPOCA": 8.11,
+        "IAȘI": 7.6,
+        "TIMIȘOARA": 7.375
       },
       "rang_mediu": {
-        "CLUJ-NAPOCA": 67.7,
-        "IAȘI": 61.1,
-        "TIMIȘOARA": 47.9
+        "CLUJ-NAPOCA": 67.9,
+        "IAȘI": 59.8,
+        "TIMIȘOARA": 49.2
       },
-      "H": 6.688,
-      "p": 0.03529,
-      "epsilon2": 0.0408,
+      "H": 5.853,
+      "p": 0.05358,
+      "epsilon2": 0.0335,
       "dunn_holm": [
         {
           "pereche": "CLUJ-NAPOCA vs TIMIȘOARA",
-          "z": 2.562,
-          "p_holm": 0.03121
+          "z": 2.419,
+          "p_holm": 0.04675
         },
         {
           "pereche": "IAȘI vs TIMIȘOARA",
-          "z": 1.661,
-          "p_holm": 0.19342
+          "z": 1.338,
+          "p_holm": 0.36207
         },
         {
           "pereche": "CLUJ-NAPOCA vs IAȘI",
-          "z": 0.881,
-          "p_holm": 0.37809
+          "z": 1.073,
+          "p_holm": 0.36207
         }
       ]
     },
@@ -192,34 +193,34 @@
         "IAȘI": 40,
         "TIMIȘOARA": 36
       },
-      "mediana_medii_scoli": {
-        "CLUJ-NAPOCA": 8.091,
-        "IAȘI": 8.093,
-        "TIMIȘOARA": 7.538
+      "mediana_medianelor_scoli": {
+        "CLUJ-NAPOCA": 8.3,
+        "IAȘI": 8.36,
+        "TIMIȘOARA": 7.92
       },
       "rang_mediu": {
-        "CLUJ-NAPOCA": 65.2,
-        "IAȘI": 66.4,
-        "TIMIȘOARA": 48.2
+        "CLUJ-NAPOCA": 62.9,
+        "IAȘI": 66.9,
+        "TIMIȘOARA": 50.4
       },
-      "H": 6.435,
-      "p": 0.04006,
-      "epsilon2": 0.0379,
+      "H": 4.615,
+      "p": 0.09952,
+      "epsilon2": 0.0223,
       "dunn_holm": [
         {
           "pereche": "IAȘI vs TIMIȘOARA",
-          "z": 2.278,
-          "p_holm": 0.06821
+          "z": 2.069,
+          "p_holm": 0.11558
         },
         {
           "pereche": "CLUJ-NAPOCA vs TIMIȘOARA",
-          "z": 2.167,
-          "p_holm": 0.06821
+          "z": 1.6,
+          "p_holm": 0.21924
         },
         {
           "pereche": "CLUJ-NAPOCA vs IAȘI",
-          "z": 0.167,
-          "p_holm": 0.8677
+          "z": 0.53,
+          "p_holm": 0.59602
         }
       ]
     }

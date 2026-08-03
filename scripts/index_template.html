@@ -1,0 +1,762 @@
+<title>Evaluare Națională — Timișoara, 2020-2025</title>
+<style>
+@font-face {
+  font-family: "system-serif";
+  src: local("Iowan Old Style"), local("Palatino Linotype"), local("Georgia");
+}
+:root {
+  --bg: #f6f3ec;
+  --surface: #ffffff;
+  --ink: #201d1a;
+  --ink-soft: #5c564c;
+  --ink-muted: #8b8378;
+  --accent: #2d4a63;
+  --accent-soft: #6f8aa0;
+  --up: #2f7a52;
+  --down: #b1502f;
+  --border: rgba(32,29,26,0.12);
+  --border-strong: rgba(32,29,26,0.22);
+  --row-alt: rgba(45,74,99,0.045);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17191b;
+    --surface: #1f2225;
+    --ink: #f0ede6;
+    --ink-soft: #b4ada0;
+    --ink-muted: #7d7669;
+    --accent: #7fb0d4;
+    --accent-soft: #4f7185;
+    --up: #58b98a;
+    --down: #e2896a;
+    --border: rgba(240,237,230,0.14);
+    --border-strong: rgba(240,237,230,0.26);
+    --row-alt: rgba(127,176,212,0.06);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17191b; --surface: #1f2225; --ink: #f0ede6; --ink-soft: #b4ada0; --ink-muted: #7d7669;
+  --accent: #7fb0d4; --accent-soft: #4f7185; --up: #58b98a; --down: #e2896a;
+  --border: rgba(240,237,230,0.14); --border-strong: rgba(240,237,230,0.26); --row-alt: rgba(127,176,212,0.06);
+}
+:root[data-theme="light"] {
+  --bg: #f6f3ec; --surface: #ffffff; --ink: #201d1a; --ink-soft: #5c564c; --ink-muted: #8b8378;
+  --accent: #2d4a63; --accent-soft: #6f8aa0; --up: #2f7a52; --down: #b1502f;
+  --border: rgba(32,29,26,0.12); --border-strong: rgba(32,29,26,0.22); --row-alt: rgba(45,74,99,0.045);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.55;
+}
+.page { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+.masthead { border-bottom: 2px solid var(--ink); padding-bottom: 1rem; margin-bottom: 0.4rem; }
+.eyebrow {
+  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin: 0 0 0.4rem;
+}
+h1 {
+  font-family: "system-serif", Georgia, "Palatino Linotype", serif;
+  font-weight: 400; font-size: clamp(1.7rem, 4vw, 2.4rem); margin: 0;
+  text-wrap: balance; color: var(--ink);
+}
+.subtitle {
+  font-family: "system-serif", Georgia, "Palatino Linotype", serif;
+  font-style: italic; color: var(--accent-soft); font-size: 17px; margin: 0.5rem 0 0;
+}
+.subtitle a {
+  color: var(--accent); font-style: normal; text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.subtitle a:hover { border-bottom-color: var(--accent); }
+.subtitle a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.subhead {
+  color: var(--ink-soft); font-size: 15px; max-width: 62ch; margin: 0.9rem 0 0;
+}
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.75rem; margin-top: 1.75rem;
+}
+.card h2 {
+  font-family: "system-serif", Georgia, serif; font-weight: 400; font-size: 1.25rem;
+  margin: 0 0 0.25rem; color: var(--ink);
+}
+.card .note { color: var(--ink-muted); font-size: 13px; margin: 0 0 1.1rem; }
+#chartWrap { position: relative; height: 420px; }
+#hoverLabel {
+  position: absolute; top: 8px; left: 12px; font-size: 13px; font-weight: 600;
+  color: var(--accent); background: var(--surface); padding: 2px 8px; border-radius: 6px;
+  border: 1px solid var(--border); pointer-events: none; display: none; max-width: 70%;
+}
+.hint { font-size: 12px; color: var(--ink-muted); margin-top: 0.6rem; }
+.table-scroll { overflow-x: auto; margin-top: 1.5rem; border: 1px solid var(--border); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 720px; }
+thead th {
+  text-align: center; font-weight: 600; font-size: 11.5px; letter-spacing: 0.03em;
+  text-transform: uppercase; color: var(--ink-soft); padding: 10px 8px;
+  border-bottom: 2px solid var(--border-strong); background: var(--surface);
+  position: sticky; top: 0;
+}
+thead th:first-child, tbody td:first-child {
+  text-align: left; position: sticky; left: 0; background: var(--surface); z-index: 1;
+  border-right: 1px solid var(--border);
+}
+tbody tr:nth-child(even) td { background: var(--row-alt); }
+tbody tr:nth-child(even) td:first-child { background: var(--row-alt); }
+tbody td {
+  padding: 7px 8px; text-align: center; border-bottom: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+td.school { font-weight: 500; white-space: nowrap; padding-right: 16px; }
+td.rank-final { font-weight: 700; font-size: 14px; }
+td.rank-base { color: var(--ink-muted); }
+.arrow-up { color: var(--up); font-weight: 600; }
+.arrow-down { color: var(--down); font-weight: 600; }
+.arrow-flat { color: var(--ink-soft); font-weight: 600; }
+.arrow-na { color: var(--ink-muted); opacity: 0.5; }
+footer { margin-top: 2rem; font-size: 12px; color: var(--ink-muted); }
+.tabnav { display: flex; gap: 4px; margin-top: 1.5rem; border-bottom: 1px solid var(--border); }
+.tab-btn {
+  font: inherit; font-size: 14px; font-weight: 500; color: var(--ink-soft);
+  background: none; border: none; padding: 10px 4px; margin-right: 22px; cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tabpanel.hidden { display: none; }
+.modenav { display: flex; gap: 8px; margin: 0.9rem 0 1.1rem; }
+.mode-btn {
+  font: inherit; font-size: 12.5px; font-weight: 500; color: var(--ink-soft);
+  background: var(--row-alt); border: 1px solid var(--border); border-radius: 999px;
+  padding: 5px 13px; cursor: pointer;
+}
+.mode-btn:hover { color: var(--ink); border-color: var(--border-strong); }
+.mode-btn.active { color: var(--surface); background: var(--accent); border-color: var(--accent); }
+.mode-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.findings p { margin: 0 0 0.9rem; font-size: 14.5px; color: var(--ink); max-width: 68ch; }
+.findings p:last-child { margin-bottom: 0; }
+.findings b { color: var(--ink); }
+.tests-list { font-size: 13.5px; color: var(--ink-soft); margin: 0 0 1.3rem; padding-left: 1.1rem; }
+.tests-list li { margin-bottom: 3px; }
+.slider-row { display: flex; align-items: center; gap: 12px; margin: 0 0 1.1rem; }
+.slider-row label { font-size: 13px; color: var(--ink-soft); white-space: nowrap; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--accent); }
+.slider-row .year-out { font-weight: 600; font-size: 15px; min-width: 42px; text-align: right; font-variant-numeric: tabular-nums; }
+.cat-row { display: grid; grid-template-columns: 24px 220px 1fr 50px; gap: 6px; align-items: center; height: 24px; font-size: 12.5px; }
+.cat-rank { color: var(--ink-muted); font-size: 12px; }
+.cat-name { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cat-val { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+.cat-tooltip {
+  position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: 6px; padding: 6px 10px; font-size: 12px; line-height: 1.5; color: var(--ink);
+  z-index: 10; display: none; white-space: nowrap;
+}
+#stripCanvas { touch-action: none; }
+
+</style>
+
+<div class="page">
+  <div class="masthead">
+    <p class="eyebrow">Evaluare Națională · clasa a VIII-a</p>
+    <h1>Școlile din Timișoara, 2020&ndash;2025</h1>
+    <p class="subtitle">Analiză în contextul Iași&ndash;Timișoara&ndash;Cluj &middot; <a href="bac.html">Bacalaureatul, 2017&ndash;2025 &rarr;</a></p>
+  </div>
+
+  <div class="tabnav" role="tablist">
+    <button class="tab-btn active" data-tab="temporal" role="tab" aria-selected="true">Efecte structurale</button>
+    <button class="tab-btn" data-tab="note" role="tab" aria-selected="false">Distribuții note pe școală</button>
+    <button class="tab-btn" data-tab="bootstrap" role="tab" aria-selected="false">Mediane cu bootstrap</button>
+    <button class="tab-btn" data-tab="mediane" role="tab" aria-selected="false">Evoluția medianelor</button>
+    <button class="tab-btn" data-tab="clasament" role="tab" aria-selected="false">Clasament (evoluție)</button>
+  </div>
+
+  <div id="tab-temporal" class="tabpanel">
+    <div class="card">
+      <h2>Rangul mediu al anilor, per oraș (test Friedman)</h2>
+      <p class="note">Pentru fiecare școală prezentă în toți cei 6 ani, anii sunt ordonați după mediana notelor: anul cu cea mai mică mediană primește poziția 1, cel cu cea mai mare — poziția 6. Liniile arată media acestor poziții pe oraș.</p>
+      <div style="position:relative;width:100%;height:300px;">
+        <canvas id="friedmanChart" role="img" aria-label="Rang mediu Friedman pe ani, trei orașe: liniile coboară în {{FR_ANI_JOS}} în toate trei orașele."></canvas>
+      </div>
+      <p class="hint">rang mediu 1 = anul cu cea mai mică mediană; 6 = anul cu cea mai mare</p>
+      <div class="findings" style="margin-top:1rem;">
+        <p>La {{EX_NUME}} medianele au fost {{EX_MEDIANE}}, deci pozițiile {{EX_POZITII}}. Pentru fiecare an se face apoi media acestor poziții peste școlile orașului. Graficul arată această medie.</p>
+        <p>Liniile orașelor diferă puțin între ele. Ordinea celor șase ani ai unei școli se poate decide la diferențe foarte mici: la {{EX_SCURT}}, între {{EX_AN_A}} și {{EX_AN_B}} au stat {{EX_DIF}} puncte de mediană. Fiecare școală are fluctuații proprii, iar media peste cele {{FR_N_SCOLI}} de școli ale orașului le netezește doar în parte.</p>
+        <p>Datele pe care le avem nu pot explica fluctuațiile anuale ale școlilor: subiectele și generația care dă examenul se schimbă amândouă de la un an la altul, și nu avem un instrument cu care să le comparăm ca date de intrare în model.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Teste efectuate</h2>
+      <ul class="tests-list">
+        <li>Kruskal-Wallis pe fiecare an în parte (2020&ndash;2025 separat), unitatea de analiză = școala, cu mediana notelor ei ca valoare, și Dunn post-hoc (corecție Holm) pe perechile de orașe.</li>
+        <li>Friedman per oraș — blocuri = școlile prezente în toți cei 6 ani, tratament = anul, cu anii ordonați după mediana școlii (graficul de mai sus).</li>
+      </ul>
+      <h2>Cele două teste împreună</h2>
+      <div class="findings">
+        <p>Ipoteza că cei șase ani sunt echivalenți e respinsă în toate trei orașele. Kendall W — concordanța dintre școli în privința ordinii anilor — e {{W_IS}} la Iași și {{W_TM}} la Timișoara: acolo școlile se mișcă sincron de la an la an. La Cluj ({{W_CJ}}), ordinea anilor are o dispersie mai mare între școli.</p>
+        <p>Jos, tiparul e același în toate trei orașele: în {{FR_ANI_JOS}} rangul mediu e cel mai mic peste tot ({{FR_JOS_MIN}}&ndash;{{FR_JOS_MAX}}). Sus, ordinea diferă: la Cluj și Timișoara rangul cel mai mare e în {{FR_AN_TOP_CJTM}} ({{FR_TOP_CJ}} și {{FR_TOP_TM}}), la Iași în {{FR_AN_TOP_IS}} ({{FR_TOP_IS}}). La Timișoara, {{FR_AN_TOP_IS}} are {{FR_TM_LA_TOPIS}}; la Cluj, {{FR_CJ_LA_TOPIS}} &mdash; acolo stă lângă {{FR_CJ_VECINI}}, între anii de mijloc. Dacă eterogenitatea dintre ani s-ar fi produs la nivelul orașului, traiectoriile ar fi fost divergente; ele coboară și urcă împreună. Forma e aceeași în toate trei orașele; ce o produce nu se poate stabili din datele astea.</p>
+        <p>Timișoara stă pe ultimul loc în toți cei șase ani, deci ordinea orașelor nu depinde de an. Deasupra ei, Cluj și Iași își schimbă locurile: Cluj e primul între {{KW_CJ_PRIM}}, Iași în {{KW_IS_PRIM}}. Efectul e mic peste tot, cu ε² între {{KW_EPS_MIN}} și {{KW_EPS_MAX}}, și cel mai mic în {{KW_AN_EPS_MIN}}, unde ajunge la {{KW_EPS_MIN_EXACT}}.</p>
+        <p>Semnificativ iese un singur contrast: {{KW_PERECHE}}, în {{KW_ANI_SIG}}. În {{KW_ANI_NESIG}}, testul pe ansamblu nu respinge egalitatea celor trei orașe. În {{KW_AN_GRANITA}} testul pe ansamblu dă p={{KW_P_GRANITA}}, iar post-hoc-ul pentru {{KW_PERECHE}} p={{KW_PDUNN_GRANITA}}: perechea iese sub un test de ansamblu care nu respinge.</p>
+        <p>Variația între ani e comună celor trei orașe și intră în orice comparație făcută pe valorile medianelor brute de la un an la altul. O analiză longitudinală pe aceste date &mdash; inclusiv skew/kurtosis calculate pe anii cumulați &mdash; cere mediane standardizate în interiorul anului.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-note" class="tabpanel hidden">
+    <div class="card">
+      <h2>Distribuția notelor</h2>
+      <p class="note">Fiecare punct e un candidat. Coloanele sunt școlile, în aceeași ordine (rangul din 2025) în toți anii, așa că împrăștierea se compară de la un an la altul.</p>
+      <div class="slider-row">
+        <label for="stripYearSlider">An</label>
+        <input type="range" id="stripYearSlider" min="0" max="5" step="1" value="5">
+        <span class="year-out" id="stripYearOut">2025</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:10px;font-size:12px;color:var(--ink-soft);">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:11px;background:var(--ink);display:inline-block;"></span>mediană</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:11px;background:var(--down);display:inline-block;"></span>media celor prezenți</span>
+      </div>
+      <div id="stripWrap" style="position:relative;width:100%;">
+        <canvas id="stripCanvas" style="display:block;width:100%;"></canvas>
+        <div class="cat-tooltip" id="stripTooltip"></div>
+      </div>
+      <p class="hint">Treceți mausul peste o coloană pentru a identifica școala. Aglomerarea punctelor arată unde se strânge distribuția; la școlile bune, punctele se adună la plafonul de 10.</p>
+    </div>
+
+    <div class="card">
+      <h2>Diferența medie&ndash;mediană</h2>
+      <p class="note">Pentru fiecare an, la ce percentilă din propria distribuție a școlii cade media (mediana e mereu la percentila 50, prin definiție); valori negative = media sub mediană.</p>
+      <div style="overflow-x:auto;">
+      <table style="width:100%;min-width:360px;font-size:13.5px;border-collapse:collapse;">
+        <thead><tr>
+          <th style="text-align:left;padding:6px 8px;border-bottom:2px solid var(--border-strong);color:var(--ink-soft);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:0.03em;">An</th>
+          <th style="text-align:right;padding:6px 8px;border-bottom:2px solid var(--border-strong);color:var(--ink-soft);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:0.03em;">media diferențelor (pp)</th>
+          <th style="text-align:right;padding:6px 8px;border-bottom:2px solid var(--border-strong);color:var(--ink-soft);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:0.03em;">mediana diferențelor (pp)</th>
+        </tr></thead>
+        <tbody id="gapBody"></tbody>
+      </table>
+      </div>
+      <div class="findings" style="margin-top:1rem;">
+        <p>Media cade sub percentila 50 în toți cei șase ani, deci de obicei mai mult de jumătate dintre elevi iau peste medie, mai ales la școlile bune. Corelația dintre nivelul școlii și mărimea diferenței e r = {{R_DIF}}. De aceea clasamentul și shrinkage-ul folosesc mediana: media coboară mai ales la școlile de elită, unde câțiva candidați slabi o trag sub nota pe care o ia majoritatea.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="tab-bootstrap" class="tabpanel hidden">
+    <div class="card">
+      <h2>Mediana ajustată (shrinkage empirical-Bayes, bootstrap)</h2>
+      <p class="note">Mediana fiecărei școli, cu eroarea standard estimată prin bootstrap ({{N_BOOT}} reeșantionări), trasă spre ancora orașului proporțional cu incertitudinea — școlile cu puțini candidați se apropie mai mult de ancoră, cele mari rămân aproape neschimbate.</p>
+      <div class="slider-row">
+        <label for="yearSlider">An</label>
+        <input type="range" id="yearSlider" min="0" max="5" step="1" value="5">
+        <span class="year-out" id="yearOut">2025</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:10px;font-size:12px;color:var(--ink-soft);">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block;"></span>mediană ajustată (shrink) + interval 95%</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:2px;height:11px;background:var(--ink-muted);display:inline-block;"></span>mediană brută</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:14px;border-top:1px dashed var(--border-strong);display:inline-block;"></span>ancora orașului</span>
+      </div>
+      <p class="note">Linia orizontală de lângă fiecare punct e intervalul de încredere de 95% al medianei ajustate: cât de sigură e acea estimare. O linie scurtă = școală mare, estimare sigură; una lungă = școală mică, unde bootstrap-ul dă o incertitudine mare. Când liniile a două școli se suprapun, diferența dintre rangurile lor nu e semnificativă statistic (vezi schema de mai jos).</p>
+      <div id="catRoot" style="position:relative;"></div>
+      <p class="hint">Graficul cuprinde școlile cu minimum {{MIN_N}} candidați în anul respectiv, de aceea numărul de rânduri variază de la an la an.</p>
+    </div>
+
+    <div class="card">
+      <h2>Cum se citește</h2>
+      <svg viewBox="0 0 640 210" style="width:100%;max-width:640px;height:auto;display:block;margin:0 auto;" role="img" aria-label="Schemă de interpretare: punctul e mediana ajustată, linia orizontală e intervalul de 95%, cratima verticală e mediana brută; când liniile a două școli se suprapun, diferența dintre ele nu e semnificativă statistic, iar când sunt separate, diferența e reală.">
+        <line x1="130" y1="35" x2="390" y2="35" stroke="var(--accent)" stroke-width="2" opacity="0.55"/>
+        <line x1="230" y1="27" x2="230" y2="43" stroke="var(--ink-muted)" stroke-width="2"/>
+        <circle cx="300" cy="35" r="6" fill="var(--accent)"/>
+        <line x1="300" y1="10" x2="300" y2="28" stroke="var(--border-strong)" stroke-width="1"/>
+        <text x="300" y="8" text-anchor="middle" font-size="12" fill="var(--ink)">mediană ajustată</text>
+        <line x1="130" y1="52" x2="130" y2="60" stroke="var(--border-strong)" stroke-width="1"/>
+        <text x="130" y="72" text-anchor="middle" font-size="12" fill="var(--ink-soft)">interval 95%</text>
+        <line x1="230" y1="52" x2="230" y2="60" stroke="var(--border-strong)" stroke-width="1"/>
+        <text x="230" y="72" text-anchor="middle" font-size="12" fill="var(--ink-soft)">mediană brută</text>
+
+        <rect x="230" y="98" width="90" height="52" fill="var(--row-alt)"/>
+        <text x="275" y="93" text-anchor="middle" font-size="11" fill="var(--ink-muted)">se suprapun</text>
+        <text x="20" y="112" font-size="12" fill="var(--ink)">Școala A</text>
+        <line x1="150" y1="108" x2="320" y2="108" stroke="var(--accent)" stroke-width="2" opacity="0.55"/>
+        <circle cx="235" cy="108" r="6" fill="var(--accent)"/>
+        <text x="20" y="142" font-size="12" fill="var(--ink)">Școala B</text>
+        <line x1="230" y1="138" x2="400" y2="138" stroke="var(--accent)" stroke-width="2" opacity="0.55"/>
+        <circle cx="315" cy="138" r="6" fill="var(--accent)"/>
+        <text x="420" y="128" font-size="12.5" fill="var(--ink)">diferența nu e</text>
+        <text x="420" y="144" font-size="12.5" fill="var(--ink)">semnificativă statistic</text>
+
+        <text x="20" y="180" font-size="12" fill="var(--ink)">Școala C</text>
+        <line x1="150" y1="176" x2="260" y2="176" stroke="var(--accent)" stroke-width="2" opacity="0.55"/>
+        <circle cx="200" cy="176" r="6" fill="var(--accent)"/>
+        <text x="20" y="204" font-size="12" fill="var(--ink)">Școala D</text>
+        <line x1="330" y1="200" x2="440" y2="200" stroke="var(--accent)" stroke-width="2" opacity="0.55"/>
+        <circle cx="385" cy="200" r="6" fill="var(--accent)"/>
+        <text x="470" y="190" font-size="12.5" fill="var(--ink)">interval separat →</text>
+        <text x="470" y="206" font-size="12.5" fill="var(--ink)">diferență reală</text>
+      </svg>
+    </div>
+
+    <div class="card">
+      <h2>Notă metodologică</h2>
+      <div class="findings">
+        <p>Pentru fiecare școală se calculează mediana notelor candidaților ei, robustă la asimetrie, cu eroarea standard prin bootstrap ({{N_BOOT}} reeșantionări cu înlocuire din candidații școlii). Ancora orașului e media medianelor tuturor școlilor din anul respectiv. Alegerea vine din formula de shrinkage, care descompune dispersia totală (τ² plus zgomotul de eșantionare) față de medie. La nivelul candidaților, unde asimetria contează, statistica rămâne mediana; la agregarea peste cele {{N_SCOLI_ANCORA}} de școli, unde valorile sunt mai omogene, se folosește media, fiindcă formula o cere.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-mediane" class="tabpanel hidden">
+
+  <div class="card">
+    <h2>Evoluția medianelor</h2>
+    <p class="note">Fiecare linie subțire e o școală (minimum {{MIN_N}} candidați în anul respectiv); linia groasă e mediana orașului. Treceți mausul peste o linie pentru a o identifica.</p>
+    <div class="modenav">
+      <button class="mode-btn active" data-mode="brut">Valori brute</button>
+      <button class="mode-btn" data-mode="reziduu">Reziduu (vs. mediana orașului)</button>
+    </div>
+    <p class="note" id="noteBrut" style="margin-top:-0.4rem;">Valorile brute conțin o mișcare comună tuturor școlilor: liniile urcă și coboară deodată, în aceeași direcție (vezi tabul „Efecte structurale"). Când o linie urcă sau coboară, comparați-o cu linia groasă a orașului: dacă se mișcă la fel, mișcarea e cea comună.</p>
+    <p class="note" id="noteReziduu" style="margin-top:-0.4rem;display:none;">Reziduul e mediana școlii minus mediana orașului din același an: arată poziția școlii față de restul orașului, fără mișcarea comună. Linia groasă a orașului devine astfel o dreaptă la zero.</p>
+    <div id="chartWrap">
+      <canvas id="medChart" role="img" aria-label="Mediana notei la Evaluarea Națională, 2020-2025, pentru {{N_SCOLI_GRAFIC}} de școli din Timișoara. Majoritatea oscilează între 6 și 9,5; Colegiul Național C.D. Loga se distinge constant peste 9,4."></canvas>
+      <div id="hoverLabel"></div>
+    </div>
+    <p class="hint">Liniile întrerupte marchează anii în care școala a avut sub {{MIN_N}} candidați, prea puțini pentru o mediană stabilă.</p>
+  </div>
+
+  </div>
+
+  <div id="tab-clasament" class="tabpanel hidden">
+
+  <div class="card">
+    <h2>Clasament (evoluție)</h2>
+    <p class="note">Săgeata arată direcția și numărul de locuri câștigate sau pierdute față de anul anterior; punctul „·” înseamnă că unul dintre cei doi ani nu are suficienți candidați pentru comparație.</p>
+    <div class="table-scroll">
+      <table id="rankTable">
+        <thead>
+          <tr>
+            <th>Școală</th>
+            <th>2020</th>
+            <th>→2021</th>
+            <th>→2022</th>
+            <th>→2023</th>
+            <th>→2024</th>
+            <th>→2025</th>
+            <th>2025</th>
+          </tr>
+        </thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  </div>
+
+  <footer>Sursă: rezultate individuale Evaluare Națională, date deschise data.gov.ro (2020&ndash;2025) · mediana per școală; graficele arată mediane brute, iar shrinkage-ul empirical-Bayes apare în tabul „Mediane cu bootstrap".</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const SCHOOLS = {{JS_SCHOOLS}};
+
+const YEARS = {{JS_YEARS}};
+const isDark = () => (document.documentElement.getAttribute('data-theme') === 'dark') ||
+  (!document.documentElement.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+const accentHex = () => isDark() ? '#7fb0d4' : '#2d4a63';
+const hexToRgb = h => { const n = parseInt(h.slice(1),16); return [(n>>16)&255,(n>>8)&255,n&255]; };
+const rgba = (hex, a) => { const [r,g,b] = hexToRgb(hex); return `rgba(${r},${g},${b},${a})`; };
+
+const MU_HAT = {{JS_MU_HAT}};
+let medMode = 'brut';
+const downHex = () => isDark() ? '#e2896a' : '#b1502f';
+
+const ctx = document.getElementById('medChart');
+function valueFor(s, y, mode) {
+  if (!s.ani[y]) return null;
+  return mode === 'reziduu' ? s.ani[y].med - MU_HAT[y] : s.ani[y].med;
+}
+function cityData(mode) {
+  return YEARS.map(y => mode === 'reziduu' ? 0 : MU_HAT[y]);
+}
+const CITY_IDX = SCHOOLS.length;
+const datasets = SCHOOLS.map(s => ({
+  label: s.nume,
+  data: YEARS.map(y => valueFor(s, y, medMode)),
+  spanGaps: false,
+  borderColor: rgba(accentHex(), 0.32),
+  backgroundColor: rgba(accentHex(), 0.32),
+  borderWidth: 1.3,
+  pointRadius: 2,
+  pointHoverRadius: 5,
+  tension: 0.15,
+}));
+datasets.push({
+  label: 'Mediana orașului',
+  data: cityData(medMode),
+  spanGaps: false,
+  borderColor: downHex(),
+  backgroundColor: downHex(),
+  borderWidth: 3,
+  pointRadius: 3,
+  pointHoverRadius: 6,
+  tension: 0.15,
+});
+
+const chart = new Chart(ctx, {
+  type: 'line',
+  data: { labels: YEARS, datasets },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    animation: { duration: 200 },
+    interaction: { mode: 'nearest', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: items => items[0] ? items[0].dataset.label : '',
+          label: c => medMode === 'reziduu'
+            ? 'an ' + c.label + ': ' + (c.parsed.y >= 0 ? '+' : '') + c.parsed.y.toFixed(2) + ' față de mediana orașului'
+            : 'an ' + c.label + ': mediana ' + c.parsed.y.toFixed(2),
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#8b8378' } },
+      y: { min: 3, max: 10, title: { display: true, text: 'mediana notei finale', color: '#8b8378', font: { size: 11 } },
+           ticks: { color: '#8b8378' }, grid: { color: 'rgba(139,131,120,0.18)' } }
+    }
+  }
+});
+
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    medMode = btn.dataset.mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b === btn));
+    document.getElementById('noteBrut').style.display = medMode === 'brut' ? '' : 'none';
+    document.getElementById('noteReziduu').style.display = medMode === 'reziduu' ? '' : 'none';
+    chart.data.datasets.forEach((ds, i) => {
+      if (i === CITY_IDX) { ds.data = cityData(medMode); }
+      else { ds.data = YEARS.map(y => valueFor(SCHOOLS[i], y, medMode)); }
+    });
+    if (medMode === 'reziduu') {
+      chart.options.scales.y.min = -4.2; chart.options.scales.y.max = 2.2;
+      chart.options.scales.y.title.text = 'mediana școlii − mediana orașului (puncte)';
+    } else {
+      chart.options.scales.y.min = 3; chart.options.scales.y.max = 10;
+      chart.options.scales.y.title.text = 'mediana notei finale';
+    }
+    chart.update();
+  });
+});
+
+const hoverLabel = document.getElementById('hoverLabel');
+ctx.addEventListener('mousemove', evt => {
+  const els = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: false }, true);
+  const idx = els.length ? els[0].datasetIndex : null;
+  chart.data.datasets.forEach((ds, i) => {
+    if (i === CITY_IDX) return;
+    if (idx === null) { ds.borderColor = rgba(accentHex(), 0.32); ds.borderWidth = 1.3; }
+    else if (i === idx) { ds.borderColor = accentHex(); ds.borderWidth = 3; }
+    else { ds.borderColor = rgba(accentHex(), 0.07); ds.borderWidth = 1; }
+  });
+  chart.update('none');
+  if (idx !== null) {
+    hoverLabel.textContent = idx === CITY_IDX ? 'Mediana orașului' : SCHOOLS[idx].nume;
+    hoverLabel.style.display = 'block';
+  } else {
+    hoverLabel.style.display = 'none';
+  }
+});
+ctx.addEventListener('mouseleave', () => {
+  chart.data.datasets.forEach((ds, i) => { if (i !== CITY_IDX) { ds.borderColor = rgba(accentHex(), 0.32); ds.borderWidth = 1.3; } });
+  chart.update('none');
+  hoverLabel.style.display = 'none';
+});
+
+function arrowCell(prevYear, nextYear, ani) {
+  const p = ani[prevYear], n = ani[nextYear];
+  if (!p || !n) return '<span class="arrow-na">·</span>';
+  const delta = p.rank - n.rank;
+  if (delta > 0) return `<span class="arrow-up">▲ ${delta}</span>`;
+  if (delta < 0) return `<span class="arrow-down">▼ ${Math.abs(delta)}</span>`;
+  return '<span class="arrow-flat">=</span>';
+}
+
+const withFinal = SCHOOLS.map(s => ({ ...s, finalRank: s.ani['2025'] ? s.ani['2025'].rank : null }));
+withFinal.sort((a, b) => {
+  if (a.finalRank !== null && b.finalRank !== null) return a.finalRank - b.finalRank;
+  if (a.finalRank !== null) return -1;
+  if (b.finalRank !== null) return 1;
+  const lastA = YEARS.slice().reverse().map(y => a.ani[y] && a.ani[y].rank).find(v => v != null) ?? 999;
+  const lastB = YEARS.slice().reverse().map(y => b.ani[y] && b.ani[y].rank).find(v => v != null) ?? 999;
+  return lastA - lastB;
+});
+
+const tbody = document.getElementById('rankBody');
+tbody.innerHTML = withFinal.map(s => {
+  const r2020 = s.ani['2020'] ? s.ani['2020'].rank : null;
+  return `<tr>
+    <td class="school">${s.nume}</td>
+    <td class="rank-base">${r2020 ?? '·'}</td>
+    <td>${arrowCell('2020','2021', s.ani)}</td>
+    <td>${arrowCell('2021','2022', s.ani)}</td>
+    <td>${arrowCell('2022','2023', s.ani)}</td>
+    <td>${arrowCell('2023','2024', s.ani)}</td>
+    <td>${arrowCell('2024','2025', s.ani)}</td>
+    <td class="rank-final">${s.finalRank ?? '·'}</td>
+  </tr>`;
+}).join('');
+
+const SHRINK_DATA = {{JS_SHRINK_DATA}};
+const SHRINK_YEARS = {{JS_SHRINK_YEARS}};
+
+function renderCaterpillar(yearIdx) {
+  const year = SHRINK_YEARS[yearIdx];
+  const yd = SHRINK_DATA[year];
+  const schools = yd.scoli.slice().sort((a, b) => a.r - b.r);
+  const los = schools.map(s => s.lo), his = schools.map(s => s.hi);
+  const domain = [Math.floor(Math.min(...los) * 2 - 0.5) / 2, Math.ceil(Math.max(...his) * 2 + 0.5) / 2];
+  const pct = v => 100 * (v - domain[0]) / (domain[1] - domain[0]);
+  const root = document.getElementById('catRoot');
+  root.innerHTML = '';
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'cat-tooltip';
+  root.appendChild(tooltip);
+
+  const muLine = document.createElement('div');
+  muLine.style.cssText = `position:absolute;top:0;bottom:0;left:${pct(yd.mu)}%;border-left:1px dashed var(--border-strong);`;
+  root.appendChild(muLine);
+
+  schools.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'cat-row';
+    const rankCell = document.createElement('div');
+    rankCell.className = 'cat-rank'; rankCell.textContent = s.r;
+    const nameCell = document.createElement('div');
+    nameCell.className = 'cat-name'; nameCell.textContent = s.n;
+    const chartCell = document.createElement('div');
+    chartCell.style.cssText = 'position:relative;height:100%;';
+    const whisker = document.createElement('div');
+    whisker.style.cssText = `position:absolute;top:50%;left:${pct(s.lo)}%;width:${pct(s.hi)-pct(s.lo)}%;height:2px;background:var(--accent);opacity:0.55;transform:translateY(-50%);border-radius:1px;`;
+    const dot = document.createElement('div');
+    dot.style.cssText = `position:absolute;top:50%;left:${pct(s.sh)}%;width:9px;height:9px;border-radius:50%;background:var(--accent);transform:translate(-50%,-50%);`;
+    const tick = document.createElement('div');
+    tick.style.cssText = `position:absolute;top:50%;left:${pct(s.raw)}%;width:2px;height:13px;background:var(--ink-muted);transform:translate(-50%,-50%);border-radius:1px;`;
+    chartCell.appendChild(whisker); chartCell.appendChild(tick); chartCell.appendChild(dot);
+    const valCell = document.createElement('div');
+    valCell.className = 'cat-val'; valCell.textContent = s.sh.toFixed(2);
+    row.appendChild(rankCell); row.appendChild(nameCell); row.appendChild(chartCell); row.appendChild(valCell);
+    row.addEventListener('mouseenter', () => {
+      tooltip.innerHTML = `<b>${s.n}</b><br>n=${s.nn} candidați · w=${s.w}<br>mediană brută ${s.raw.toFixed(2)} → ajustată ${s.sh.toFixed(2)} [${s.lo.toFixed(2)}, ${s.hi.toFixed(2)}]`;
+      tooltip.style.display = 'block';
+      tooltip.style.top = (row.offsetTop - 4) + 'px';
+      const left = pct(s.sh);
+      tooltip.style.left = left > 55 ? '' : (left + 8) + '%';
+      tooltip.style.right = left > 55 ? (100 - left + 8) + '%' : '';
+    });
+    row.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
+    root.appendChild(row);
+  });
+}
+
+const yearSlider = document.getElementById('yearSlider');
+const yearOut = document.getElementById('yearOut');
+yearSlider.addEventListener('input', () => {
+  const idx = +yearSlider.value;
+  yearOut.textContent = SHRINK_YEARS[idx];
+  renderCaterpillar(idx);
+});
+renderCaterpillar(+yearSlider.value);
+
+const CANDIDATI_RAW = {{JS_CANDIDATI_RAW}};
+
+const GAP_YEARS = {{JS_GAP_YEARS}};
+const GAP_MEDIU = {{JS_GAP_MEDIU}};
+const GAP_MEDIAN = {{JS_GAP_MEDIAN}};
+document.getElementById('gapBody').innerHTML = GAP_YEARS.map((y, i) => `<tr>
+  <td style="padding:6px 8px;border-bottom:1px solid var(--border);">${y}</td>
+  <td style="padding:6px 8px;border-bottom:1px solid var(--border);text-align:right;font-variant-numeric:tabular-nums;">${GAP_MEDIU[i].toFixed(2)}</td>
+  <td style="padding:6px 8px;border-bottom:1px solid var(--border);text-align:right;font-variant-numeric:tabular-nums;">${GAP_MEDIAN[i].toFixed(2)}</td>
+</tr>`).join('');
+
+let stripPoints = [];
+let stripStats = {};
+let stripLayout = null;
+function yForVal(L, v) {
+  return L.marginT + L.plotH * (1 - (v - 1) / 9);
+}
+function renderStrip(yearIdx) {
+  const year = String(GAP_YEARS[yearIdx]);
+  const yearData = (CANDIDATI_RAW.ani[year]) || {};
+  const order = CANDIDATI_RAW.order;
+  const wrap = document.getElementById('stripWrap');
+  const canvas = document.getElementById('stripCanvas');
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = Math.max(wrap.clientWidth, 300);
+  const cssH = 340;
+  canvas.width = cssW * dpr; canvas.height = cssH * dpr;
+  canvas.style.width = cssW + 'px'; canvas.style.height = cssH + 'px';
+  const cctx = canvas.getContext('2d');
+  cctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const marginL = 28, marginR = 6, marginT = 8, marginB = 8;
+  const plotW = cssW - marginL - marginR;
+  const plotH = cssH - marginT - marginB;
+  const n = order.length;
+  const bandW = plotW / n;
+  const yDomain = [1, 10];
+  const yScale = v => marginT + plotH * (1 - (v - yDomain[0]) / (yDomain[1] - yDomain[0]));
+
+  stripLayout = { marginL, marginT, plotW, plotH, bandW, n, cssW, cssH };
+  stripPoints = [];
+  stripStats = {};
+  order.forEach((code, i) => {
+    const vals = yearData[code];
+    if (!vals) return;
+    const bandX0 = marginL + i * bandW;
+    vals.forEach(v => {
+      const jitter = (Math.random() - 0.5) * bandW * 0.82;
+      stripPoints.push({ x: bandX0 + bandW / 2 + jitter, y: yScale(v), schoolIdx: i, code });
+    });
+    const sorted = vals.slice().sort((a, b) => a - b);
+    const median = sorted[Math.floor(sorted.length / 2)];
+    const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
+    stripStats[i] = { median, mean, x0: bandX0, x1: bandX0 + bandW };
+  });
+  drawStrip(null);
+}
+
+function drawStrip(hoverIdx) {
+  const canvas = document.getElementById('stripCanvas');
+  const cctx = canvas.getContext('2d');
+  const L = stripLayout;
+  if (!L) return;
+  cctx.clearRect(0, 0, L.cssW, L.cssH);
+  const muted = (getComputedStyle(document.documentElement).getPropertyValue('--ink-muted') || '#8b8378').trim();
+  const ink = (getComputedStyle(document.documentElement).getPropertyValue('--ink') || '#201d1a').trim();
+  const down = (getComputedStyle(document.documentElement).getPropertyValue('--down') || '#b1502f').trim();
+  const acc = (getComputedStyle(document.documentElement).getPropertyValue('--accent') || '#2d4a63').trim();
+  const rowAlt = (getComputedStyle(document.documentElement).getPropertyValue('--row-alt') || 'rgba(0,0,0,0.04)').trim();
+  if (hoverIdx !== null) {
+    cctx.fillStyle = rowAlt;
+    cctx.fillRect(L.marginL + hoverIdx * L.bandW, L.marginT, L.bandW, L.plotH);
+  }
+  cctx.font = '11px -apple-system, sans-serif';
+  cctx.fillStyle = muted;
+  cctx.textAlign = 'right';
+  for (let v = 2; v <= 10; v += 2) {
+    const y = L.marginT + L.plotH * (1 - (v - 1) / 9);
+    cctx.fillText(String(v), L.marginL - 6, y + 4);
+  }
+  const rgb = hexToRgb(acc.startsWith('#') ? acc : '#2d4a63');
+  stripPoints.forEach(p => {
+    const on = hoverIdx === null || p.schoolIdx === hoverIdx;
+    cctx.beginPath();
+    cctx.fillStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${on ? (hoverIdx === null ? 0.32 : 0.75) : 0.08})`;
+    cctx.arc(p.x, p.y, 2.1, 0, Math.PI * 2);
+    cctx.fill();
+  });
+  Object.keys(stripStats).forEach(k => {
+    const i = +k;
+    const s = stripStats[i];
+    const on = hoverIdx === null || i === hoverIdx;
+    const alpha = on ? 1 : 0.15;
+    const x0 = s.x0 + (s.x1 - s.x0) * 0.15, x1 = s.x1 - (s.x1 - s.x0) * 0.15;
+    cctx.globalAlpha = alpha;
+    cctx.strokeStyle = ink; cctx.lineWidth = 2;
+    const ym = yForVal(L, s.median);
+    cctx.beginPath(); cctx.moveTo(x0, ym); cctx.lineTo(x1, ym); cctx.stroke();
+    cctx.strokeStyle = down;
+    const ya = yForVal(L, s.mean);
+    cctx.beginPath(); cctx.moveTo(x0, ya); cctx.lineTo(x1, ya); cctx.stroke();
+    cctx.globalAlpha = 1;
+  });
+}
+
+const stripTooltip = document.getElementById('stripTooltip');
+const stripCanvas = document.getElementById('stripCanvas');
+stripCanvas.addEventListener('mousemove', evt => {
+  const L = stripLayout;
+  if (!L) return;
+  const rect = stripCanvas.getBoundingClientRect();
+  const mx = evt.clientX - rect.left;
+  const my = evt.clientY - rect.top;
+  let idx = Math.floor((mx - L.marginL) / L.bandW);
+  if (idx < 0 || idx >= L.n || mx < L.marginL) {
+    drawStrip(null); stripTooltip.style.display = 'none'; return;
+  }
+  drawStrip(idx);
+  const code = CANDIDATI_RAW.order[idx];
+  const name = CANDIDATI_RAW.names[code];
+  const year = String(GAP_YEARS[+document.getElementById('stripYearSlider').value]);
+  const vals = (CANDIDATI_RAW.ani[year] || {})[code];
+  if (!vals) { stripTooltip.style.display = 'none'; return; }
+  const stat = stripStats[idx];
+  const med = stat ? stat.median : null;
+  const mean = stat ? stat.mean : null;
+  stripTooltip.innerHTML = med === null ? `<b>${name}</b>` :
+    `<b>${name}</b><br>mediană ${med.toFixed(2)} &middot; medie ${mean.toFixed(2)} &middot; n=${vals.length} candidați`;
+  stripTooltip.style.display = 'block';
+  const leftPct = 100 * mx / L.cssW;
+  stripTooltip.style.top = '4px';
+  if (leftPct > 55) { stripTooltip.style.left = ''; stripTooltip.style.right = (100 - leftPct + 2) + '%'; }
+  else { stripTooltip.style.left = (leftPct + 2) + '%'; stripTooltip.style.right = ''; }
+});
+stripCanvas.addEventListener('mouseleave', () => { drawStrip(null); stripTooltip.style.display = 'none'; });
+
+const stripYearSlider = document.getElementById('stripYearSlider');
+const stripYearOut = document.getElementById('stripYearOut');
+stripYearSlider.addEventListener('input', () => {
+  stripYearOut.textContent = GAP_YEARS[+stripYearSlider.value];
+  renderStrip(+stripYearSlider.value);
+});
+
+const TAB_IDS = ['temporal', 'note', 'bootstrap', 'mediane', 'clasament'];
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+    btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
+    TAB_IDS.forEach(id => document.getElementById('tab-' + id).classList.toggle('hidden', btn.dataset.tab !== id));
+    if (btn.dataset.tab === 'temporal') { if (!friedmanChart) renderFriedmanChart(); else friedmanChart.resize(); }
+    if (btn.dataset.tab === 'mediane') chart.resize();
+    if (btn.dataset.tab === 'note') renderStrip(+stripYearSlider.value);
+  });
+});
+
+let friedmanChart = null;
+function renderFriedmanChart() {
+  const fctx = document.getElementById('friedmanChart');
+  const dark = isDark();
+  const cats = dark
+    ? { blue: '#3987e5', aqua: '#199e70', yellow: '#c98500' }
+    : { blue: '#2a78d6', aqua: '#1baf7a', yellow: '#eda100' };
+  friedmanChart = new Chart(fctx, {
+    type: 'line',
+    data: {
+      labels: YEARS,
+      datasets: [
+        { label: 'Iași', data: {{JS_FR_IS}}, borderColor: cats.blue, backgroundColor: cats.blue, borderWidth: 2, pointRadius: 4, tension: 0.2 },
+        { label: 'Cluj-Napoca', data: {{JS_FR_CJ}}, borderColor: cats.aqua, backgroundColor: cats.aqua, borderWidth: 2, borderDash: [6,3], pointRadius: 4, pointStyle: 'triangle', tension: 0.2 },
+        { label: 'Timișoara', data: {{JS_FR_TM}}, borderColor: cats.yellow, backgroundColor: cats.yellow, borderWidth: 2, borderDash: [2,2], pointRadius: 4, pointStyle: 'rect', tension: 0.2 },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: true, position: 'top', labels: { color: '#8b8378', usePointStyle: true, boxWidth: 8, font: { size: 12 } } },
+        tooltip: { callbacks: { label: c => c.dataset.label + ': rang mediu ' + c.parsed.y.toFixed(2) } }
+      },
+      scales: {
+        x: { ticks: { color: '#8b8378' }, grid: { display: false } },
+        y: { min: 1, max: 6, title: { display: true, text: 'rang mediu al anului (1=slab, 6=bun)', color: '#8b8378', font: { size: 11 } },
+             ticks: { color: '#8b8378', stepSize: 1 }, grid: { color: 'rgba(139,131,120,0.18)' } }
+      }
+    }
+  });
+}
+renderFriedmanChart();
+</script>
